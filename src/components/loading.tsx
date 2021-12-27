@@ -1,5 +1,4 @@
-import React from 'react';
-import LoadingIcon from '../assets/loading.svg'
+import LoadingIcon from '../assets/loading.svg';
 import styled from 'styled-components';
 
 export const StyledLoading = styled.div`
@@ -16,8 +15,7 @@ export const StyledIcon = styled(LoadingIcon)`
 
 export const Loading = () => (
   <StyledLoading>
+    LOADING
     <StyledIcon />
   </StyledLoading>
 );
-
-
