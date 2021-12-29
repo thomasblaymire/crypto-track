@@ -9,20 +9,26 @@ const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
   }
-  @font-face {
-    font-weight: 200;
-    font-family: 'Gotham Book';
-    src: url(../assets/fonts/GothamBook.ttf);
-    font-style: normal;
-  }
+
   html {
-    height: 100vh;
+  font-size: 10px;
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  height: 100vh;
   }
-  body {
-    background-color: #ecf1f3;
-    height: inherit;
-    margin: 0;
-  }
+
+body {
+  padding: 0;
+  margin: 0;
+  line-height: 2;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Poppins', sans-serif;
+  background-color: #ecf1f3;
+  height: inherit;
+}
+
 `;
 
 function App() {

@@ -29,7 +29,6 @@ export interface LayoutProps {
 }
 
 export const Layout = ({ children }: LayoutProps) => {
-  console.log('TOM layout', children);
   return (
     <>
       <Wrapper>

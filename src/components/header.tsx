@@ -16,7 +16,7 @@ const StyledHeaderLogo = styled(Logo)`
 
 const StyledHeaderWrapper = styled.div`
   display: flex;
-  padding: 1.5rem 0;
+  padding: 3.5rem 0;
 `;
 
 export const Header = ({ navigation, stats }: HeaderProps): JSX.Element => (

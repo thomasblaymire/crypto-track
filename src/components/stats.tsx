@@ -22,17 +22,14 @@ const StyledStatTitle = styled.span`
   color: grey;
 `;
 
-export const StatsBar = ({ stats }: StatsProps): JSX.Element => {
-  console.log('TOM stats', stats);
-  return (
-    <StyledStatsBar>
-      {stats &&
-        stats.map((stat, i) => (
-          <StyledStatBlock key={i}>
-            <StyledStatTitle>{stat.title}</StyledStatTitle>
-            <span>{stat.value}</span>
-          </StyledStatBlock>
-        ))}
-    </StyledStatsBar>
-  );
-};
+export const StatsBar = ({ stats }: StatsProps): JSX.Element => (
+  <StyledStatsBar>
+    {stats &&
+      stats.map((stat, i) => (
+        <StyledStatBlock key={i}>
+          <StyledStatTitle>{stat.title}</StyledStatTitle>
+          <span>{stat.value}</span>
+        </StyledStatBlock>
+      ))}
+  </StyledStatsBar>
+);

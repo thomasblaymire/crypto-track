@@ -35,7 +35,6 @@ interface RequestOptions {
   secret?: string;
 }
 
-
 export const useFetch = <T>({
   url,
   params = {},
@@ -48,8 +47,9 @@ export const useFetch = <T>({
     if (!url) return;
     try {
       setLoading(true);
-      const response: any = await fetch(url, params)
-      setData(response);
+      const response: any = await fetch(url, params);
+      const data = await response.json();
+      setData(data);
       setLoading(false);
     } catch (err) {
       setError(err);
@@ -67,5 +67,3 @@ export const useFetch = <T>({
     loading,
   };
 };
-
-

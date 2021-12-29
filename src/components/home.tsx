@@ -39,22 +39,19 @@ const stats = [
 ];
 
 export const Home = ({}: HomeProps): JSX.Element => {
-  // const { data }: any = useFetch({
-  //   url: API_URL,
-  //   params: {
-  //     headers: {
-  //       jwt: '84688968-53a0-4a2e-88f0-e7cfa246c8a6',
-  //     },
-  //   },
-  // });
-
-  // console.log('TOM data', data);
+  const { data }: any = useFetch({
+    url: API_URL,
+    params: {
+      headers: {
+        'X-CMC_PRO_API_KEY': '84688968-53a0-4a2e-88f0-e7cfa246c8a6',
+      },
+    },
+  });
 
   return (
     <Layout>
       <Header navigation={nav} stats={stats} />
-      {/* {data && <p>{JSON.parse(data)}</p>} */}
-      <CryptoTable />
+      {data && <CryptoTable data={data} />}
     </Layout>
   );
 };

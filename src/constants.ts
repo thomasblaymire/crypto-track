@@ -1,4 +1,4 @@
+const API_URL =
+  'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=50&convert=aud';
 
-const API_URL = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=5000&convert=aud';
-
-export { API_URL }
+export { API_URL };
