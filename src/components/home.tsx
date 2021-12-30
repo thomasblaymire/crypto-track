@@ -7,34 +7,39 @@ import { CryptoTable } from '../components/CryptoTable';
 
 interface HomeProps {}
 
-const nav = [
+const navItems = [
   {
-    'id:': '1',
-    item: 'Home',
+    id: '1',
+    item: 'Cryptocurrencies',
     url: '/',
+  },
+  {
+    id: '2',
+    item: 'Markets',
+    url: '/markets',
   },
 ];
 
 const stats = [
   {
     title: 'Cryptocurrencys',
-    value: '1592',
+    value: 1592,
   },
   {
     title: 'Markets',
-    value: '10271',
+    value: 10271,
   },
   {
     title: 'Market Cap',
-    value: '$33,456,544,334',
+    value: 33456544334,
   },
   {
     title: 'Volume 24H',
-    value: '$12,223,245,223',
+    value: 12223245223,
   },
   {
     title: 'BTC Dominance',
-    value: '38.7%',
+    value: 387,
   },
 ];
 
@@ -50,7 +55,7 @@ export const Home = ({}: HomeProps): JSX.Element => {
 
   return (
     <Layout>
-      <Header navigation={nav} stats={stats} />
+      <Header navItems={navItems} stats={stats} />
       {data && <CryptoTable data={data} />}
     </Layout>
   );

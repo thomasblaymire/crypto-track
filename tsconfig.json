@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "jsx": "preserve",
-    "jsxFactory": "h",
+    "jsx": "react",
     "jsxFragmentFactory": "Fragment",
     "noEmit": true,
     "skipLibCheck": true,
@@ -20,6 +19,6 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "types": ["node"],
-    }
+    "types": ["node"]
   }
+}

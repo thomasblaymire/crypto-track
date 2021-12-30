@@ -1,21 +1,45 @@
 import styled from 'styled-components';
 
+interface TableDataProps {
+  alignment?: string;
+}
+
+interface TableHeaderProps {
+  alignment?: string;
+}
+
 export const StyledCryptoTable = styled.table`
-  background: #fff;
   border-radius: 5px;
   margin: auto;
   font-size: 14px;
   width: 100%;
   transform: translateZ(0px);
   margin-bottom: 2rem;
+  border-spacing: 0px;
+  color: #fff;
 `;
 
-export const StyledTd = styled.td`
-  border-bottom: 1px solid #eff2f5;
-  background-color: #fff;
+export const StyledTr = styled.tr`
+  &:hover {
+    background: #171925;
+    cursor: pointer;
+  }
+`;
+
+export const StyledTd = styled.td<TableDataProps>`
+  border-bottom: 1px solid rgb(34, 37, 49);
   font-weight: 500;
   white-space: nowrap;
-  padding: 0 0 0.75rem;
+  padding: 1rem 0;
+  text-align: ${({ alignment }) => (alignment === 'left' ? `left` : `right`)};
+`;
+
+export const StyledTh = styled.th<TableHeaderProps>`
+  border-bottom: 1px solid rgb(34, 37, 49);
+  text-align: ${({ alignment }) => (alignment === 'left' ? `left` : `right`)};
+  p {
+    margin: 0.75rem 0;
+  }
 `;
 
 export const StyledCoin = styled.div`
@@ -32,10 +56,6 @@ export const StyledCoin = styled.div`
   }
 `;
 
-export const StyledTh = styled.th`
-  text-align: left;
-`;
-
 export const StyledIcon = styled.div`
   display: flex;
   justify-content: center;
@@ -45,4 +65,14 @@ export const StyledIcon = styled.div`
     width: 20px;
     height: 20px;
   }
+`;
+
+export const StyledRank = styled.div`
+  padding: 0 1rem;
+  display: flex;
+`;
+
+export const StyledName = styled.div`
+  padding-right: 1rem;
+  font-weight: 600;
 `;

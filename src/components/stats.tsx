@@ -6,11 +6,10 @@ interface StatsProps {
 }
 
 const StyledStatsBar = styled.div`
-  height: 3rem;
   display: flex;
-  align-items: center;
-  justify-content: center;
   border-bottom: solid 1px #d5d5d5;
+  font-size: 1.1rem;
+  padding: 1rem 0;
 `;
 
 const StyledStatBlock = styled.div`

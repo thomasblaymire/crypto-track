@@ -1,5 +1,4 @@
 import React from 'react';
-import LoadingIcon from '../assets/loading.svg';
 import styled from 'styled-components';
 
 export const StyledLoading = styled.div`
@@ -10,13 +9,16 @@ export const StyledLoading = styled.div`
   align-self: center;
 `;
 
-export const StyledIcon = styled(LoadingIcon)`
+export const StyledNavigation = styled.nav`
   display: block;
 `;
 
-export const Loading = () => (
-  <StyledLoading>
-    LOADING
-    <StyledIcon />
-  </StyledLoading>
+export const Navigation = ({ navItems }) => (
+  <StyledNavigation>
+    <ul>
+      {navItems.map((item, i) => (
+        <li key={i}>{item.item}</li>
+      ))}
+    </ul>
+  </StyledNavigation>
 );

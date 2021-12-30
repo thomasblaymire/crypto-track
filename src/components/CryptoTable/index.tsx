@@ -1,10 +1,13 @@
 import React from 'react';
 import {
   StyledCryptoTable,
+  StyledTr,
   StyledTh,
   StyledTd,
   StyledIcon,
   StyledCoin,
+  StyledRank,
+  StyledName,
 } from './styled';
 import Star from '../../assets/star.svg';
 
@@ -22,7 +25,7 @@ export const CryptoTable = ({
         <tr>
           <StyledTh></StyledTh>
           <StyledTh></StyledTh>
-          <StyledTh>
+          <StyledTh alignment="left">
             <p>Name</p>
           </StyledTh>
           <StyledTh>
@@ -41,7 +44,7 @@ export const CryptoTable = ({
             <p>Volume (24h)</p>
           </StyledTh>
           <StyledTh>
-            <p>Circulating Supply (24h)</p>
+            <p>Circulating Supply</p>
           </StyledTh>
         </tr>
       </thead>
@@ -51,14 +54,16 @@ export const CryptoTable = ({
           const { price, volume_change_24h, market_cap } = quote.AUD;
 
           return (
-            <tr key={id}>
+            <StyledTr key={id}>
               <StyledTd>
                 <StyledIcon>
                   <Star />
                 </StyledIcon>
               </StyledTd>
-              <StyledTd>{cmc_rank}</StyledTd>
               <StyledTd>
+                <StyledRank>{cmc_rank}</StyledRank>
+              </StyledTd>
+              <StyledTd alignment="left">
                 <StyledCoin>
                   <img
                     className="coin-logo"
@@ -66,16 +71,11 @@ export const CryptoTable = ({
                     loading="lazy"
                     alt="BTC logo"
                   ></img>
-                  <div>
+                  <StyledName>
                     <p>{name}</p>
-                  </div>
+                  </StyledName>
                   <div>
-                    <p
-                      color="text3"
-                      className="sc-1eb5slv-0 gGIpIK coin-item-symbol"
-                    >
-                      {symbol}
-                    </p>
+                    <p>{symbol}</p>
                   </div>
                 </StyledCoin>
               </StyledTd>
@@ -85,7 +85,7 @@ export const CryptoTable = ({
               <StyledTd>${market_cap}</StyledTd>
               <StyledTd>$29,118,389,263</StyledTd>
               <StyledTd>$29,118,389,263</StyledTd>
-            </tr>
+            </StyledTr>
           );
         })}
       </tbody>

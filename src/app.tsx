@@ -25,7 +25,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: 'Poppins', sans-serif;
-  background-color: #ecf1f3;
+  //background-color: #ecf1f3;
+  background-color: #17171a;
   height: inherit;
 }
 
