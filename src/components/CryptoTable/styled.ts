@@ -8,6 +8,10 @@ interface TableHeaderProps {
   alignment?: string;
 }
 
+interface VolumeProps {
+  isPositive: boolean;
+}
+
 export const StyledCryptoTable = styled.table`
   border-radius: 5px;
   margin: auto;
@@ -17,6 +21,7 @@ export const StyledCryptoTable = styled.table`
   margin-bottom: 2rem;
   border-spacing: 0px;
   color: #fff;
+  font-size: 1.7rem;
 `;
 
 export const StyledTr = styled.tr`
@@ -75,4 +80,8 @@ export const StyledRank = styled.div`
 export const StyledName = styled.div`
   padding-right: 1rem;
   font-weight: 600;
+`;
+
+export const StyledVolume = styled.div<VolumeProps>`
+  color: ${({ isPositive }) => (isPositive ? `green` : `red`)};
 `;

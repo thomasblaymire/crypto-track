@@ -44,13 +44,19 @@ const stats = [
 ];
 
 export const Home = ({}: HomeProps): JSX.Element => {
-  const { data }: any = useFetch({
+  const { data, refetch }: any = useFetch({
     url: API_URL,
     params: {
       headers: {
         'X-CMC_PRO_API_KEY': '84688968-53a0-4a2e-88f0-e7cfa246c8a6',
       },
     },
+  });
+
+  useEffect(() => {
+    setTimeout(() => {
+      refetch();
+    }, 5000);
   });
 
   return (

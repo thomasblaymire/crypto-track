@@ -10,6 +10,7 @@ export interface FetchResult<T> {
   data: Readonly<RequestResponse<T>> | null;
   error: boolean;
   loading: boolean;
+  refetch: () => void;
 }
 
 export interface RequestResponse<T = string> {
@@ -42,6 +43,10 @@ export const useFetch = <T>({
   const [data, setData] = useState<Readonly<RequestResponse<T>> | null>(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
+  const [refetchIndex, setRefetchIndex] = useState(0);
+
+  const refetch = () =>
+    setRefetchIndex(prevRefetchIndex => prevRefetchIndex + 1);
 
   const fetchData = async () => {
     if (!url) return;
@@ -59,11 +64,12 @@ export const useFetch = <T>({
 
   useEffect(() => {
     fetchData();
-  }, [url]);
+  }, [url, refetchIndex]);
 
   return {
     data,
     error,
     loading,
+    refetch,
   };
 };

@@ -1,5 +1,5 @@
-import React, { Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { Fragment, Suspense } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Home } from './components/home';
 import { Loading } from './components/loading';
 
@@ -34,15 +34,17 @@ body {
 
 function App() {
   return (
-    <>
+    <Fragment>
       <GlobalStyle />
       <Suspense fallback={<Loading />}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/detail/:id">Detail</Route>
-        </Routes>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/detail/:id">Detail</Route>
+          </Routes>
+        </Router>
       </Suspense>
-    </>
+    </Fragment>
   );
 }
 
