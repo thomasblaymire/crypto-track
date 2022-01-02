@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { Header } from './header';
 
@@ -70,20 +70,23 @@ const stats = [
 
 export const Layout = ({ children }: LayoutProps) => {
   return (
-    <>
+    <Fragment>
       <StyledHead>
         <Container>
           <Header navItems={navItems} stats={stats} />
-          {/* <input
-            placeholder="Search..."
-            // onChange={e => searchItems(e.target.value)}
-          /> */}
         </Container>
       </StyledHead>
 
       <Wrapper>
         <Container>{children}</Container>
       </Wrapper>
-    </>
+    </Fragment>
   );
 };
+
+{
+  /* <input
+            placeholder="Search..."
+            // onChange={e => searchItems(e.target.value)}
+          /> */
+}

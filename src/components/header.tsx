@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Logo } from './logo';
 import { Navigation } from './navigation';
 import { StatsBar } from './stats';
+import { Search } from './search';
 
 interface HeaderProps {
   navItems: NavigationItem[];
@@ -26,6 +27,7 @@ export const Header = ({ navItems, stats }: HeaderProps): JSX.Element => (
     <StyledHeaderWrapper>
       <Logo />
       <Navigation navItems={navItems} />
+      <Search />
     </StyledHeaderWrapper>
   </>
 );
