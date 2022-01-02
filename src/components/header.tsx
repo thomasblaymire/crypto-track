@@ -9,19 +9,23 @@ interface HeaderProps {
   stats: Stats[];
 }
 
-const StyledHeader = styled.header``;
-
 const StyledHeaderWrapper = styled.div`
   display: flex;
-  padding: 3.5rem 0;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px 0px;
+  max-width: 1400px;
+  width: 100%;
+  overflow: hidden;
+  margin: 0px auto;
 `;
 
 export const Header = ({ navItems, stats }: HeaderProps): JSX.Element => (
-  <StyledHeader>
+  <>
     {stats && <StatsBar stats={stats} />}
     <StyledHeaderWrapper>
       <Logo />
       <Navigation navItems={navItems} />
     </StyledHeaderWrapper>
-  </StyledHeader>
+  </>
 );

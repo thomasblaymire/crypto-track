@@ -11,6 +11,7 @@ export interface FetchResult<T> {
   error: boolean;
   loading: boolean;
   refetch: () => void;
+  fetchData: any;
 }
 
 export interface RequestResponse<T = string> {
@@ -68,6 +69,7 @@ export const useFetch = <T>({
 
   return {
     data,
+    fetchData,
     error,
     loading,
     refetch,

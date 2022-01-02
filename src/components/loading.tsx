@@ -8,15 +8,21 @@ export const StyledLoading = styled.div`
   justify-self: center;
   align-items: center;
   align-self: center;
+
+  svg {
+    color: white;
+  }
 `;
 
 export const StyledIcon = styled(LoadingIcon)`
   display: block;
+  color: white;
+  width: 400px;
+  height: 300px;
 `;
 
 export const Loading = () => (
   <StyledLoading>
-    LOADING
-    <StyledIcon />
+    <LoadingIcon />
   </StyledLoading>
 );

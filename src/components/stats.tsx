@@ -7,9 +7,8 @@ interface StatsProps {
 
 const StyledStatsBar = styled.div`
   display: flex;
-  border-bottom: solid 1px #d5d5d5;
   font-size: 1.1rem;
-  padding: 1rem 0;
+  padding-top: 1rem;
 `;
 
 const StyledStatBlock = styled.div`

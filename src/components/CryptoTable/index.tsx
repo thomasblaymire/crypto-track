@@ -16,9 +16,7 @@ interface CryptoTableProps {
   data: any;
 }
 
-export const CryptoTable = ({
-  data: { data },
-}: CryptoTableProps): JSX.Element => {
+export const CryptoTable = ({ data }: CryptoTableProps): JSX.Element => {
   return (
     <StyledCryptoTable>
       <CryptoTableHead />

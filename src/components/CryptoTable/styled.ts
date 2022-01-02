@@ -15,13 +15,13 @@ interface VolumeProps {
 export const StyledCryptoTable = styled.table`
   border-radius: 5px;
   margin: auto;
-  font-size: 14px;
   width: 100%;
   transform: translateZ(0px);
   margin-bottom: 2rem;
   border-spacing: 0px;
   color: #fff;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
+  padding: 4rem 0;
 `;
 
 export const StyledTr = styled.tr`

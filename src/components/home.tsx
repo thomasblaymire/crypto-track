@@ -1,50 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Header } from './header';
 import { Layout } from './layout';
 import { API_URL } from '../constants';
 import { useFetch } from '../hooks/fetch';
 import { CryptoTable } from '../components/CryptoTable';
+import { Loading } from '../components/loading';
 
 interface HomeProps {}
 
-const navItems = [
-  {
-    id: '1',
-    item: 'Cryptocurrencies',
-    url: '/',
-  },
-  {
-    id: '2',
-    item: 'Markets',
-    url: '/markets',
-  },
-];
-
-const stats = [
-  {
-    title: 'Cryptocurrencys',
-    value: 1592,
-  },
-  {
-    title: 'Markets',
-    value: 10271,
-  },
-  {
-    title: 'Market Cap',
-    value: 33456544334,
-  },
-  {
-    title: 'Volume 24H',
-    value: 12223245223,
-  },
-  {
-    title: 'BTC Dominance',
-    value: 387,
-  },
-];
-
 export const Home = ({}: HomeProps): JSX.Element => {
-  const { data, refetch }: any = useFetch({
+  const [filteredResults, setFilteredResults] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
+
+  const { data, loading }: any = useFetch({
     url: API_URL,
     params: {
       headers: {
@@ -53,16 +21,35 @@ export const Home = ({}: HomeProps): JSX.Element => {
     },
   });
 
-  useEffect(() => {
-    setTimeout(() => {
-      refetch();
-    }, 5000);
-  });
+  const searchItems = searchValue => {
+    setSearchInput(searchValue);
+    if (searchInput !== '' && data) {
+      const filteredData = data.data.filter(item => {
+        return Object.values(item)
+          .join('')
+          .toLowerCase()
+          .includes(searchInput.toLowerCase());
+      });
+      setFilteredResults(filteredData);
+    } else {
+      setFilteredResults(data);
+    }
+  };
 
   return (
-    <Layout>
-      <Header navItems={navItems} stats={stats} />
-      {data && <CryptoTable data={data} />}
-    </Layout>
+    <>
+      <Layout>
+        {loading && <Loading />}
+        {data && (
+          <div>
+            {searchInput.length > 1 ? (
+              <CryptoTable data={filteredResults} />
+            ) : (
+              <CryptoTable data={data.data} />
+            )}
+          </div>
+        )}
+      </Layout>
+    </>
   );
 };
