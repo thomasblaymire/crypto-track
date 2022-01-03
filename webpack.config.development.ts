@@ -47,7 +47,7 @@ const createWebpackConfig = async () => {
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: 'bundle.[fullhash].js',
+      filename: '[name].[fullhash].js',
     },
     devServer: {
       static: path.join(__dirname, 'dist'),
