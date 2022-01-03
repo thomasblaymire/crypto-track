@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { Header } from './header';
-import { Layout } from './layout';
+import React from 'react';
+import styled from 'styled-components';
+import { Layout } from './Layout';
 import { API_URL } from '../constants';
 import { useFetch } from '../hooks/fetch';
-import { CryptoTable } from '../components/CryptoTable';
-import { Loading } from '../components/loading';
+import { CryptoTable } from './CryptoTable';
+import Loading from './Loading';
 
 interface HomeProps {}
 
 export const Home = ({}: HomeProps): JSX.Element => {
-  const [filteredResults, setFilteredResults] = useState([]);
-  const [searchInput, setSearchInput] = useState('');
+  // const [filteredResults, setFilteredResults] = useState([]);
+  // const [searchInput, setSearchInput] = useState('');
 
   const { data, loading }: any = useFetch({
     url: API_URL,
@@ -21,35 +21,47 @@ export const Home = ({}: HomeProps): JSX.Element => {
     },
   });
 
-  const searchItems = searchValue => {
-    setSearchInput(searchValue);
-    if (searchInput !== '' && data) {
-      const filteredData = data.data.filter(item => {
-        return Object.values(item)
-          .join('')
-          .toLowerCase()
-          .includes(searchInput.toLowerCase());
-      });
-      setFilteredResults(filteredData);
-    } else {
-      setFilteredResults(data);
-    }
-  };
+  const StyledLoading = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  `;
+
+  // const searchItems = searchValue => {
+  //   setSearchInput(searchValue);
+  //   if (searchInput !== '' && data) {
+  //     const filteredData = data.data.filter(item => {
+  //       return Object.values(item)
+  //         .join('')
+  //         .toLowerCase()
+  //         .includes(searchInput.toLowerCase());
+  //     });
+  //     setFilteredResults(filteredData);
+  //   } else {
+  //     setFilteredResults(data);
+  //   }
+  // };
+
+  const searchInput = [];
+  const filteredResults = null;
 
   return (
-    <>
-      <Layout>
-        {loading && <Loading />}
-        {data && (
-          <div>
-            {searchInput.length > 1 ? (
-              <CryptoTable data={filteredResults} />
-            ) : (
-              <CryptoTable data={data.data} />
-            )}
-          </div>
-        )}
-      </Layout>
-    </>
+    <Layout>
+      {loading && (
+        <StyledLoading>
+          <Loading />
+        </StyledLoading>
+      )}
+      {data && (
+        <div>
+          {searchInput.length > 1 ? (
+            <CryptoTable data={filteredResults} />
+          ) : (
+            <CryptoTable data={data.data} />
+          )}
+        </div>
+      )}
+    </Layout>
   );
 };

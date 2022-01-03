@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { Header } from './header';
+import { Header } from './Header';
 
 const Wrapper = styled.div`
   height: inherit;
   background-color: #1a1a24;
+  min-height: 100vh;
 `;
 
 const Container = styled.div`

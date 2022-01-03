@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { Logo } from './logo';
-import { Navigation } from './navigation';
-import { StatsBar } from './stats';
-import { Search } from './search';
+import { Logo } from './Logo';
+import { Navigation } from './Navigation';
+import { StatsBar } from './Status';
+import { Search } from './Search';
 
 interface HeaderProps {
-  navItems: NavigationItem[];
-  stats: Stats[];
+  navItems: any;
+  stats: any;
+  // navItems: NavigationItem[];
+  // stats: Stats[];
 }
 
 const StyledHeaderWrapper = styled.div`
@@ -22,12 +24,12 @@ const StyledHeaderWrapper = styled.div`
 `;
 
 export const Header = ({ navItems, stats }: HeaderProps): JSX.Element => (
-  <>
+  <Fragment>
     {stats && <StatsBar stats={stats} />}
     <StyledHeaderWrapper>
       <Logo />
       <Navigation navItems={navItems} />
       <Search />
     </StyledHeaderWrapper>
-  </>
+  </Fragment>
 );

@@ -1,8 +1,9 @@
 import React, { Fragment, Suspense } from 'react';
+import Loading from './Loading';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Home } from './components/home';
-import { Loading } from './components/loading';
-
+import { Home } from './Home';
+import { NotFound } from './NotFound';
+import { CryptoDetails } from './CryptoDetails';
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
@@ -29,10 +30,9 @@ body {
   background-color: #17171a;
   height: inherit;
 }
-
 `;
 
-function App() {
+const App = () => {
   return (
     <Fragment>
       <GlobalStyle />
@@ -40,12 +40,13 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/detail/:id">Detail</Route>
+            <Route path="/currencies/:crypto" element={CryptoDetails} />
+            <Route element={NotFound} />
           </Routes>
         </Router>
       </Suspense>
     </Fragment>
   );
-}
+};
 
 export default App;
