@@ -1,0 +1,8 @@
+FROM node:alpine
+
+WORKDIR /app
+COPY package.json .
+RUN yarn dev
+COPY . . 
+
+CMD ["npm", "run", "dev"]
