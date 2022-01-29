@@ -1,84 +1,83 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { Layout } from './Layout';
 import { CryptoTable } from './CryptoTable';
-import { Loading } from './Loading';
-import { Search } from './Search'
-import { fetchCryptoData, fetchCryptoBySearch } from '../helpers/crypto'
-import { cryptoHeadingColumns } from '../data'
-import { useParams } from 'react-router-dom'
+import { Search } from './Search/index';
+import { SearchToggle } from './Search';
+import { useFetch } from '../hooks/fetch';
+import { useDebounce } from '../hooks/debounce';
+import { fetchCoinByQuery } from '../helpers/crypto';
+import { CryptoData } from '../types';
+import {
+  QUERY_DEBOUNCE_DURATION_MILLISECONDS,
+  ALL_COIN_QUERY_STRING,
+} from '../constants';
 
-interface HomeProps {}
+const StyledRow = styled.div`
+  display: flex;
+  padding-top: 4rem;
+  margin-bottom: 4rem;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1300px;
+`;
 
-export const Home = ({}: HomeProps): JSX.Element => {
-  const [searchInput, setSearchInput] = useState('');
-  const [data, setData] = useState(null);
-  const [resultData, setResultData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [ searchQuery, setSearchQuery ] = useState(null);
-  const { params } = useParams()
-  
-  console.log('TOM params', params)
+interface FetchCryptoCoinsInterface {
+  data?: CryptoData[];
+  isLoading?: boolean;
+  hasError?: boolean;
+  errorMessage?: string;
+}
 
-  const fetchCryptoTableData = useCallback(async () => {
-     const cryptoData = await fetchCryptoData();
-     setData(cryptoData)
-  }, [])
+export const Home = (): JSX.Element => {
+  const { data, hasError, errorMessage }: FetchCryptoCoinsInterface = useFetch({
+    initialUrl: `${process.env.COINGEKO_API}/${ALL_COIN_QUERY_STRING()}`,
+    interval: 5,
+    revalidate: true,
+  });
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState(null);
+  const [toggleSearch, setToggleSearch] = useState(false);
+
+  const debouncedSearchTerm = useDebounce(
+    searchQuery,
+    QUERY_DEBOUNCE_DURATION_MILLISECONDS
+  );
 
   useEffect(() => {
-    try {
-      setLoading(true);
-      fetchCryptoTableData()
-    } catch(err: any) {
-      setError(err)
-    } finally {
-      setLoading(false)
+    if (debouncedSearchTerm) {
+      fetchCoinByQuery(debouncedSearchTerm).then(results => {
+        setSearchResults(results.coins.slice(0, 5));
+      });
+    } else {
+      setSearchResults(null);
     }
-  }, [fetchCryptoTableData])
-
-
-  // const searchItems = searchValue => {
-  //   setSearchInput(searchValue);
-  //   setLoading(true)
-  //   if (searchInput !== '' && data) {
-  //     const filteredData = data.filter(item => {
-  //       return Object.values(item)
-  //         .join('')
-  //         .toLowerCase()
-  //         .includes(searchInput.toLowerCase());
-  //     });
-  //     setData(filteredData);
-  //     setLoading(false)
-  //   } else {
-  //     setData(data);
-  //   }
-  // };
-
-  const updateSearchResults = async (query, delay) => {
-    // API CALL TO FETCH SEARCH RESULTS BY QUERY
-    setSearchQuery(query);
-    console.log('Tom search query', query, delay);
-    const cryptoData = await fetchCryptoBySearch(query);
-    console.log('TOM crypto data', cryptoData)
-    setResultData(cryptoData.coins)
-  }
+  }, [debouncedSearchTerm]);
 
   return (
     <Layout>
-      {loading && <Loading position="center" />}
-      {error && <p>{error}</p>}
-      <Search updateSearchResults={updateSearchResults} />
-      {data && !searchQuery && (
-        <CryptoTable 
-          headingColumns={cryptoHeadingColumns} 
-          data={data} 
-          /> 
-      )}
-      {resultData && (
-        <ul>
-          {resultData.map((coin) => <li>{coin.name}</li>)}         
-        </ul>
-      )}
+      {hasError && <p>{errorMessage}</p>}
+
+      <StyledRow>
+        <SearchToggle
+          setToggleSearch={setToggleSearch}
+          toggleSearch={toggleSearch}
+        />
+        {toggleSearch && (
+          <Search
+            data={searchResults}
+            setSearchQuery={setSearchQuery}
+            searchQuery={searchQuery}
+            setToggleSearch={setToggleSearch}
+            toggleSearch={toggleSearch}
+          />
+        )}
+      </StyledRow>
+
+      {data && <CryptoTable data={data} />}
     </Layout>
   );
 };

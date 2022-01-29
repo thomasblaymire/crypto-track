@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import HamburgerImage from '../assets/hamburger.svg';
 
-interface MenuProps { 
+interface MenuProps {
   isOpen: boolean;
 }
 
@@ -15,7 +15,7 @@ export const StyledLoading = styled.div`
 `;
 
 const StyledNavigation = styled.nav`
-  @media(min-width: 480px) {
+  @media (min-width: 480px) {
     display: flex;
     flex: 1 1 0%;
     align-items: center;
@@ -40,8 +40,8 @@ const StyledNavigationLink = styled.a`
 `;
 
 const StyledHamburger = styled(HamburgerImage)`
-display: flex;
-  @media(min-width: 480px) {
+  display: flex;
+  @media (min-width: 480px) {
     display: none;
   }
 `;
@@ -52,22 +52,22 @@ const StyledMenu = styled.div<MenuProps>`
   position: relative;
   display: none;
 
-  @media(min-width: 768px) {
-     display: flex;
+  @media (min-width: 768px) {
+    display: flex;
   }
-`
+`;
 
-export const Navigation = ({ navItems, isOpen, setIsOpen }) => {
+export const Navigation = ({ navItems, isOpen, setIsOpen }): JSX.Element => {
   return (
     <StyledNavigation>
       <StyledHamburger onClick={() => setIsOpen(!isOpen)} />
       <StyledMenu isOpen={isOpen}>
-      {navItems.map((item, i) => (
-        <StyledNavigationItem key={i}>
-          <StyledNavigationLink href="/">{item.item}</StyledNavigationLink>
-        </StyledNavigationItem>
-      ))}
+        {navItems.map((item, i) => (
+          <StyledNavigationItem key={i}>
+            <StyledNavigationLink href="/">{item.item}</StyledNavigationLink>
+          </StyledNavigationItem>
+        ))}
       </StyledMenu>
     </StyledNavigation>
-  )
-}
+  );
+};

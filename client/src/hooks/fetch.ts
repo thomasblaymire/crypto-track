@@ -1,22 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export interface FetchArguments {
   initialUrl: string;
   initialParams?: RequestInit;
   initialHeaders?: any;
   options?: RequestOptions;
+  revalidate: boolean;
+  interval?: number;
   skip?: boolean;
 }
 
-export interface FetchResult<T> {
-  data: Readonly<RequestResponse<T>> | null;
-  hasError: boolean;
+export interface FetchResult {
+  data: any;
+  isError: boolean;
   isLoading: boolean;
   errorMessage: string;
   updateHeaders: any;
   updateUrl: any;
   updateParams: any;
-  refetch: () => void;
+  revalidate: () => void;
 }
 
 export interface RequestResponse<T = string> {
@@ -45,58 +47,67 @@ interface RequestOptions {
 export const useFetch = <T>({
   initialUrl,
   initialParams = {},
+  revalidate,
+  interval,
   initialHeaders,
   skip = false,
-}: FetchArguments): FetchResult<T> => {
+}: FetchArguments): FetchResult => {
   const [url, updateUrl] = useState(initialUrl);
   const [params, updateParams] = useState(initialParams);
   const [headers, updateHeaders] = useState(initialHeaders);
   const [data, setData] = useState<Readonly<RequestResponse<T>> | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [hasError, setHasError] = useState(false);
+  const [isError, setisError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [refetchIndex, setRefetchIndex] = useState(0);
+  const [revalidateKey, setRevalidateKey] = useState('');
 
   const queryString = Object.keys(params)
     .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(params[key]))
     .join('&');
 
-  const refetch = () =>
-    setRefetchIndex(prevRefetchIndex => prevRefetchIndex + 1);
-
+  const apiRequest = useCallback(async () => {
+    if (skip) return;
+    setIsLoading(true);
+    try {
+      const response = await fetch(`${url}${queryString}`, headers);
+      const result = await response.json();
+      if (response.ok) {
+        setData(result);
+      } else {
+        setisError(true);
+        setErrorMessage(result);
+      }
+    } catch (err: any) {
+      setisError(true);
+      setErrorMessage(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [url, params]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (skip) return;
-      setIsLoading(true);
-      try {
-        const response = await fetch(`${url}${queryString}`, headers);
-        const result = await response.json();
-        if (response.ok) {
-          setData(result);
-        } else {
-          setHasError(true);
-          setErrorMessage(result);
-        }
-      } catch (err: any) {
-        setHasError(true);
-        setErrorMessage(err.message);
-      } finally {
-        setIsLoading(false);
+    const revalidateInterval = setInterval(() => {
+      if (revalidate) {
+        setRevalidateKey(Math.random().toString());
       }
-    };
-    fetchData();
-  }, [url, params, refetchIndex]);
+    }, (interval ? interval : 3) * 1000);
+    return () => clearInterval(revalidateInterval);
+  }, [interval, revalidate]);
+
+  useEffect(() => {
+    // on first load fetch data and when revalidateKey changes
+    apiRequest();
+  }, [fetch, revalidateKey]);
 
   return {
     data,
     isLoading,
-    hasError,
+    isError,
     errorMessage,
     updateUrl,
     updateHeaders,
     updateParams,
-    refetch,
+    revalidate: apiRequest,
   };
 };
 export default useFetch;

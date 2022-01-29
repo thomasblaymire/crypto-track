@@ -1,7 +1,6 @@
 import React from 'react';
 import LoadingIcon from '../assets/loading.svg';
 import styled, { css } from 'styled-components';
-import ReactDelayRender from 'react-delay-render';
 
 interface LoadingProps {
   position: string;
@@ -29,11 +28,8 @@ export const StyledIcon = styled(LoadingIcon)`
   height: 300px;
 `;
 
-export const Loading = ({ position }) => {
-  console.log('TOM Position', position);
-  return (
-    <StyledLoading position={position}>
-      <LoadingIcon />
-    </StyledLoading>
-  );
-};
+export const Loading = ({ position }): JSX.Element => (
+  <StyledLoading position={position}>
+    <LoadingIcon />
+  </StyledLoading>
+);

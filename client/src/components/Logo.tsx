@@ -4,17 +4,17 @@ import LogoImage from '../assets/logo.svg';
 import { Link } from 'react-router-dom';
 
 const StyledHeaderLogo = styled(LogoImage)`
-   height: 30px;
+  height: 30px;
 
-  @media(min-width: 480px) {
-    height: 35px
+  @media (min-width: 480px) {
+    height: 35px;
   }
 `;
 
-export const Logo = () => {
+export const Logo = (): JSX.Element => {
   return (
     <Link to="/">
-        <StyledHeaderLogo />
+      <StyledHeaderLogo />
     </Link>
   );
 };

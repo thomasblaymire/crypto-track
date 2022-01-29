@@ -16,17 +16,17 @@ const StyledHeaderWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 15px 0px;
+  padding: 10px 0px;
   width: 100%;
   justify-content: space-between;
-  @media(min-width: 480px) {
-     justify-content: initial;
+  @media (min-width: 480px) {
+    justify-content: initial;
   }
 `;
 
 const StyledActions = styled.div`
   display: none;
-  @media(min-width: 480px) {
+  @media (min-width: 480px) {
     display: flex;
     align-items: center;
   }
@@ -43,8 +43,8 @@ const StyledResponsiveMenu = styled.div`
   transition: right 0.2s ease 0s;
   height: calc(100% - 60px);
   overflow: auto;
-  background-color: #1a1a25;
-`
+  background: #13131c;
+`;
 
 const StyledResponseiveDiv = styled.div`
   padding: 0px 8px;
@@ -58,30 +58,29 @@ const StyledResponseiveDiv = styled.div`
   transition: all 0.2s ease 0s;
   border-bottom: 1px solid rgb(34, 37, 49);
   font-size: 1.5rem;
-  
+
   a {
     color: white;
     text-decoration: none;
   }
-`
+`;
 
 const StyledResponsiveHeader = styled.div`
-    display: flex;
-    justify-content: space-between;
-    height: 60px;
-    -webkit-box-align: center;
-    align-items: center;
-    background-color:red;
-    position: relative;
-    padding-right: 16px;
-    padding-left: 16px;
-    background: #161621;
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  -webkit-box-align: center;
+  align-items: center;
+  position: relative;
+  padding-right: 16px;
+  padding-left: 16px;
+  background: #13131c;
 `;
 
 const StyledResponsiveBody = styled.div`
-    padding: 8px 16px;
-    height: calc(100% - 60px);
-    overflow: auto;
+  padding: 8px 16px;
+  height: calc(100% - 60px);
+  overflow: auto;
 `;
 
 export const Header = ({ navItems, stats }: HeaderProps): JSX.Element => {
@@ -92,34 +91,28 @@ export const Header = ({ navItems, stats }: HeaderProps): JSX.Element => {
       <StyledHeaderWrapper>
         <Logo />
         <Navigation navItems={navItems} setIsOpen={setIsOpen} isOpen={isOpen} />
-          <StyledActions>
-            <AuthActions />
-          </StyledActions>
-          {isOpen &&
+        <StyledActions>
+          <AuthActions />
+        </StyledActions>
+        {isOpen && (
           <>
             <StyledResponsiveMenu>
               <StyledResponsiveHeader>
                 <Logo />
-                 <button onClick={() => setIsOpen(false)}>CLOSE</button>
-              </StyledResponsiveHeader>  
+                <button onClick={() => setIsOpen(false)}>CLOSE</button>
+              </StyledResponsiveHeader>
 
-            <StyledResponsiveBody>
-
-              {navItems.map((item, i) => (
-              <StyledResponseiveDiv key={i}>
-                <a href="/">{item.item}</a>
-              </StyledResponseiveDiv>
-            ))}
-            
-           
-
-            </StyledResponsiveBody>
+              <StyledResponsiveBody>
+                {navItems.map((item, i) => (
+                  <StyledResponseiveDiv key={i}>
+                    <a href="/">{item.item}</a>
+                  </StyledResponseiveDiv>
+                ))}
+              </StyledResponsiveBody>
             </StyledResponsiveMenu>
-            
-            </>
-          }
+          </>
+        )}
       </StyledHeaderWrapper>
     </Fragment>
-  )
-}
-
+  );
+};

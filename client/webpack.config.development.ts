@@ -35,12 +35,7 @@ const createWebpackConfig = async () => {
       new HtmlWebpackPlugin({
         template: 'public/index.html',
       }),
-      new webpack.EnvironmentPlugin([
-        'COINMARKETCAP_KEY',
-        'COINMARKETCAP_ALL_CURRENCIES',
-        'COINMARKETCAP_SINGLE_CURRENCY',
-        'AUTH_URL',
-      ]),
+      new webpack.EnvironmentPlugin(['COINGEKO_API', 'AUTH_URL']),
       new webpack.HotModuleReplacementPlugin(),
       new CopyPlugin({
         patterns: [{ from: 'src/assets', to: '' }],

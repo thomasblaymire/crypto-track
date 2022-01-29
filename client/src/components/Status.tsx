@@ -10,9 +10,8 @@ const StyledStatsBar = styled.div`
   font-size: 1.1rem;
   padding-top: 1rem;
 
-
-  @media(min-width: 480px) {
-     display: flex;
+  @media (min-width: 480px) {
+    display: flex;
   }
 `;
 

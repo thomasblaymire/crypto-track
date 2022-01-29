@@ -1,82 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import SearchIcon from '../assets/search.svg';
-import { useNavigate } from "react-router-dom"
-import { DELAY_AFTER_KEY_PRESS } from '../constants'
 
 export const StyledSearch = styled.div`
-  input {
-    background-color: rgb(23, 25, 36);
-    color: rgb(100, 107, 128);
-    border-radius: 8px;
-    padding: 8px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    cursor: pointer;
-    margin-top: 2rem;
-    width: 200px;
-    border: none;
-  }
-
-
-  div {
-    display: flex;
-    flex: 1 1 0%;
-    font-weight: 600;
-    font-size: 12px;
-    margin-left: 4px;
-    width: 100px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-`;
-
-const StyledSearchContainer = styled.div`
+  background: #13131c;
+  color: rgb(100, 107, 128);
+  border-radius: 8px;
+  padding: 8px;
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  cursor: pointer;
+  width: 200px;
+  border: none;
+  padding-left: 1rem;
+  line-height: 2rem;
+
+  span {
+    font-size: 1.2rem;
+    font-family: 'Poppins', sans-serif;
+    padding-left: 1rem;
+  }
 `;
 
-export const Search = ({updateSearchResults}) => {
-  const [query, setQuery] = useState("")
-  const navigate = useNavigate()
+const StyledSearchContainer = styled.div``;
 
-  useEffect(() => {
-    const params = new URLSearchParams()
-    if (query) {
-      params.append("search", query)
-    } else {
-      params.delete("search")
-    }
-    navigate({search: params.toString()})
-  }, [query, history])
-
-  const onChange = (e: any) => {
-    const query = (e && e.target.value) || '';
-    setQuery(query)
-    updateSearchResults(query, DELAY_AFTER_KEY_PRESS);
-  }
-
-  const onKeyPress = () => {}
-
-  const handleFocus = () => {}
-
-  return (
-    <StyledSearchContainer>
-      <StyledSearch >
-        <SearchIcon />
-          <input
-            placeholder="Search Cryptos"
-            type="search"
-            maxLength={50}
-            name="search-bar"
-            onKeyPress={onKeyPress}
-            onFocus={handleFocus}
-            onChange={onChange}
-            value={query}
-          />
-      </StyledSearch>
-    </StyledSearchContainer>
-  );
-};
+export const SearchToggle = ({ setToggleSearch, toggleSearch }) => (
+  <StyledSearchContainer>
+    <StyledSearch>
+      <SearchIcon />
+      <div onClick={() => setToggleSearch(!toggleSearch)}>
+        <span>Search Cryptocurrencys</span>
+      </div>
+    </StyledSearch>
+  </StyledSearchContainer>
+);

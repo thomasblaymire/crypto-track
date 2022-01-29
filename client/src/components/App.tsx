@@ -1,4 +1,4 @@
-import React, { Fragment, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { Loading } from './Loading';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Home } from './Home';
@@ -39,12 +39,12 @@ const theme = {
   colors: {
     primary: '#FFF',
     secondary: '#000',
-    tertiary: '#171925'
+    tertiary: '#171925',
   },
   borders: {
-    primary: 'rgb(34, 37, 49)'
-  }
-}
+    primary: 'rgb(34, 37, 49)',
+  },
+};
 
 const App = () => {
   return (

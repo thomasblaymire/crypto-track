@@ -1,62 +1,38 @@
 import styled from 'styled-components';
-
-interface TableDataProps {
-  alignment?: string;
-}
-
-interface TableHeaderProps {
-  alignment?: string;
-}
-
 interface VolumeProps {
   isPositive: boolean;
 }
 
-export const StyledCryptoTable = styled.table`
-  border-radius: 5px;
-  margin: auto;
-  width: 100%;
-  transform: translateZ(0px);
-  margin-bottom: 2rem;
-  border-spacing: 0px;
-  color: #fff;
-  font-size: 1.5rem;
-  padding: 4rem 0;
+export const StyledHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-color: #474d57;
+  background: #13131c;
+  flex: 1;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+  color: #eaecef;
+  height: 50px;
+  padding-right: 15px;
+  padding-left: 15px;
 `;
 
-export const StyledTr = styled.tr`
-  &:hover {
-    background: ${({theme}) => theme.colors.tertiary};
-    cursor: pointer;
-  }
-`;
-
-export const StyledTd = styled.td<TableDataProps>`
-  border-bottom: 1px solid ${({theme}) => theme.borders.primary};
-  font-weight: 500;
-  white-space: nowrap;
-  padding: 1rem 0;
-  text-align: ${({ alignment }) => (alignment === 'left' ? `left` : `right`)};
-`;
-
-export const StyledTh = styled.th<TableHeaderProps>`
-  border-bottom: 1px solid ${({theme}) => theme.borders.primary};
-  text-align: right;
-
-  :nth-child(3) {  
-    text-align: left;
-  }
-
-  p {
-    margin: 0.75rem 0;
-  }
+export const StyledHeaderItem = styled.div`
+  font-weight: bold;
 `;
 
 export const StyledCoin = styled.div`
-  box-sizing: border-box;
-  margin: 0px;
+  width: 200px;
+  flex: 200 1 0%;
   display: flex;
+  text-align: left;
+  justify-content: flex-start;
   align-items: center;
+  padding-left: 2.5rem;
 
   img {
     height: 24px;
@@ -66,27 +42,74 @@ export const StyledCoin = styled.div`
   }
 `;
 
-export const StyledIcon = styled.div`
-  display: flex;
-  justify-content: center;
-  padding: 0 1rem;
+export const StyledName = styled.div`
+  padding-right: 1rem;
+  padding-left: 0.5rem;
+  font-weight: 600;
+  font-size: 1.5rem;
+`;
 
-  svg {
-    width: 20px;
-    height: 20px;
+export const StyledPrice = styled.div<VolumeProps>`
+  width: 100px;
+  flex: 100;
+  display: flex;
+  transition: all 0.5s;
+  color: ${({ isPositive }) =>
+    isPositive ? `rgb(14, 203, 129);` : `#F6465D;`};
+`;
+
+export const StyledCryptoRow = styled.div`
+  box-sizing: border-box;
+  margin: 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid;
+  border-color: #474d57;
+  border-radius: 4px 4px 0px 0px;
+  flex: 1;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+  color: #eaecef;
+  height: 64px;
+  padding-right: 15px;
+  padding-left: 15px;
+
+  @media (min-width: 480px) {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+
+  &:hover {
+    background: #13131c;
+    cursor: pointer;
   }
 `;
 
-export const StyledRank = styled.div`
-  padding: 0 1rem;
-  display: flex;
+export const StyledGeneral = styled.div`
+  display: none;
+
+  @media (min-width: 480px) {
+    display: block;
+    width: 100px;
+    flex: 100;
+
+    &:not(:last-child) {
+      width: 130px;
+      flex: 130 1 0%;
+      direction: ltr;
+    }
+  }
 `;
 
-export const StyledName = styled.div`
-  padding-right: 1rem;
-  font-weight: 600;
+export const StyledWrapper = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1300px;
 `;
 
-export const StyledVolume = styled.div<VolumeProps>`
-  color: ${({ isPositive }) => (isPositive ? `green` : `red`)};
+export const StyledTicker = styled.div`
+  color: #848e9c;
 `;

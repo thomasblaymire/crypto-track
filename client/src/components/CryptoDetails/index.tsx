@@ -1,11 +1,9 @@
 import React from 'react';
 import { Layout } from '../Layout';
 import { Loading } from '../Loading';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useFetch } from '../../hooks/fetch';
 import styled from 'styled-components';
-
-interface CryptoDetailsProps {}
 
 const StyledCryptoSection = styled.section`
   padding-top: 4rem;
@@ -23,30 +21,32 @@ const StyledCryptoSection = styled.section`
   }
 `;
 
-const StyledCryptoName = styled.h2``;
+interface FetchCryptoCoinInterface {
+  data?: any;
+  isLoading?: boolean;
+  hasError?: boolean;
+  errorMessage?: string;
+}
 
-export const CryptoDetails = ({}: CryptoDetailsProps): JSX.Element => {
+export const CryptoDetails = (): JSX.Element => {
   const { crypto } = useParams();
-  const { state }: any = useLocation();
 
-  const { data, isLoading, isErrors, errorMessage }: any = useFetch({
-    initialUrl: `${process.env.COINMARKETCAP_SINGLE_CURRENCY}?slug=${crypto}&aux=logo,description`,
-    initialHeaders: {
-      headers: {
-        'X-CMC_PRO_API_KEY': process.env.COINMARKETCAP_KEY,
-      },
-    },
-  });
+  const { data, isLoading, hasError, errorMessage }: FetchCryptoCoinInterface =
+    useFetch({
+      initialUrl: `${process.env.COINGEKO_API}/search?query=${crypto}`,
+      revalidate: false,
+    });
 
+  console.log('TOM data', data);
 
   return (
     <Layout>
       {isLoading && <Loading position="center" />}
       {data && (
         <StyledCryptoSection>
-          <img src={data.data[state].logo} />
-          <h2>{data.data[state].name}</h2>
-          <p>{data.data[state].description}</p>
+          <img src={data.coins[0].large} />
+          <h2>{data.coins[0].name}</h2>
+          <p>{data.coins[0].market_cap_rank}</p>
         </StyledCryptoSection>
       )}
     </Layout>

@@ -13,9 +13,11 @@ const Container = styled.div`
   margin-left: auto;
   box-sizing: border-box;
   width: 100%;
-  padding-right: 16px;
-  padding-left: 16px;
-  
+
+  @media (min-width: 480px) {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
 
   @media (min-width: 768px) {
     width: 750px;
@@ -23,13 +25,10 @@ const Container = styled.div`
   @media (min-width: 992px) {
     width: 1300px;
   }
-  @media (min-width: 1200px) {
-    width: 1400px;
-  }
 `;
 
 const StyledHead = styled.header`
-  background: #161620;
+  background: #13131c;
 `;
 
 const navItems = [
@@ -85,17 +84,9 @@ export const Layout = ({ children }: LayoutProps) => {
           <Header navItems={navItems} stats={stats} />
         </Container>
       </StyledHead>
-
       <Wrapper>
         <Container>{children}</Container>
       </Wrapper>
     </Fragment>
   );
 };
-
-{
-  /* <input
-            placeholder="Search..."
-            // onChange={e => searchItems(e.target.value)}
-          /> */
-}

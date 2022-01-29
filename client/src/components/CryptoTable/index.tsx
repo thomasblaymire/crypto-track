@@ -1,78 +1,75 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import {
-  StyledCryptoTable,
-  StyledTr,
-  StyledTd,
-  StyledIcon,
   StyledCoin,
-  StyledRank,
-  StyledVolume,
+  StyledPrice,
   StyledName,
-  StyledTh,
+  StyledCryptoRow,
+  StyledHeader,
+  StyledHeaderItem,
+  StyledGeneral,
+  StyledWrapper,
+  StyledTicker,
 } from './styled';
 import { useNavigate } from 'react-router-dom';
-import Star from '../../assets/star.svg';
+import { CryptoData } from '../../types';
+import { cryptoHeadingColumns } from '../../data';
+import { currencyFormat } from '../../helpers/format';
 
 interface CryptoTableProps {
-  data: any;
-  headingColumns: any;
+  data: CryptoData[];
 }
 
-export const CryptoTable = ({ data, headingColumns }: CryptoTableProps): JSX.Element => {
+export const CryptoTable = ({ data }: CryptoTableProps): JSX.Element => {
   const navigate = useNavigate();
 
   return (
-    <Fragment>
-      <StyledCryptoTable>
-      <thead>
-      <tr>
-        {headingColumns.map((column, index) => (
-          <StyledTh key={index}>{column}</StyledTh>
-        ))}
-      </tr>
-      </thead>
-        <tbody>
-          {data.map((item, index) => {
-            const { id, name, rank, symbol, price, percent24h, marketCap, image} = item;
-            return (
-              <StyledTr
-                key={index}
-                onClick={() => navigate(`${name.toLowerCase()}`, { state: id })}
-              >
-                <StyledTd>
-                  <StyledIcon>
-                    <Star />
-                  </StyledIcon>
-                </StyledTd>
-                <StyledTd>
-                  <StyledRank>{rank}</StyledRank>
-                </StyledTd>
-                <StyledTd alignment="left">
-                  <StyledCoin>
-                    <img src={image} />
-                    <StyledName>
-                      <p>{name}</p>
-                    </StyledName>
-                    <div>
-                      <p>{symbol}</p>
-                    </div>
-                  </StyledCoin>
-                </StyledTd>
-                <StyledTd>${price}</StyledTd>
-                <StyledTd>
-                  <StyledVolume isPositive={Math.sign(percent24h) === 1}>
-                    {percent24h}%
-                  </StyledVolume>
-                </StyledTd>
-                <StyledTd>6.68%</StyledTd>
-                <StyledTd>${marketCap}</StyledTd>
-                <StyledTd>$29,118,389,263</StyledTd>
-                <StyledTd>$29,118,389,263</StyledTd>
-              </StyledTr>
-            );
-          })}
-        </tbody>
-      </StyledCryptoTable>
-    </Fragment>
+    <StyledWrapper>
+      <StyledHeader>
+        {cryptoHeadingColumns.map(column => {
+          return <StyledHeaderItem>{column}</StyledHeaderItem>;
+        })}
+      </StyledHeader>
+
+      {data.map((item, index) => {
+        const {
+          id,
+          name,
+          symbol,
+          current_price,
+          price_change_percentage_24h,
+          market_cap,
+          image,
+        } = item;
+
+        const isPositiveChange = Math.sign(price_change_percentage_24h) === 1;
+        const priceChangeFormatted = price_change_percentage_24h.toFixed(2);
+
+        return (
+          <StyledCryptoRow
+            key={index}
+            onClick={() => navigate(`${name.toLowerCase()}`, { state: id })}
+          >
+            <StyledCoin>
+              <img src={image} alt={name} />
+              <StyledName>
+                <p>{symbol.toUpperCase()}</p>
+              </StyledName>
+              <StyledTicker>
+                <p>{name}</p>
+              </StyledTicker>
+            </StyledCoin>
+            <StyledGeneral>{currencyFormat(current_price)}</StyledGeneral>
+            <StyledPrice isPositive={isPositiveChange}>
+              {priceChangeFormatted}%
+            </StyledPrice>
+            <StyledPrice isPositive={isPositiveChange}>
+              {priceChangeFormatted}
+            </StyledPrice>
+            <StyledGeneral>{currencyFormat(market_cap)}</StyledGeneral>
+            <StyledGeneral>{currencyFormat(market_cap)}</StyledGeneral>
+          </StyledCryptoRow>
+        );
+      })}
+    </StyledWrapper>
   );
 };
