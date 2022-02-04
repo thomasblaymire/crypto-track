@@ -18,6 +18,7 @@ export interface FetchResult {
   updateHeaders: any;
   updateUrl: any;
   updateParams: any;
+  isInitialLoad: number;
   revalidate: () => void;
 }
 
@@ -57,6 +58,7 @@ export const useFetch = <T>({
   const [headers, updateHeaders] = useState(initialHeaders);
   const [data, setData] = useState<Readonly<RequestResponse<T>> | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(0);
   const [isError, setisError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [revalidateKey, setRevalidateKey] = useState('');
@@ -71,6 +73,7 @@ export const useFetch = <T>({
     try {
       const response = await fetch(`${url}${queryString}`, headers);
       const result = await response.json();
+      setIsInitialLoad(isInitialLoad + 1);
       if (response.ok) {
         setData(result);
       } else {
@@ -95,7 +98,6 @@ export const useFetch = <T>({
   }, [interval, revalidate]);
 
   useEffect(() => {
-    // on first load fetch data and when revalidateKey changes
     apiRequest();
   }, [fetch, revalidateKey]);
 
@@ -107,6 +109,7 @@ export const useFetch = <T>({
     updateUrl,
     updateHeaders,
     updateParams,
+    isInitialLoad,
     revalidate: apiRequest,
   };
 };

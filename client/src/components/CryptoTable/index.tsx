@@ -5,6 +5,7 @@ import {
   StyledPriceBasic,
   StyledName,
   StyledCryptoRow,
+  StyledChevron,
   StyledHeader,
   StyledGeneral,
   StyledWrapper,
@@ -77,9 +78,11 @@ export const CryptoTable = ({ data }: CryptoTableProps): JSX.Element => {
             </StyledCoin>
             <StyledGeneral>{currencyFormat(current_price)}</StyledGeneral>
             <StyledPrice isPositive={isPositiveChange}>
+              <StyledChevron isPositive={isPositiveChange} />
               {priceChangeFormatted}%
             </StyledPrice>
             <StyledPrice isPositive={isPositiveChange}>
+              <StyledChevron isPositive={isPositiveChange} />
               {priceChangeFormatted}%
             </StyledPrice>
             <StyledGeneral>{currencyFormat(market_cap)}</StyledGeneral>

@@ -112,3 +112,16 @@ export const StyledWrapper = styled.div`
 export const StyledTicker = styled.div`
   color: #848e9c;
 `;
+
+export const StyledChevron = styled.div<VolumeProps>`
+  width: 0;
+  height: 0;
+  display: inline-block;
+  border: 6px solid transparent;
+  margin-right: 0.5rem;
+  border-bottom-color: ${({ isPositive }) =>
+    isPositive ? `rgb(14, 203, 129);` : `transparent`};
+
+  border-top-color: : ${({ isPositive }) =>
+    !isPositive ? `#F6465D;` : `transparent`};
+`;

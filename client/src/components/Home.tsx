@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Layout } from './Layout';
 import { CryptoTable } from './CryptoTable';
 import { Search } from './Search/index';
+import { Loading } from './Loading';
 import { SearchToggle } from './SearchToggle';
 import { useFetch } from '../hooks/fetch';
 import { useDebounce } from '../hooks/debounce';
@@ -28,11 +29,17 @@ interface FetchCryptoCoinsInterface {
   data?: CryptoData[];
   isLoading?: boolean;
   hasError?: boolean;
+  isInitialLoad: number;
   errorMessage?: string;
 }
 
 export const Home = (): JSX.Element => {
-  const { data, hasError, errorMessage }: FetchCryptoCoinsInterface = useFetch({
+  const {
+    data,
+    hasError,
+    errorMessage,
+    isInitialLoad,
+  }: FetchCryptoCoinsInterface = useFetch({
     initialUrl: `${process.env.COINGEKO_API}/${ALL_COIN_QUERY_STRING()}`,
     interval: 5,
     revalidate: true,
@@ -78,6 +85,7 @@ export const Home = (): JSX.Element => {
       </StyledRow>
 
       {data && <CryptoTable data={data} />}
+      {isInitialLoad === 0 && <Loading position="center" />}
     </Layout>
   );
 };
