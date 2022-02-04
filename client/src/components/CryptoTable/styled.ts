@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 interface VolumeProps {
-  isPositive: boolean;
+  isPositive?: boolean;
 }
 
 export const StyledHeader = styled.div`
@@ -10,18 +10,13 @@ export const StyledHeader = styled.div`
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
   border-color: #474d57;
-  background: #13131c;
+  background: ${props => props.theme.colors.primary};
   flex: 1;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 16px;
   font-weight: 400;
   color: #eaecef;
   height: 50px;
-  padding-right: 15px;
-  padding-left: 15px;
-`;
-
-export const StyledHeaderItem = styled.div`
   font-weight: bold;
 `;
 
@@ -58,6 +53,10 @@ export const StyledPrice = styled.div<VolumeProps>`
     isPositive ? `rgb(14, 203, 129);` : `#F6465D;`};
 `;
 
+export const StyledPriceBasic = styled(StyledPrice)`
+  color: #fff;
+`;
+
 export const StyledCryptoRow = styled.div`
   box-sizing: border-box;
   margin: 0;
@@ -83,7 +82,7 @@ export const StyledCryptoRow = styled.div`
   }
 
   &:hover {
-    background: #13131c;
+    background: ${props => props.theme.colors.primary};
     cursor: pointer;
   }
 `;

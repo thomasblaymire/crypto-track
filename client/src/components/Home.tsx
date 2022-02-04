@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Layout } from './Layout';
 import { CryptoTable } from './CryptoTable';
 import { Search } from './Search/index';
-import { SearchToggle } from './Search';
+import { SearchToggle } from './SearchToggle';
 import { useFetch } from '../hooks/fetch';
 import { useDebounce } from '../hooks/debounce';
 import { fetchCoinByQuery } from '../helpers/crypto';

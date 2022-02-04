@@ -4,12 +4,12 @@ import { Logo } from './Logo';
 import { Navigation } from './Navigation';
 import { StatsBar } from './Status';
 import { AuthActions } from './AuthActions';
+import { NavigationItem, Stats } from '../types';
+import { device } from '../helpers/device';
 
 interface HeaderProps {
-  navItems: any;
-  stats: any;
-  // navItems: NavigationItem[];
-  // stats: Stats[];
+  navItems: NavigationItem[];
+  stats: Stats[];
 }
 
 const StyledHeaderWrapper = styled.div`
@@ -19,14 +19,15 @@ const StyledHeaderWrapper = styled.div`
   padding: 10px 0px;
   width: 100%;
   justify-content: space-between;
-  @media (min-width: 480px) {
+
+  @media ${device.mobileL} {
     justify-content: initial;
   }
 `;
 
 const StyledActions = styled.div`
   display: none;
-  @media (min-width: 480px) {
+  @media ${device.mobileL} {
     display: flex;
     align-items: center;
   }
@@ -43,7 +44,7 @@ const StyledResponsiveMenu = styled.div`
   transition: right 0.2s ease 0s;
   height: calc(100% - 60px);
   overflow: auto;
-  background: #13131c;
+  background: ${props => props.theme.colors.primary};
 `;
 
 const StyledResponseiveDiv = styled.div`
@@ -74,7 +75,7 @@ const StyledResponsiveHeader = styled.div`
   position: relative;
   padding-right: 16px;
   padding-left: 16px;
-  background: #13131c;
+  background: ${props => props.theme.colors.primary};
 `;
 
 const StyledResponsiveBody = styled.div`

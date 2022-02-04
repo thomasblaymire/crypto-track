@@ -1,10 +1,10 @@
-const cryptoHeadingColumns = [
-  'Name',
-  'Price',
-  '24h%',
-  '48h%',
-  'Market Cap',
-  'Volume (24h)',
-];
+const cryptoHeadingColumns = [{
+  name: 'Name',
+  price: 'Price',
+  priceChange24: '24h%',
+  priceChange48: '48h%',
+  marketCap: 'Market Cap',
+  volume: 'Volume (24h)',
+}];
 
 export { cryptoHeadingColumns };

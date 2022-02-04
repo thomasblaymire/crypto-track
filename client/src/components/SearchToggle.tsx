@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import SearchIcon from '../assets/search.svg';
 
 export const StyledSearch = styled.div`
-  background: #13131c;
-  color: rgb(100, 107, 128);
+  background: ${props => props.theme.colors.primary};
+  color: ${props => props.theme.colors.quaternary};
   border-radius: 8px;
   padding: 8px;
   display: flex;
@@ -17,7 +17,6 @@ export const StyledSearch = styled.div`
 
   span {
     font-size: 1.2rem;
-    font-family: 'Poppins', sans-serif;
     padding-left: 1rem;
   }
 `;

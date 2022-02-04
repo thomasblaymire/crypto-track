@@ -7,7 +7,7 @@ const StyledLink = styled(Link)`
   color: #fff;
 
   &:hover {
-    background: #13131c;
+    background: ${props => props.theme.colors.primary};
   }
 `;
 
@@ -26,7 +26,7 @@ const StyledResults = styled.div`
   }
 
   span {
-    font-size: 1.5rem;
+    font-size: 14px;
   }
 `;
 

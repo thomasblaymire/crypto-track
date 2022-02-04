@@ -10,14 +10,14 @@ export const AuthActions = () => {
     <StyledAuthButtons>
       <button
         onClick={() => {
-          navigate('/login');
+          navigate('/signin');
         }}
       >
-        Log In
+        Sign In
       </button>
       <button
         onClick={() => {
-          navigate('/register');
+          navigate('/signup');
         }}
       >
         Sign Up

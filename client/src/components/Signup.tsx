@@ -1,20 +1,25 @@
 import React, { useState } from 'react';
 import { Layout } from './Layout';
-import { LoginForm } from './Forms/LoginForm';
+import { SignupForm } from './Forms/SignupForm';
+import styled from 'styled-components';
 
 interface LoginProps {}
 
-export const Login = ({}: LoginProps): JSX.Element => {
+const FormWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-top: 15rem;
+`;
+
+export const Signup = ({}: LoginProps): JSX.Element => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
 
-  const handleSignIn = async ({ email, password }) => {
+  const handleSignUp = async ({ email, password }) => {
     const headers = {
       Authorzation: 'Basic ' + btoa(`${email} : ${password}`),
     };
-
-    console.log('TOM handleSignIn parent');
 
     try {
       setLoading(true);
@@ -46,12 +51,14 @@ export const Login = ({}: LoginProps): JSX.Element => {
 
   return (
     <Layout>
-      <LoginForm
-        signIn={handleSignIn}
-        loading={loading}
-        error={error}
-        data={data}
-      />
+      <FormWrapper>
+        <SignupForm
+          signUp={handleSignUp}
+          loading={loading}
+          error={error}
+          data={data}
+        />
+      </FormWrapper>
     </Layout>
   );
 };

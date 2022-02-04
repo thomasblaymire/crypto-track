@@ -2,7 +2,9 @@ import React, { Suspense } from 'react';
 import { Loading } from './Loading';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Home } from './Home';
-import { Login } from './Login';
+import { Signup } from './Signup';
+import { Signin } from './Signin';
+import { Reset } from './Reset';
 import { Register } from './Register';
 import { NotFound } from './NotFound';
 import { CryptoDetails } from './CryptoDetails';
@@ -37,9 +39,10 @@ a {
 
 const theme = {
   colors: {
-    primary: '#FFF',
+    primary: '#13131c',
     secondary: '#000',
-    tertiary: '#171925',
+    tertiary: '#13131c',
+    quaternary: 'rgb(100, 107, 128)',
   },
   borders: {
     primary: 'rgb(34, 37, 49)',
@@ -56,7 +59,9 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path=":crypto" element={<CryptoDetails />} />
             <Route path="*" element={<NotFound />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/reset" element={<Reset />} />
             <Route path="/register" element={<Register />} />
           </Routes>
         </Router>

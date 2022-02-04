@@ -1,10 +1,10 @@
-type NavigationItem = {
-  id: string;
+export type NavigationItem = {
+  id: number;
   item: string;
   url: string;
 };
 
-type Stats = {
+export type Stats = {
   title: string;
   value: number;
 };

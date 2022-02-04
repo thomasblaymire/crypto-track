@@ -28,22 +28,22 @@ const Container = styled.div`
 `;
 
 const StyledHead = styled.header`
-  background: #13131c;
+  background: ${props => props.theme.colors.primary};
 `;
 
 const navItems = [
   {
-    id: '1',
+    id: 1,
     item: 'Cryptocurrencies',
     url: '/',
   },
   {
-    id: '2',
+    id: 2,
     item: 'Markets',
     url: '/markets',
   },
   {
-    id: '3',
+    id: 3,
     item: 'Influencers',
     url: '/influencers',
   },

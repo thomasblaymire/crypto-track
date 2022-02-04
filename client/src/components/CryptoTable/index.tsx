@@ -2,10 +2,10 @@ import React from 'react';
 import {
   StyledCoin,
   StyledPrice,
+  StyledPriceBasic,
   StyledName,
   StyledCryptoRow,
   StyledHeader,
-  StyledHeaderItem,
   StyledGeneral,
   StyledWrapper,
   StyledTicker,
@@ -26,7 +26,24 @@ export const CryptoTable = ({ data }: CryptoTableProps): JSX.Element => {
     <StyledWrapper>
       <StyledHeader>
         {cryptoHeadingColumns.map(column => {
-          return <StyledHeaderItem>{column}</StyledHeaderItem>;
+          const {
+            name,
+            price,
+            priceChange24,
+            priceChange48,
+            marketCap,
+            volume,
+          } = column;
+          return (
+            <>
+              <StyledCoin>{name}</StyledCoin>
+              <StyledGeneral>{price}</StyledGeneral>
+              <StyledPriceBasic>{priceChange24}</StyledPriceBasic>
+              <StyledPriceBasic>{priceChange48}</StyledPriceBasic>
+              <StyledGeneral>{marketCap}</StyledGeneral>
+              <StyledGeneral>{volume}</StyledGeneral>
+            </>
+          );
         })}
       </StyledHeader>
 
@@ -63,7 +80,7 @@ export const CryptoTable = ({ data }: CryptoTableProps): JSX.Element => {
               {priceChangeFormatted}%
             </StyledPrice>
             <StyledPrice isPositive={isPositiveChange}>
-              {priceChangeFormatted}
+              {priceChangeFormatted}%
             </StyledPrice>
             <StyledGeneral>{currencyFormat(market_cap)}</StyledGeneral>
             <StyledGeneral>{currencyFormat(market_cap)}</StyledGeneral>
