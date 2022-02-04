@@ -4,7 +4,7 @@ import { getSVGLoader } from './webpack-helpers';
 import CopyPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 
 require('dotenv').config();
 
@@ -59,6 +59,7 @@ const createWebpackConfig = async () => {
       historyApiFallback: true,
       open: true,
       hot: true,
+      allowedHosts: ['crypto.dev'],
     },
   };
 };
