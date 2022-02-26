@@ -1,35 +1,24 @@
 import React from 'react';
 import { Table } from './Table';
-import { useFetch } from '../hooks/fetch';
-import { ALL_COIN_QUERY_STRING } from '../constants';
 import { CryptoData } from '../types';
 import { Loading } from './Loading';
+import { useCryptos } from '../hooks/useCryptos';
 
-interface FetchCryptoCoinsInterface {
+interface CryptoDataRequest {
   data: CryptoData[];
   isLoading?: boolean;
-  hasError?: boolean;
-  isInitialLoad: number;
-  errorMessage?: string;
+  isError?: boolean;
+  error?: any;
 }
 
 export const CryptoTable = (): JSX.Element => {
-  const {
-    data,
-    hasError,
-    errorMessage,
-    isInitialLoad,
-  }: FetchCryptoCoinsInterface = useFetch({
-    initialUrl: `${process.env.COINGEKO_API}/${ALL_COIN_QUERY_STRING()}`,
-    interval: 5,
-    revalidate: true,
-  });
+  const { data, isLoading, isError, error }: CryptoDataRequest = useCryptos();
 
   return (
     <>
       {data && <Table data={data} />}
-      {isInitialLoad === 0 && <Loading position="center" />}
-      {hasError && <p>{errorMessage}</p>}
+      {isLoading && <Loading position="center" />}
+      {isError && <p>{error.message}</p>}
     </>
   );
 };

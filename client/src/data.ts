@@ -11,7 +11,6 @@ const currencies = [
   ['aud', 'AUD'],
   ['gbp', 'GBP'],
   ['usd', 'USD'],
-  ['yen', 'YEN'],
 ];
 
 export { cryptoHeadingColumns, currencies };

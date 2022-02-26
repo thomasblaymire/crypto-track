@@ -10,6 +10,8 @@ import { Influencers } from './Influencers';
 import { NotFound } from './NotFound';
 import { CryptoDetails } from './CryptoDetails';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { QueryClientProvider, QueryClient } from 'react-query';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -38,6 +40,9 @@ a {
 }
 `;
 
+// Create a client
+const queryClient = new QueryClient();
+
 const theme = {
   colors: {
     primary: '#13131c',
@@ -52,23 +57,26 @@ const theme = {
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <Suspense fallback={<Loading position="center" />}>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path=":crypto" element={<CryptoDetails />} />
-            <Route path="*" element={<NotFound />} />
-            <Route path="/influencers" element={<Influencers />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/reset" element={<Reset />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
-        </Router>
-      </Suspense>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Suspense fallback={<Loading position="center" />}>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path=":crypto" element={<CryptoDetails />} />
+              <Route path="*" element={<NotFound />} />
+              <Route path="/influencers" element={<Influencers />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/signin" element={<Signin />} />
+              <Route path="/reset" element={<Reset />} />
+              <Route path="/register" element={<Register />} />
+            </Routes>
+          </Router>
+        </Suspense>
+        <ReactQueryDevtools />
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 };
 

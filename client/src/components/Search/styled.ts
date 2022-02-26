@@ -54,17 +54,6 @@ export const StyledInputWrapper = styled.div`
 
 export const StyledSearchContainer = styled.div``;
 
-export const StyledResultsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 0px 10px 10px;
-  color: rgb(133, 140, 162);
-
-  &:focus {
-    background: red;
-  }
-`;
-
 export const StyledClose = styled.div`
   cursor: pointer;
   width: 16px;

@@ -5,7 +5,7 @@ import { CryptoHeader } from './CryptoHeader';
 import { CryptoRow } from './CryptoRow';
 import { CryptoData } from '../../types';
 import { cryptoHeadingColumns } from '../../data';
-import { useFetch } from '../../hooks/fetch';
+import { useFetch } from '../../hooks/useFetch';
 import { ALL_COIN_QUERY_STRING } from '../../constants';
 
 interface FetchCryptoCoinsInterface {

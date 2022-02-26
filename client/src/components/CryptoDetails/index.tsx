@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout } from '../Layout';
 import { Loading } from '../Loading';
 import { useParams } from 'react-router-dom';
-import { useFetch } from '../../hooks/fetch';
+import { useFetch } from '../../hooks/useFetch';
 import styled from 'styled-components';
 
 const StyledCryptoSection = styled.section`

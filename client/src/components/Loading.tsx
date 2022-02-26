@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFetch } from '../hooks/fetch';
+import { useFetch } from '../hooks/useFetch';
 import SvgSmiley from '../assets/loading.svg';
 import styled, { css } from 'styled-components';
 
@@ -45,11 +45,11 @@ export const Loading = ({
     >
       <g
         transform="translate(1 1)"
-        stroke-width="2"
+        strokeWidth="2"
         fill="none"
-        fill-rule="evenodd"
+        fillRule="evenodd"
       >
-        <circle stroke-opacity=".5" cx="18" cy="18" r="18" />
+        <circle strokeOpacity=".5" cx="18" cy="18" r="18" />
         <path d="M36 18c0-9.94-8.06-18-18-18">
           <animateTransform
             attributeName="transform"

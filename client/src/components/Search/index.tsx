@@ -1,35 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyledCryptoWrapper,
   StyledSearch,
   StyledInputWrapper,
   StyledSearchContainer,
-  StyledResultsWrapper,
   StyledClose,
 } from './styled';
 import { Results } from '../Results';
-import { Coins } from '../../types';
+import { useDebounce } from '../../hooks/useDebounce';
+import { QUERY_DEBOUNCE_DURATION_MILLISECONDS } from '../../constants';
 import SearchIcon from '../../assets/search.svg';
 import CloseIcon from '../../assets/close.svg';
 
-interface CryptoResultData {
-  results: Coins[];
-  setSearchQuery: any;
-  searchQuery: string;
+interface SearchInterface {
   toggleSearch: boolean;
   setToggleSearch: (boolean) => void;
 }
 
 export const Search = ({
-  results,
-  setSearchQuery,
-  searchQuery,
   toggleSearch,
   setToggleSearch,
-}: CryptoResultData): JSX.Element => {
+}: SearchInterface): JSX.Element => {
+  const [searchQuery, setSearchQuery] = useState('');
+
   const onChange = event => {
-    setSearchQuery(event.target.value);
+    const { value } = event.target as HTMLFormElement;
+    setSearchQuery(value);
   };
+
+  const debouncedSearchTerm = useDebounce(
+    searchQuery,
+    QUERY_DEBOUNCE_DURATION_MILLISECONDS
+  );
 
   return (
     <StyledCryptoWrapper hideToggle={toggleSearch}>
@@ -54,14 +56,7 @@ export const Search = ({
         </StyledSearch>
       </StyledSearchContainer>
 
-      {results &&
-        results.map(coin => {
-          return (
-            <StyledResultsWrapper tabIndex={0}>
-              <Results image={coin.large} name={coin.name} />
-            </StyledResultsWrapper>
-          );
-        })}
+      <Results searchQuery={debouncedSearchTerm} />
     </StyledCryptoWrapper>
   );
 };

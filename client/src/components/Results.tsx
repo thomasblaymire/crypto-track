@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useSearch } from '../hooks/useSearch';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -30,11 +31,33 @@ const StyledResults = styled.div`
   }
 `;
 
-export const Results = ({ name, image }): JSX.Element => (
-  <StyledLink to="/">
-    <StyledResults>
-      <img src={image} />
-      <span>{name}</span>
-    </StyledResults>
-  </StyledLink>
-);
+export const StyledResultsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0px 10px 10px;
+  color: rgb(133, 140, 162);
+
+  &:focus {
+    background: red;
+  }
+`;
+
+export const Results = ({ searchQuery }): JSX.Element => {
+  const { data } = useSearch(searchQuery);
+
+  return (
+    <StyledResultsWrapper tabIndex={0}>
+      {data &&
+        data.map(coin => {
+          return (
+            <StyledLink to="/">
+              <StyledResults>
+                <img src={coin.thumb} />
+                <span>{coin.name}</span>
+              </StyledResults>
+            </StyledLink>
+          );
+        })}
+    </StyledResultsWrapper>
+  );
+};
