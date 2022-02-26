@@ -68,3 +68,7 @@ export const StyledFormActions = styled.div`
     color: #1a1a25;
   }
 `;
+
+export const StyledFormError = styled.div`
+  margin: 2rem 2rem 0rem 2rem;
+`;

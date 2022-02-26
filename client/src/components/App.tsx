@@ -6,6 +6,7 @@ import { Signup } from './Signup';
 import { Signin } from './Signin';
 import { Reset } from './Reset';
 import { Register } from './Register';
+import { Influencers } from './Influencers';
 import { NotFound } from './NotFound';
 import { CryptoDetails } from './CryptoDetails';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
@@ -59,6 +60,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path=":crypto" element={<CryptoDetails />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/influencers" element={<Influencers />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/reset" element={<Reset />} />

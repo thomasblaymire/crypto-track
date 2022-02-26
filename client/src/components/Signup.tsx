@@ -14,36 +14,28 @@ const FormWrapper = styled.div`
 export const Signup = ({}: LoginProps): JSX.Element => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(null);
-  const [error, setError] = useState(null);
+  const [errors, setErrors] = useState(null);
 
   const handleSignUp = async ({ email, password }) => {
-    const headers = {
-      Authorzation: 'Basic ' + btoa(`${email} : ${password}`),
-    };
-
     try {
       setLoading(true);
-      console.log('TOM IN TRY', headers);
-
-      const response = await fetch(`${process.env.AUTH_URL}`, {
-        method: 'GET',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      console.log('TOM email passworffl', {
+        email,
+        password,
       });
 
-      console.log('TOM result', response);
+      const response = await fetch(`https://crypto.dev/api/users/signup`, {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+      });
+
       const result = await response.json();
 
-      console.log('TOM result', result);
-      if (response.ok) {
-        setData(result);
+      if (result.errors) {
+        setErrors(result.errors);
       } else {
-        setError(result);
+        setData(result);
       }
-    } catch (err: any) {
-      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -55,7 +47,7 @@ export const Signup = ({}: LoginProps): JSX.Element => {
         <SignupForm
           signUp={handleSignUp}
           loading={loading}
-          error={error}
+          errors={errors}
           data={data}
         />
       </FormWrapper>

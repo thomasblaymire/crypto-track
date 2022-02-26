@@ -1,11 +1,13 @@
 import React, { Fragment, useState } from 'react';
 import styled from 'styled-components';
 import { Logo } from './Logo';
+import { Link } from 'react-router-dom';
 import { Navigation } from './Navigation';
 import { StatsBar } from './Status';
 import { AuthActions } from './AuthActions';
 import { NavigationItem, Stats } from '../types';
 import { device } from '../helpers/device';
+import { CurrencySelect } from './CurrencySelect';
 
 interface HeaderProps {
   navItems: NavigationItem[];
@@ -16,7 +18,7 @@ const StyledHeaderWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 10px 0px;
+  padding: 15px 0px;
   width: 100%;
   justify-content: space-between;
 
@@ -50,9 +52,7 @@ const StyledResponsiveMenu = styled.div`
 const StyledResponseiveDiv = styled.div`
   padding: 0px 8px;
   display: flex;
-  -webkit-box-align: center;
   align-items: center;
-  -webkit-box-pack: justify;
   justify-content: space-between;
   height: 48px;
   color: rgb(255, 255, 255);
@@ -84,11 +84,21 @@ const StyledResponsiveBody = styled.div`
   overflow: auto;
 `;
 
+const StyledTopBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding-top: 1rem;
+`;
+
 export const Header = ({ navItems, stats }: HeaderProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Fragment>
-      {stats && <StatsBar stats={stats} />}
+      <StyledTopBar>
+        {stats && <StatsBar stats={stats} />}
+        <CurrencySelect />
+      </StyledTopBar>
+
       <StyledHeaderWrapper>
         <Logo />
         <Navigation navItems={navItems} setIsOpen={setIsOpen} isOpen={isOpen} />
@@ -106,7 +116,7 @@ export const Header = ({ navItems, stats }: HeaderProps): JSX.Element => {
               <StyledResponsiveBody>
                 {navItems.map((item, i) => (
                   <StyledResponseiveDiv key={i}>
-                    <a href="/">{item.item}</a>
+                    <Link to={item.url}>{item.item}</Link>
                   </StyledResponseiveDiv>
                 ))}
               </StyledResponsiveBody>

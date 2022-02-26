@@ -8,27 +8,27 @@ import {
   StyledClose,
 } from './styled';
 import { Results } from '../Results';
+import { Coins } from '../../types';
 import SearchIcon from '../../assets/search.svg';
 import CloseIcon from '../../assets/close.svg';
 
 interface CryptoResultData {
-  data: any;
-  setSearchQuery: (value: HTMLElement | string) => void;
+  results: Coins[];
+  setSearchQuery: any;
   searchQuery: string;
-  toggleSearch: void;
-  setToggleSearch: void;
+  toggleSearch: boolean;
+  setToggleSearch: (boolean) => void;
 }
 
 export const Search = ({
-  data,
+  results,
   setSearchQuery,
   searchQuery,
   toggleSearch,
   setToggleSearch,
 }: CryptoResultData): JSX.Element => {
   const onChange = event => {
-    const value = (event && (event.target as HTMLElement)) || '';
-    setSearchQuery(value);
+    setSearchQuery(event.target.value);
   };
 
   return (
@@ -39,25 +39,25 @@ export const Search = ({
           <StyledInputWrapper>
             <input
               placeholder="Search Cryptocurrencies"
-              type="search"
+              type="text"
               maxLength={50}
-              name="search-bar"
+              name="search"
               autoComplete="off"
               autoFocus
               onChange={onChange}
               value={searchQuery}
             />
-            <StyledClose onClick={() => lsetToggleSearch(!toggleSearch)}>
+            <StyledClose onClick={() => setToggleSearch(!toggleSearch)}>
               <CloseIcon />
             </StyledClose>
           </StyledInputWrapper>
         </StyledSearch>
       </StyledSearchContainer>
 
-      {data &&
-        data.map(coin => {
+      {results &&
+        results.map(coin => {
           return (
-            <StyledResultsWrapper>
+            <StyledResultsWrapper tabIndex={0}>
               <Results image={coin.large} name={coin.name} />
             </StyledResultsWrapper>
           );

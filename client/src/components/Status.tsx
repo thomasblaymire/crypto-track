@@ -8,7 +8,6 @@ interface StatsProps {
 const StyledStatsBar = styled.div`
   display: none;
   font-size: 1.1rem;
-  padding-top: 1rem;
 
   @media (min-width: 480px) {
     display: flex;

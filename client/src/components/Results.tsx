@@ -31,7 +31,7 @@ const StyledResults = styled.div`
 `;
 
 export const Results = ({ name, image }): JSX.Element => (
-  <StyledLink to="/" tabIndex={0}>
+  <StyledLink to="/">
     <StyledResults>
       <img src={image} />
       <span>{name}</span>

@@ -37,3 +37,12 @@ export interface CryptoData {
   total_supply: number;
   total_volume: number;
 }
+
+export interface Coins {
+  id: string;
+  large: string;
+  market_cap_rank: number;
+  name: string;
+  symbol: string;
+  thumb: string;
+}

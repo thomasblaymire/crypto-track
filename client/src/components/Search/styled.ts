@@ -59,6 +59,10 @@ export const StyledResultsWrapper = styled.div`
   flex-direction: column;
   padding: 0px 10px 10px;
   color: rgb(133, 140, 162);
+
+  &:focus {
+    background: red;
+  }
 `;
 
 export const StyledClose = styled.div`
@@ -73,4 +77,8 @@ export const StyledClose = styled.div`
   background-color: rgb(50, 53, 70);
   color: rgb(23, 25, 36);
   border-radius: 8px;
+
+  svg {
+    width: 15px;
+  }
 `;

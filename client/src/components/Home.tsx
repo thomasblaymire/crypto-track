@@ -3,16 +3,10 @@ import styled from 'styled-components';
 import { Layout } from './Layout';
 import { CryptoTable } from './CryptoTable';
 import { Search } from './Search/index';
-import { Loading } from './Loading';
 import { SearchToggle } from './SearchToggle';
-import { useFetch } from '../hooks/fetch';
 import { useDebounce } from '../hooks/debounce';
 import { fetchCoinByQuery } from '../helpers/crypto';
-import { CryptoData } from '../types';
-import {
-  QUERY_DEBOUNCE_DURATION_MILLISECONDS,
-  ALL_COIN_QUERY_STRING,
-} from '../constants';
+import { QUERY_DEBOUNCE_DURATION_MILLISECONDS } from '../constants';
 
 const StyledRow = styled.div`
   display: flex;
@@ -25,27 +19,8 @@ const StyledRow = styled.div`
   max-width: 1300px;
 `;
 
-interface FetchCryptoCoinsInterface {
-  data?: CryptoData[];
-  isLoading?: boolean;
-  hasError?: boolean;
-  isInitialLoad: number;
-  errorMessage?: string;
-}
-
 export const Home = (): JSX.Element => {
-  const {
-    data,
-    hasError,
-    errorMessage,
-    isInitialLoad,
-  }: FetchCryptoCoinsInterface = useFetch({
-    initialUrl: `${process.env.COINGEKO_API}/${ALL_COIN_QUERY_STRING()}`,
-    interval: 5,
-    revalidate: true,
-  });
-
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
   const [toggleSearch, setToggleSearch] = useState(false);
 
@@ -66,16 +41,15 @@ export const Home = (): JSX.Element => {
 
   return (
     <Layout>
-      {hasError && <p>{errorMessage}</p>}
-
       <StyledRow>
         <SearchToggle
           setToggleSearch={setToggleSearch}
           toggleSearch={toggleSearch}
         />
+
         {toggleSearch && (
           <Search
-            data={searchResults}
+            results={searchResults}
             setSearchQuery={setSearchQuery}
             searchQuery={searchQuery}
             setToggleSearch={setToggleSearch}
@@ -84,8 +58,7 @@ export const Home = (): JSX.Element => {
         )}
       </StyledRow>
 
-      {data && <CryptoTable data={data} />}
-      {isInitialLoad === 0 && <Loading position="center" />}
+      <CryptoTable />
     </Layout>
   );
 };
