@@ -16,11 +16,3 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: tblaymire/client
-      context: client
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: 'src/**/*.ts'
-            dest: .
