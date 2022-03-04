@@ -8,6 +8,7 @@ export type ButtonProps = {
   color?: 'primary' | 'secondary';
   disabled?: boolean;
   loading?: boolean;
+  className?: string;
 };
 
 const StyledButton = styled.button<ButtonProps>`
@@ -61,9 +62,15 @@ export const Button = ({
   color = 'primary',
   disabled,
   loading,
+  className,
 }: ButtonProps) => {
   return (
-    <StyledButton onClick={onClick} color={color} disabled={disabled}>
+    <StyledButton
+      onClick={onClick}
+      color={color}
+      disabled={disabled}
+      className={className}
+    >
       {children}
       {loading && (
         <StyledButtonLoading>

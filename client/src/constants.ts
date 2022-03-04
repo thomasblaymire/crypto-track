@@ -2,7 +2,7 @@ const DELAY_AFTER_KEY_PRESS = 500;
 const QUERY_DEBOUNCE_DURATION_MILLISECONDS = 500;
 
 // Currency will eventually be stored on userData with backend, temporarily lets use localStorage.
-const ALL_COIN_QUERY_STRING = (currency?: string) => {
+const ALL_COIN_QUERY_STRING = (currency?: string, page?: number) => {
   const defaultCurrency = currency || 'gbp';
   const userCurrency = window.localStorage.getItem('currency');
 
@@ -10,7 +10,7 @@ const ALL_COIN_QUERY_STRING = (currency?: string) => {
     currency = userCurrency;
   }
 
-  return `coins/markets?vs_currency=${defaultCurrency}&order=market_cap_desc&per_page=100&page=1&sparkline=false`;
+  return `coins/markets?vs_currency=${defaultCurrency}&order=market_cap_desc&per_page=100&page=${page}&sparkline=false`;
 };
 
 export {
