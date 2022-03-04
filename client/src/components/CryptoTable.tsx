@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import { Table } from './Table';
 import { ALL_COIN_QUERY_STRING } from '../constants';
+import { Table } from './Table';
 import { Loading } from './Loading';
 import { Pagination } from './Pagination';
 import { CryptoData } from '../types';
@@ -19,26 +19,22 @@ interface CryptoDataRequest {
 export const CryptoTable = (): JSX.Element => {
   const [pageNumber, setPageNumber] = useState(1);
 
-  const { data, isLoading, isFetching, isError, error }: CryptoDataRequest =
-    useQuery(
-      ['cryptos', pageNumber],
-      async () => {
-        const response = await fetch(
-          `${process.env.COINGEKO_API}/${ALL_COIN_QUERY_STRING(
-            null,
-            pageNumber
-          )}`
-        );
+  const { data, isLoading, isError, error }: CryptoDataRequest = useQuery(
+    ['cryptos', pageNumber],
+    async () => {
+      const response = await fetch(
+        `${process.env.COINGEKO_API}/${ALL_COIN_QUERY_STRING(null, pageNumber)}`
+      );
 
-        const data = await response.json();
-        return data;
-      },
-      {
-        keepPreviousData: true,
-        retry: 5,
-        refetchInterval: 6000,
-      }
-    );
+      const data = await response.json();
+      return data;
+    },
+    {
+      keepPreviousData: true,
+      retry: 5,
+      refetchInterval: 6000,
+    }
+  );
 
   const handlePaginate = (pageNumber: number): void => {
     setPageNumber(pageNumber);
@@ -53,7 +49,7 @@ export const CryptoTable = (): JSX.Element => {
           <Pagination handlePaginate={handlePaginate} />
         </>
       )}
-      {(isLoading || isFetching) && <Loading position="center" />}
+      {isLoading && <Loading position="center" />}
       {isError && <p>{error.message}</p>}
     </>
   );

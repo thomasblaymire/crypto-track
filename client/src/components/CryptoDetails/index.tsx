@@ -1,17 +1,20 @@
 import React from 'react';
+import parse from 'html-react-parser';
+import styled from 'styled-components';
 import { Layout } from '../Layout';
 import { Loading } from '../Loading';
+import { useQuery } from 'react-query';
+import { SINGLE_COIN_QUERY_STRING } from '../../constants';
 import { useParams } from 'react-router-dom';
-import { useFetch } from '../../hooks/useFetch';
-import styled from 'styled-components';
+import { SingleCryptoCoin } from '../../types';
+import { LineGraph } from '../LineGraph';
 
 const StyledCryptoSection = styled.section`
-  padding-top: 4rem;
+  padding: 7rem 0;
 
   h2 {
     color: white;
     font-size: 3rem;
-    margin-bottom: 1rem;
   }
 
   p {
@@ -24,7 +27,6 @@ const StyledCryptoSection = styled.section`
 const StyledCard = styled.div`
   width: 100%;
   background: #13131d;
-
   padding: 3rem;
   font-size: 2rem;
 
@@ -45,15 +47,39 @@ const StyledCardRow = styled.div`
   box-shadow: rgb(0 0 0 / 8%) 0px 0px 15px, rgb(0 0 0 / 5%) 0px 0px 4px;
   display: flex;
   width: 100%;
+  margin-bottom: 10rem;
 `;
 
 const StyledCrypto = styled.div`
   display: flex;
-  margin-bottom: 10rem;
+  padding-bottom: 5rem;
+  align-items: center;
 
   img {
-    width: 10%;
+    width: 100px;
+    height: 100px;
     margin-right: 5rem;
+  }
+`;
+
+const StyledLeftSection = styled.aside`
+  max-width: 930px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledCryptoInformation = styled.div`
+  font-size: 1.5rem;
+  line-height: 35px;
+  a {
+    text-decoration: none;
+    color: blue;
+    color: #fff;
+    text-decoration: none;
+    &:hover {
+      cursor: default;
+    }
   }
 `;
 
@@ -61,23 +87,45 @@ const StyledSection = styled.section``;
 
 const StyledCryptoGraph = styled.div``;
 
-interface FetchCryptoCoinInterface {
-  data?: any;
+interface FetchSingleCoinInterface {
+  data?: SingleCryptoCoin;
   isLoading?: boolean;
-  hasError?: boolean;
-  errorMessage?: string;
+  isError?: boolean;
+  error?: string;
+  isFetching: boolean;
 }
+
+const StyledLineGraph = styled(LineGraph)`
+  margin-bottom: 7rem;
+`;
 
 export const CryptoDetails = (): JSX.Element => {
   const { crypto } = useParams();
 
-  const { data, isLoading, hasError, errorMessage }: FetchCryptoCoinInterface =
-    useFetch({
-      initialUrl: `${process.env.COINGEKO_API}/search?query=${crypto}`,
-      revalidate: false,
-    });
+  const {
+    data,
+    isLoading,
+    isFetching,
+    isError,
+    error,
+  }: FetchSingleCoinInterface = useQuery(
+    ['crypto', crypto],
+    async () => {
+      const response = await fetch(
+        `${process.env.COINGEKO_API}/${SINGLE_COIN_QUERY_STRING(crypto)}`
+      );
 
-  console.log('TOM data', data);
+      const data = await response.json();
+      return data;
+    },
+    {
+      retry: 5,
+    }
+  );
+
+  ('//api.coingecko.com/api/v3/coins/bitcoin?localization=false&tickers=false&market_data=false&developer_data=false&sparkline=false');
+
+  https: console.log('TOM data', data);
 
   return (
     <Layout>
@@ -85,9 +133,8 @@ export const CryptoDetails = (): JSX.Element => {
       {data && (
         <StyledCryptoSection>
           <StyledCrypto>
-            <img src={data.coins[0].large} />
-            <h2>{data.coins[0].name}</h2>
-            <p>{data.coins[0].market_cap_rank}</p>
+            <img src={data.image.large} />
+            <h2>{data.name}</h2>
           </StyledCrypto>
 
           <StyledCardRow>
@@ -133,9 +180,21 @@ export const CryptoDetails = (): JSX.Element => {
             </StyledCard>
           </StyledCardRow>
 
-          <StyledSection>
-            <StyledCryptoGraph>GRAPH HERE PLS</StyledCryptoGraph>
-          </StyledSection>
+          <StyledLeftSection>
+            <StyledSection>
+              {/* <StyledCryptoGraph>
+            
+            </StyledCryptoGraph> */}
+              <StyledLineGraph />
+            </StyledSection>
+
+            <StyledSection>
+              <StyledCryptoInformation>
+                {parse(data.description.en)}
+              </StyledCryptoInformation>
+              {/* {data.description.en} */}
+            </StyledSection>
+          </StyledLeftSection>
         </StyledCryptoSection>
       )}
     </Layout>

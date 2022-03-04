@@ -11,8 +11,16 @@ import {
 import { currencyFormat } from '../../helpers/format';
 import { Coin } from './Coin';
 import { PriceChange } from './PriceChange';
+import { useNavigate } from 'react-router-dom';
+import { CryptoData } from '../../types';
 
-export const Table = ({ data }): JSX.Element => {
+interface TableProps {
+  data: CryptoData[];
+}
+
+export const Table = ({ data }: TableProps): JSX.Element => {
+  const navigate = useNavigate();
+
   const columns = useMemo(
     () => [
       {
@@ -96,7 +104,14 @@ export const Table = ({ data }): JSX.Element => {
             <StyledTableRowBody {...row.getRowProps()}>
               {row.cells.map(cell => {
                 return (
-                  <StyledTableD {...cell.getCellProps()}>
+                  <StyledTableD
+                    {...cell.getCellProps()}
+                    onClick={() => {
+                      return navigate(
+                        `/currencies/${cell.row.values.name.toLowerCase()}`
+                      );
+                    }}
+                  >
                     {cell.render('Cell')}
                   </StyledTableD>
                 );

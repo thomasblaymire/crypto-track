@@ -64,13 +64,14 @@ const App = () => {
           <Router>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path=":crypto" element={<CryptoDetails />} />
-              <Route path="*" element={<NotFound />} />
+              <Route path="/currencies" element={<Home />} />
+              <Route path="/currencies/:crypto" element={<CryptoDetails />} />
               <Route path="/influencers" element={<Influencers />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/signin" element={<Signin />} />
               <Route path="/reset" element={<Reset />} />
               <Route path="/register" element={<Register />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Router>
         </Suspense>
