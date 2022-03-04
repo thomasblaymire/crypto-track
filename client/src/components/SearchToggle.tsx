@@ -23,7 +23,10 @@ export const StyledSearch = styled.div`
 
 const StyledSearchContainer = styled.div``;
 
-export const SearchToggle = ({ setToggleSearch, toggleSearch }) => (
+export const SearchToggle = ({
+  setToggleSearch,
+  toggleSearch,
+}): JSX.Element => (
   <StyledSearchContainer>
     <StyledSearch>
       <SearchIcon />

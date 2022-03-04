@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import { ALL_COIN_QUERY_STRING } from '../constants';
+import { ALL_COIN_QUERY_STRING } from '../helpers/api';
 import { Table } from './Table';
 import { Loading } from './Loading';
 import { Pagination } from './Pagination';

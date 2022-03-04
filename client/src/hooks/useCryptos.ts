@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { ALL_COIN_QUERY_STRING } from '../constants';
+import { ALL_COIN_QUERY_STRING } from '../helpers/api';
 
 // A simple data fetching hook used to fetch all cryptos based on a given users currency.
 export const useCryptos = (currency?: string) => {

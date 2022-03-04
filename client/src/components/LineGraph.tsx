@@ -53,7 +53,11 @@ const data = [
   },
 ];
 
-export const LineGraph = ({ className }) => {
+interface LineGraphInterface {
+  className?: string;
+}
+
+export const LineGraph = ({ className }: LineGraphInterface): JSX.Element => {
   return (
     <LineChart
       className={className}

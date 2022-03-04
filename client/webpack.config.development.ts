@@ -28,6 +28,10 @@ const createWebpackConfig = async () => {
             },
           },
         },
+        {
+          test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
+          type: 'asset/resource',
+        },
         getSVGLoader(),
       ],
     },

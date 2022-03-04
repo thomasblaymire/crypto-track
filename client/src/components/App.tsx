@@ -26,18 +26,18 @@ const GlobalStyle = createGlobalStyle`
     height: 100vh;
   }
 
-body {
-  padding: 0;
-  margin: 0;
-  line-height: 2;
-  font-family: 'Poppins', sans-serif;
-  color: #FFF;
-  height: inherit;
-}
+  body {
+    padding: 0;
+    margin: 0;
+    line-height: 2;
+    font-family: 'Poppins', sans-serif;
+    color: #FFF;
+    height: inherit;
+  }
 
-a {
-  line-height: 0;
-}
+  a {
+    line-height: 0;
+  }
 `;
 
 // Create a client
@@ -55,30 +55,28 @@ const theme = {
   },
 };
 
-const App = () => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <Suspense fallback={<Loading position="center" />}>
-          <Router>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/currencies" element={<Home />} />
-              <Route path="/currencies/:crypto" element={<CryptoDetails />} />
-              <Route path="/influencers" element={<Influencers />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/signin" element={<Signin />} />
-              <Route path="/reset" element={<Reset />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Router>
-        </Suspense>
-        <ReactQueryDevtools />
-      </ThemeProvider>
-    </QueryClientProvider>
-  );
-};
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <Suspense fallback={<Loading position="center" />}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/currencies" element={<Home />} />
+            <Route path="/currencies/:crypto" element={<CryptoDetails />} />
+            <Route path="/influencers" element={<Influencers />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/reset" element={<Reset />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Router>
+      </Suspense>
+      <ReactQueryDevtools />
+    </ThemeProvider>
+  </QueryClientProvider>
+);
 
 export default App;

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useFetch } from '../hooks/useFetch';
 import SvgSmiley from '../assets/loading.svg';
 import styled, { css } from 'styled-components';
 
@@ -31,11 +30,7 @@ const StyledLoading = styled.div<LoadingProps>`
 //   height: 300px;
 // `;
 
-export const Loading = ({
-  position,
-  width,
-  height,
-}: LoadingProps): JSX.Element => (
+export const Loading = ({ position }: LoadingProps): JSX.Element => (
   <StyledLoading position={position}>
     <svg
       width="38"

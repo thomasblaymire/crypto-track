@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Layout } from '../Layout';
 import { Loading } from '../Loading';
 import { useQuery } from 'react-query';
-import { SINGLE_COIN_QUERY_STRING } from '../../constants';
+import { SINGLE_COIN_QUERY_STRING } from '../../helpers/api';
 import { useParams } from 'react-router-dom';
 import { SingleCryptoCoin } from '../../types';
 import { LineGraph } from '../LineGraph';
@@ -182,9 +182,6 @@ export const CryptoDetails = (): JSX.Element => {
 
           <StyledLeftSection>
             <StyledSection>
-              {/* <StyledCryptoGraph>
-            
-            </StyledCryptoGraph> */}
               <StyledLineGraph />
             </StyledSection>
 
