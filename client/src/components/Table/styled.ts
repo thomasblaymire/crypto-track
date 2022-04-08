@@ -13,6 +13,14 @@ export const StyledThead = styled.thead`
   tr:first-child {
     display: none;
   }
+
+  th:nth-child(1) {
+    border-top-left-radius: 8px;
+  }
+
+  th:nth-child(8) {
+    border-top-right-radius: 9px;
+  }
 `;
 
 export const StyledTableHeader = styled.th`

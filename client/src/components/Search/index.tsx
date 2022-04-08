@@ -6,11 +6,11 @@ import {
   StyledSearchContainer,
   StyledClose,
 } from './styled';
-import { Results } from '../Results';
-import { useDebounce } from '../../hooks/useDebounce';
+import { Results } from './SearchResults';
+import { useDebounce } from '@hooks/useDebounce';
 import { QUERY_DEBOUNCE_DURATION_MILLISECONDS } from '../../constants';
-import SearchIcon from '../../assets/search.svg';
-import CloseIcon from '../../assets/close.svg';
+import SearchIcon from '@assets/search.svg';
+import CloseIcon from '@assets/close.svg';
 
 interface SearchInterface {
   toggleSearch: boolean;

@@ -39,7 +39,11 @@ const createWebpackConfig = async () => {
       new HtmlWebpackPlugin({
         template: 'public/index.html',
       }),
-      new webpack.EnvironmentPlugin(['COINGEKO_API', 'AUTH_URL']),
+      new webpack.EnvironmentPlugin([
+        'COINGEKO_API',
+        'BACKEND_API',
+        'AUTH_URL',
+      ]),
       new webpack.HotModuleReplacementPlugin(),
       new CopyPlugin({
         patterns: [{ from: 'src/assets', to: '' }],
@@ -50,6 +54,11 @@ const createWebpackConfig = async () => {
       extensions: ['.tsx', '.ts', '.js'],
       alias: {
         'react-dom': '@hot-loader/react-dom',
+        '@': path.resolve(__dirname, 'src'),
+        '@components': path.resolve(__dirname, 'src/components'),
+        '@assets': path.resolve(__dirname, 'src/assets'),
+        '@helpers': path.resolve(__dirname, 'src/helpers'),
+        '@hooks': path.resolve(__dirname, 'src/hooks'),
       },
     },
     output: {

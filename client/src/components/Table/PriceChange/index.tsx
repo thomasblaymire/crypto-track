@@ -13,7 +13,8 @@ export const StyledPrice = styled.div<VolumeProps>`
   transition: all 0.5s;
   white-space: nowrap;
   color: #f6465d;
-  letter-spacing: 0.01rem;
+  letter-spacing: 0px;
+  line-height: 16px;
 
   ${({ isPositive }) =>
     isPositive &&

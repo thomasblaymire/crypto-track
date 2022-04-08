@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   FormWrapper,
+  FormContent,
   StyledButton,
   StyledFormIntro,
   StyledFieldset,
@@ -34,51 +35,53 @@ export const SigninForm = ({ signIn, loading, error, data }) => {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={onSubmit}
-      validationSchema={validationSchema}
-    >
-      {({ isSubmitting, handleChange, errors, touched }) => (
-        <FormWrapper>
-          <StyledFormIntro>
-            <h6>Sign In</h6>
-            <hr />
-          </StyledFormIntro>
-          <StyledFieldset disabled={loading} aria-busy={loading}>
-            <FieldElement
-              title="Email"
-              name="email"
-              type="text"
-              placeholder="yourname@example.com"
-              handleChange={handleChange}
-              errors={errors}
-              touched={touched}
-            />
-            <FieldElement
-              title="Password"
-              name="password"
-              type="password"
-              placeholder="Password"
-              handleChange={handleChange}
-              errors={errors}
-              touched={touched}
-            />
-            <StyledButton type="submit">Sign In</StyledButton>
-          </StyledFieldset>
+    <FormWrapper>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        validationSchema={validationSchema}
+      >
+        {({ isSubmitting, handleChange, errors, touched }) => (
+          <FormContent>
+            <StyledFormIntro>
+              <h6>Sign In</h6>
+              <hr />
+            </StyledFormIntro>
+            <StyledFieldset disabled={loading} aria-busy={loading}>
+              <FieldElement
+                title="Email"
+                name="email"
+                type="text"
+                placeholder="yourname@example.com"
+                handleChange={handleChange}
+                errors={errors}
+                touched={touched}
+              />
+              <FieldElement
+                title="Password"
+                name="password"
+                type="password"
+                placeholder="Password"
+                handleChange={handleChange}
+                errors={errors}
+                touched={touched}
+              />
+              <StyledButton type="submit">Sign In</StyledButton>
+            </StyledFieldset>
 
-          <StyledFormActions>
-            <Link to="/reset">
-              <a>Forgot password?</a>
-            </Link>
+            <StyledFormActions>
+              <Link to="/reset">
+                <a>Forgot password?</a>
+              </Link>
 
-            <div className="new-account">
-              <span>Don't have an account?</span>
-              <Link to="/signup"> Sign up</Link>
-            </div>
-          </StyledFormActions>
-        </FormWrapper>
-      )}
-    </Formik>
+              <div className="new-account">
+                <span>Don't have an account?</span>
+                <Link to="/signup"> Sign up</Link>
+              </div>
+            </StyledFormActions>
+          </FormContent>
+        )}
+      </Formik>
+    </FormWrapper>
   );
 };

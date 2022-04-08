@@ -1,20 +1,41 @@
 import { useQuery } from 'react-query';
-import { ALL_COIN_QUERY_STRING } from '../helpers/api';
+import { ALL_COIN_QUERY_STRING } from '@helpers/api';
+import { CryptoData } from '../types/types';
+
+interface CryptoDataRequest {
+  data: CryptoData[];
+  hasMore?: boolean;
+  isLoading?: boolean;
+  isError?: boolean;
+  isFetching?: boolean;
+  isPreviousData?: boolean;
+  error?: Error;
+}
 
 // A simple data fetching hook used to fetch all cryptos based on a given users currency.
-export const useCryptos = (currency?: string) => {
-  return useQuery(
-    'cryptos',
+export const useCryptos = (pageNumber: number) => {
+  console.log('TOM PAGE NUMBER', pageNumber);
+  const { data, isLoading, isError, error }: CryptoDataRequest = useQuery(
+    ['cryptos', pageNumber],
     async () => {
       const response = await fetch(
-        `${process.env.COINGEKO_API}/${ALL_COIN_QUERY_STRING(currency)}`
+        `${process.env.BACKEND_API}/${ALL_COIN_QUERY_STRING(null, pageNumber)}`
       );
 
       const data = await response.json();
       return data;
     },
     {
+      keepPreviousData: true,
       retry: 5,
+      refetchInterval: 6000,
     }
   );
+
+  return {
+    cryptos: data,
+    isLoading,
+    isError,
+    error,
+  };
 };

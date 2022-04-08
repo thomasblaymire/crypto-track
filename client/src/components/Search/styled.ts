@@ -5,12 +5,16 @@ interface WrapperProps {
 }
 
 export const StyledCryptoWrapper = styled.div<WrapperProps>`
-  width: 400px;
+  width: 360px;
   min-height: 140px;
   max-height: 610px;
   border-radius: 8px;
   background-color: rgb(23, 25, 36);
   position: ${({ hideToggle }) => (hideToggle ? `absolute` : `relative`)};
+
+  @media (min-width: 480px) {
+    width: 400px;
+  }
 `;
 
 export const StyledSearch = styled.div`

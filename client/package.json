@@ -5,7 +5,7 @@
   "homepage": ".",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --config webpack.config.development.ts",
+    "dev": "webpack-dev-server --config webpack.config.development.ts --port=3001",
     "prebuild": "rimraf dist",
     "build": "cross-env NODE_ENV=production webpack --mode production --env production --config webpack.config.production.ts"
   },

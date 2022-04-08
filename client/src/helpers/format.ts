@@ -21,12 +21,12 @@ const formatCryptoData = (data: any) => {
 
 // If the user has a default currency we will adopt the prices to that currency, unless changed within UI
 const currencyFormat = (price: number) => {
-  let currency = 'GBP';
-  const userCurrency = window.localStorage.getItem('currency');
+  // let currency = 'GBP';
+  const currency = window.localStorage.getItem('currency') || 'gbp';
 
-  if (userCurrency) {
-    currency = userCurrency;
-  }
+  // if (userCurrency) {
+  //   currency = userCurrency;
+  // }
 
   return price.toLocaleString('en-US', {
     style: 'currency',

@@ -1,27 +1,18 @@
 import React from 'react';
 import { useRoutes, useLocation, Navigate } from 'react-router-dom';
-import { Home } from './components/Home';
-import { WatchList } from './components/WatchList';
-import { Influencers } from './components/Influencers';
-import { CryptoDetails } from './components/CryptoDetails';
-import { Signup } from './components/Signup';
-import { Signin } from './components/Signin';
-import { Reset } from './components/Reset';
-import { Register } from './components/Register';
-import { NotFound } from './components/NotFound';
-import { Settings } from './components/Settings';
-import { useAuth } from './hooks/useAuth';
-
-const ProtectedRoute = ({ children }) => {
-  const { token } = useAuth();
-  const location = useLocation();
-
-  if (!token) {
-    return <Navigate to="/" replace state={{ from: location }} />;
-  }
-
-  return children;
-};
+import { Home } from './pages/Home';
+import { WatchList } from './pages/WatchList';
+import { Influencers } from './pages/Influencers';
+import { Details } from './pages/Details';
+import { Signin } from './pages/Signin';
+import { Reset } from './pages/Reset';
+import { Markets } from './pages/Markets';
+import { Register } from './pages/Register';
+import { NotFound } from './pages/NotFound';
+import { Settings } from './pages/Settings';
+import { Tools } from './pages/Tools';
+import { News } from './pages/News';
+import { useAuth } from '@hooks/useAuth';
 
 const Router = () => {
   const element = useRoutes([
@@ -36,7 +27,7 @@ const Router = () => {
     },
     {
       path: '/currencies/:crypto',
-      element: <CryptoDetails />,
+      element: <Details />,
     },
     {
       path: '/influencers',
@@ -47,8 +38,16 @@ const Router = () => {
       element: <WatchList />,
     },
     {
-      path: '/signup',
-      element: <Signup />,
+      path: '/news',
+      element: <News />,
+    },
+    {
+      path: '/markets',
+      element: <Markets />,
+    },
+    {
+      path: '/tools',
+      element: <Tools />,
     },
     {
       path: '/signin',
@@ -76,6 +75,17 @@ const Router = () => {
     },
   ]);
   return element as any;
+};
+
+const ProtectedRoute = ({ children }) => {
+  const { token } = useAuth();
+  const location = useLocation();
+
+  if (!token) {
+    return <Navigate to="/" replace state={{ from: location }} />;
+  }
+
+  return children;
 };
 
 export { Router };

@@ -1,14 +1,29 @@
 import styled from 'styled-components';
 import { Form } from 'formik';
 // import Button from '../UI/Button';
+import { device } from '@helpers/device';
 
-export const FormWrapper = styled(Form)`
-  width: 30%;
+export const FormWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-top: 5rem;
+
+  @media ${device.mobileL} {
+    padding-top: 15rem;
+  }
+`;
+
+export const FormContent = styled(Form)`
+  width: 100%;
   font-size: 1.5rem;
   line-height: 1.5;
   font-weight: 600;
   background-color: rgba(226, 232, 240);
   border-radius: 5px;
+
+  @media ${device.mobileL} {
+    width: 30%;
+  }
 `;
 
 export const StyledFormIntro = styled.div`

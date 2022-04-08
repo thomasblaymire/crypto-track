@@ -3,12 +3,12 @@
     "jsx": "react",
     "noEmit": true,
     "skipLibCheck": true,
-    "baseUrl": ".",
+    "baseUrl": "src/",
     "module": "commonjs",
     "target": "es2018",
     "sourceMap": true,
     "removeComments": true,
-    "typeRoots": ["./src/"],
+    "typeRoots": ["./src/types", "./node_modules/@types"],
     "strict": true,
     "noImplicitAny": false,
     "strictNullChecks": false,
@@ -21,7 +21,14 @@
     "resolveJsonModule": true,
     "types": ["node"],
     "declaration": true,
-    "declarationDir": "./src"
+    "declarationDir": "./src",
+    "paths": {
+      "@": ["./src"],
+      "@components/*": ["components/*"],
+      "@assets/*": ["assets/*"],
+      "@helpers/*": ["helpers/*"],
+      "@hooks/*": ["hooks/*"]
+    }
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
