@@ -1,35 +1,64 @@
 import mongoose from 'mongoose';
 import { Password } from '../services/password';
 
-// An interface that describes the properties
-// that are requried to create a new User
+type UserRole = 'admin' | 'user';
+
 interface UserAttrs {
   email: string;
   password: string;
 }
 
-// An interface that describes the properties
-// that a User Model has
 interface UserModel extends mongoose.Model<UserDoc> {
   build(attrs: UserAttrs): UserDoc;
 }
 
-// An interface that describes the properties
-// that a User Document has
 interface UserDoc extends mongoose.Document {
   email: string;
   password: string;
+  passwordResetToken: undefined | string;
+  passwordResetExpires: undefined | number;
+  photo?: string;
+  role: UserRole;
 }
 
 const userSchema = new mongoose.Schema(
   {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     email: {
       type: String,
       required: true,
+      lowercase: true,
+      unique: true,
+      trim: true,
     },
+    role: {
+      type: String,
+      enum: ['user', 'vip', 'admin'],
+      default: 'user',
+    },
+    photo: String,
     password: {
       type: String,
       required: true,
+      minlength: 5,
+      trim: true,
+      validate(value: string) {
+        if (value.toLowerCase().includes('password')) {
+          throw new Error('Password cannot contain "password"');
+        }
+      },
+    },
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
+    active: {
+      type: Boolean,
+      default: true,
+      select: false,
     },
   },
   {
@@ -47,6 +76,7 @@ const userSchema = new mongoose.Schema(
 userSchema.pre('save', async function (done) {
   if (this.isModified('password')) {
     const hashed = await Password.toHash(this.get('password'));
+    this.set('passwordChangedAt', Date.now() - 1000); // One second in the past
     this.set('password', hashed);
   }
   done();

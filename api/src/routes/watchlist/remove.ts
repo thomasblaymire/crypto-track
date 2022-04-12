@@ -7,6 +7,11 @@ import { WatchList } from '../../models/watchlist';
 
 const router = express.Router();
 
+// REMOVING A CRYPTO FROM A WATCHLIST
+// 1. A user sends a post request with a cryptosID to the backend (must match api id)
+// 2. We remove the watchlist from the user model with thier id watchlistItems: {'11211', 12312312'};
+// 3. Return success or failure to the user
+
 router.post(
   '/api/watchlist/remove',
   requireAuth,

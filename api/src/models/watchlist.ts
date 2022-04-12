@@ -1,20 +1,14 @@
 import mongoose from 'mongoose';
 
-// An interface that describes the properties
-// that are requried to create a new Watchlist item
-interface UserAttrs {
+interface WatchListAttrs {
   cryptoId: string;
   userId: string;
 }
 
-// An interface that describes the properties
-// that a User Model has
 interface WatchListModel extends mongoose.Model<WatchListDoc> {
-  build(attrs: UserAttrs): WatchListDoc;
+  build(attrs: WatchListAttrs): WatchListDoc;
 }
 
-// An interface that describes the properties
-// that a Watchlist Document has
 interface WatchListDoc extends mongoose.Document {
   cryptoId: string;
   userId: string;
@@ -44,7 +38,7 @@ const watchList = new mongoose.Schema(
 );
 
 // Created for TS Type checking
-watchList.statics.build = (attrs: UserAttrs) => {
+watchList.statics.build = (attrs: WatchListAttrs) => {
   return new WatchList(attrs);
 };
 
