@@ -14,7 +14,6 @@ interface CryptoDataRequest {
 
 // A simple data fetching hook used to fetch all cryptos based on a given users currency.
 export const useCryptos = (pageNumber: number) => {
-  console.log('TOM PAGE NUMBER', pageNumber);
   const { data, isLoading, isError, error }: CryptoDataRequest = useQuery(
     ['cryptos', pageNumber],
     async () => {
@@ -26,7 +25,7 @@ export const useCryptos = (pageNumber: number) => {
       return data;
     },
     {
-      keepPreviousData: true,
+      keepPreviousData: false,
       retry: 5,
       refetchInterval: 6000,
     }

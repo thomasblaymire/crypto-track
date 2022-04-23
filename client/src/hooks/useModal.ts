@@ -1,29 +1,19 @@
 import { useState } from 'react';
 
 export const useModal = () => {
-  const [isShowing, setIsShowing] = useState(false);
+  const [modalOpen, setModalOpen] = useState(null);
+  const toggle = () => setModalOpen(!modalOpen);
+  return [modalOpen, setModalOpen, toggle];
+};
 
-  const toggleModal = event => {
-    event.preventDefault();
-    const {
-      target: {
-        dataset: { modal },
-      },
-    } = event;
-    if (modal) toggleModal(modal);
+export const useModalWithData = (initialSelected = null) => {
+  const [modalOpen, setModalOpen] = useModal();
+  const [selected, setSelected] = useState(initialSelected);
+  const setModalState = state => {
+    setModalOpen(state);
+    if (state === false) {
+      setSelected(null);
+    }
   };
-
-  const closeModal = () => {
-    setIsShowing(false);
-  };
-
-  function toggle() {
-    setIsShowing(!isShowing);
-  }
-
-  return {
-    isShowing,
-    closeModal,
-    toggle,
-  };
+  return { modalOpen, setModalOpen, selected, setSelected, setModalState };
 };
