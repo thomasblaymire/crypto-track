@@ -27,7 +27,7 @@ const StyledHeaderWrapper = styled.div`
 
 const StyledActions = styled.div`
   display: none;
-  @media ${device.mobileL} {
+  @media (min-width: 1200px) {
     display: flex;
     align-items: center;
   }
@@ -35,7 +35,7 @@ const StyledActions = styled.div`
 
 const StyledBar = styled.div`
   display: none;
-  @media ${device.mobileL} {
+  @media ${device.laptopL} {
     display: flex;
     justify-content: space-between;
     height: 37px;

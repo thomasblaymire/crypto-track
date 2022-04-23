@@ -22,12 +22,15 @@ export const StyledLoading = styled.div`
 `;
 
 const StyledNavigation = styled.nav`
-  @media (min-width: 480px) {
-    padding-top: 0.5rem;
-    display: flex;
-    flex: 1 1 0%;
-    align-items: center;
-    padding-left: 3rem;
+  justify-content: flex-end;
+  padding-top: 0.5rem;
+  display: flex;
+  flex: 1 1 0%;
+  align-items: center;
+  padding-left: 3rem;
+
+  @media (min-width: 1200px) {
+    justify-content: flex-start;
   }
 `;
 
@@ -57,7 +60,7 @@ const StyledNavigationItem = styled.div`
 
 const StyledHamburger = styled.div`
   display: flex;
-  @media (min-width: 480px) {
+  @media (min-width: 1200px) {
     display: none;
   }
 `;
@@ -68,7 +71,7 @@ const StyledMenu = styled.div<MenuProps>`
   position: relative;
   display: none;
 
-  @media (min-width: 768px) {
+  @media (min-width: 1200px) {
     display: flex;
   }
 `;

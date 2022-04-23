@@ -3,7 +3,7 @@ import LoadingIncon from '@assets/loading.svg';
 import styled, { css } from 'styled-components';
 
 interface LoadingProps {
-  position: string;
+  position?: string;
   width?: string;
   height?: string;
 }
@@ -23,8 +23,12 @@ const StyledLoading = styled.div<LoadingProps>`
   }
 `;
 
-export const Loading = ({ position }: LoadingProps): JSX.Element => (
-  <StyledLoading position={position}>
+export const Loading = ({
+  position,
+  width,
+  height,
+}: LoadingProps): JSX.Element => (
+  <StyledLoading position={position} width={width} height={height}>
     <LoadingIncon />
   </StyledLoading>
 );

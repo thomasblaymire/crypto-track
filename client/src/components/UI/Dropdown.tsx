@@ -44,15 +44,14 @@ const StyledDropdownItem = styled.div<DropdownItemProps>`
   }
 `;
 
-export const Dropdown = ({ onMouseLeave, items }: DropdownProps) => {
-  console.log('TOM ITEMS', items);
-  return (
-    <StyledDropdown onMouseLeave={onMouseLeave}>
-      <StyledDropdownContent>
-        {items.map(({ title, onClick }) => (
-          <StyledDropdownItem onClick={onClick}>{title}</StyledDropdownItem>
-        ))}
-      </StyledDropdownContent>
-    </StyledDropdown>
-  );
-};
+export const Dropdown = ({ onMouseLeave, items }: DropdownProps) => (
+  <StyledDropdown onMouseLeave={onMouseLeave}>
+    <StyledDropdownContent>
+      {items.map(({ title, onClick }, i) => (
+        <StyledDropdownItem key={i} onClick={onClick}>
+          {title}
+        </StyledDropdownItem>
+      ))}
+    </StyledDropdownContent>
+  </StyledDropdown>
+);

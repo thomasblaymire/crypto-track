@@ -12,38 +12,30 @@ import { currencyFormat } from '@helpers/format';
 import { Coin } from './Coin';
 import { useQuery } from 'react-query';
 import { PriceChange } from './PriceChange';
+import { useModal } from '@hooks/useModal';
+import { Modal } from '../UI/Modal';
+import { Signup } from '../Auth/Signup';
 import { WatchListIcon } from './WatchListIcon';
 import { CryptoData } from '../../types/types';
 
 interface TableProps {
   data: CryptoData[];
-  onFetchData: () => void;
 }
 
 export const Table = ({ data }: TableProps): JSX.Element => {
-  // const { data, isLoading, isError, error }: any = useQuery(
-  //   ['watchlist'],
-  //   async () => {
-  //     const response = await fetch(`${process.env.BACKEND_API}/api/watchlist`);
-  //     const data = await response.json();
-  //     return data;
+  const { isShowing, toggle } = useModal();
+
+  // const onSaveRating = (e, cell) => {
+  //   // If user is not authenticated then signup modal displayed
+  //   const isAuthenticated = false;
+  //   if (!isAuthenticated) {
+  //     toggle();
   //   }
-  // );
 
-  // console.log('TOM watchlistItems', data);
-  console.log('TOM cryptoData', data);
-
-  // var selectedUser = users.find(function (user) {
-  //   return user.id === 70;
-  // });
-
-  const selected = true;
-
-  const onSaveRating = (e, cell) => {
-    const id = cell?.row?.original.id;
-    // Hit an API to store the users selected cryptos
-    e.preventDefault();
-  };
+  //   const id = cell?.row?.original.id;
+  //   // Hit an API to store the users selected cryptos
+  //   e.preventDefault();
+  // };
 
   const columns = useMemo(
     () => [
@@ -54,11 +46,12 @@ export const Table = ({ data }: TableProps): JSX.Element => {
             Header: '',
             accessor: 'watch',
             Cell: ({ cell }) => {
+              // console.log('TOM CELL', cell.row.original);
+
               return (
                 <WatchListIcon
-                  onSaveRating={onSaveRating}
-                  selected={selected}
                   cell={cell}
+                  selected={cell.row.original?.isSelected}
                 />
               );
             },
@@ -185,6 +178,9 @@ export const Table = ({ data }: TableProps): JSX.Element => {
           })}
         </tbody>
       </StyledTable>
+      <Modal isShowing={isShowing} hide={toggle} title={'Create An Account'}>
+        <Signup toggle={toggle} />
+      </Modal>
     </>
   );
 };

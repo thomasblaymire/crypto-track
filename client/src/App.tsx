@@ -4,11 +4,12 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { QueryClientProvider, QueryClient } from 'react-query';
-import { AuthProvider } from './providers/AuthProvider';
 import { GlobalStyle, darkTheme, lightTheme } from '@helpers//style';
 import { Router } from './routes';
 import { useLightMode } from '@hooks/useLightMode';
 import { Header } from './components/UI/Header';
+
+import { AuthProvider } from '@helpers/auth';
 
 const queryClient = new QueryClient();
 

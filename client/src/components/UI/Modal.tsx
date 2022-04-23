@@ -1,9 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import CloseIcon from '@assets/close.svg';
 
-const StyledModal = styled.div`
+interface ModalProps {
+  isActive?: boolean;
+}
+
+const StyledModal = styled.div<ModalProps>`
+  display: ${({ isActive }) => (isActive ? `flex` : `none`)};
+
   .modal-overlay {
     position: fixed;
     top: 0;
@@ -79,35 +84,36 @@ const StyledClose = styled.div`
   }
 `;
 
-export const Modal = ({ isShowing, hide, title, children }): JSX.Element =>
-  isShowing
-    ? ReactDOM.createPortal(
-        <StyledModal>
-          <div className="modal-overlay" />
-          <div
-            className="modal-wrapper"
-            aria-modal
-            aria-hidden
-            tabIndex={-1}
-            role="dialog"
+export const Modal = ({
+  isActive,
+  children,
+  title,
+  handleClose,
+}): JSX.Element => (
+  <StyledModal isActive={isActive}>
+    <div className="modal-overlay" />
+    <div
+      className="modal-wrapper"
+      aria-modal
+      aria-hidden
+      tabIndex={-1}
+      role="dialog"
+    >
+      <div className="modal">
+        <div className="modal-header">
+          <h3>{title}</h3>
+          <StyledClose
+            type="button"
+            className="modal-close-button"
+            data-dismiss="modal"
+            aria-label="Close"
+            onClick={handleClose}
           >
-            <div className="modal">
-              <div className="modal-header">
-                <h3>{title}</h3>
-                <StyledClose
-                  type="button"
-                  className="modal-close-button"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                  onClick={hide}
-                >
-                  <CloseIcon />
-                </StyledClose>
-              </div>
-              <div className="modal-body">{children}</div>
-            </div>
-          </div>
-        </StyledModal>,
-        document.body
-      )
-    : null;
+            <CloseIcon />
+          </StyledClose>
+        </div>
+        <div className="modal-body">{children}</div>
+      </div>
+    </div>
+  </StyledModal>
+);
