@@ -31,7 +31,6 @@ export const WatchList = (): JSX.Element => {
     {
       keepPreviousData: true,
       retry: 5,
-      refetchInterval: 6000,
     }
   );
 

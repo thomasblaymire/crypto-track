@@ -4,7 +4,6 @@ import { Home } from './pages/Home';
 import { WatchList } from './pages/WatchList';
 import { Influencers } from './pages/Influencers';
 import { Details } from './pages/Details';
-import { Signin } from './pages/Signin';
 import { Reset } from './pages/Reset';
 import { Markets } from './pages/Markets';
 import { Register } from './pages/Register';
@@ -12,7 +11,7 @@ import { NotFound } from './pages/NotFound';
 import { Settings } from './pages/Settings';
 import { Tools } from './pages/Tools';
 import { News } from './pages/News';
-import { useAuth } from '@hooks/useAuth';
+import { useAuth } from '@helpers/auth';
 
 const Router = () => {
   const element = useRoutes([
@@ -50,10 +49,6 @@ const Router = () => {
       element: <Tools />,
     },
     {
-      path: '/signin',
-      element: <Signin />,
-    },
-    {
       path: '/reset',
       element: <Reset />,
     },
@@ -78,10 +73,10 @@ const Router = () => {
 };
 
 const ProtectedRoute = ({ children }) => {
-  const { token } = useAuth();
+  const { user } = useAuth();
   const location = useLocation();
 
-  if (!token) {
+  if (!user.token) {
     return <Navigate to="/" replace state={{ from: location }} />;
   }
 

@@ -24,15 +24,15 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    console.log('TOM req', req);
+    console.log('TOM req', req.user);
 
     // Find the crypto the user is trying to their watchlist
     const { cryptoId } = req.body;
 
     // Build the watchlist item and save it to the database
     const watchList = WatchList.build({
-      userId: req.currentUser!.id,
-      cryptoId,
+      userId: '123345',
+      cryptoId: cryptoId,
     });
 
     await watchList.remove();

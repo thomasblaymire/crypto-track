@@ -1,12 +1,15 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cookieSession from 'cookie-session';
+import cookieParser from 'cookie-parser';
 import 'express-async-errors';
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
 import compression from 'compression';
 import hpp from 'hpp';
+import cors from 'cors';
 import { currentUser } from './middlewares';
-import { NotFoundError } from './errors';
+import { AppError } from './errors';
+import { globalErrorHandler } from './middlewares';
 import { indexCryptoRouter } from './routes/crypto/index';
 import { watchListRouter } from './routes/watchlist';
 import { watchListAddRouter } from './routes/watchlist/add';
@@ -20,12 +23,31 @@ import { resetPasswordRouter } from './routes/auth/reset-password';
 import { updatePasswordRouter } from './routes/auth/update-password';
 import { updateMeRouter } from './routes/user/update-me';
 import { deleteMeRouter } from './routes/user/delete-me';
+import { meRouter } from './routes/user/me';
 import { allUsersRouter } from './routes/auth/all-users';
+
+interface Error {
+  statusCode?: number;
+  status?: string;
+}
 
 const app = express();
 
+const whitelist = ['http://127.0.0.1:3001', 'http://localhost:3001', 'http://127.0.0.0'];
+const corsOptions = {
+  credentials: true,
+  //@ts-ignore
+  origin: (origin, callback) => {
+    if (whitelist.includes(origin)) return callback(null, true);
+    callback(new Error('Not allowed by CORS'));
+  },
+};
+
+app.use(cors(corsOptions));
+
 // Body parser, reading data from body into req.body (limit for #security)
 app.use(express.json({ limit: '10kb' }));
+app.use(cookieParser());
 
 // Data sanitization against NOSQL query injection #security
 app.use(mongoSanitize());
@@ -56,11 +78,11 @@ app.use(
 // Used for NGINX requests
 app.set('trust proxy', true);
 
-// CORS options temporary
+// CORS options
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  // console.log('TOM req.cookies', req.cookies);
+  res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:3001');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
   next();
 });
 
@@ -79,12 +101,14 @@ app.use(updatePasswordRouter);
 app.use(updateMeRouter);
 app.use(deleteMeRouter);
 app.use(allUsersRouter);
+app.use(meRouter);
 
 // Catch all route
-app.all('*', async (req, res) => {
-  throw new NotFoundError();
+app.all('*', (req: Request, res: Response, next: NextFunction) => {
+  next(new AppError(`Cant find ${req.originalUrl} on this server!`, 404));
 });
 
-// app.use(errorHandler);
+// Global error handler
+app.use(globalErrorHandler);
 
 export { app };

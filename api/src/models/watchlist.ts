@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { ObjectId } from 'mongodb';
 
 interface WatchListAttrs {
   cryptoId: string;
@@ -21,7 +22,8 @@ const watchList = new mongoose.Schema(
       required: true,
     },
     userId: {
-      type: String,
+      type: ObjectId,
+      ref: 'User',
       required: true,
     },
   },

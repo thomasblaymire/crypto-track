@@ -6,20 +6,19 @@ import { catchAsync } from '../../services';
 const router = express.Router();
 
 // We don't actually delete the user account but set `actve: false` in case they want to re-activate in the future.
-router.delete(
-  '/api/users/deleteMe',
+router.get(
+  '/api/users/me',
   validateRequest,
   requireAuth,
   catchAsync(async (req: Request, res: Response) => {
-    await User.findByIdAndUpdate(req.user!.id, {
-      active: false,
-    });
-
-    res.status(204).json({
+    const user = await User.findById(req.user!.id);
+    res.status(200).json({
       status: 'success',
-      data: null,
+      data: {
+        user,
+      },
     });
   })
 );
 
-export { router as deleteMeRouter };
+export { router as meRouter };

@@ -6,3 +6,4 @@ export * from '../errors/not-found-error';
 export * from '../errors/request-validation.error';
 export * from '../errors/email-error';
 export * from '../errors/jwt-error';
+export * from '../errors/app-error';

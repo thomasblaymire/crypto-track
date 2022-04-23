@@ -1,14 +1,23 @@
-import mongoose from 'mongoose';
 import express, { Request, Response } from 'express';
 import { BadRequestError } from '../../errors';
-import { validateRequest, requireAuth, restrictTo, rateLimiter } from '../../middlewares';
+import { validateRequest, requireAuth, rateLimiter } from '../../middlewares';
 import { WatchList } from '../../models/watchlist';
-import { currentUser } from '../../middlewares';
 
 const router = express.Router();
 
+// router.post(
+//   '/api/users/signin',
+//   [
+//     body('email').isEmail().withMessage('Email must be valid'),
+//     body('password').trim().notEmpty().withMessage('You must supply a password'),
+//   ],
+//   validateRequest,
+//   async (req: Request, res: Response) => {
+//     const { email, password } = req.body;
+
 router.post('/api/watchlist', requireAuth, validateRequest, rateLimiter, async (req: Request, res: Response) => {
-  const { cryptoId, userId } = req.body;
+  console.log('TOM BACKEND', req.body);
+  const { cryptoId } = req.body;
 
   // Check if user has already added that one
   const existingCrypto = await WatchList.findOne({ cryptoId });
