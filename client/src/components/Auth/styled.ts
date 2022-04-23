@@ -18,9 +18,9 @@ const StyledUserButton = styled.div`
   background: #6a7482;
   position: relative;
   padding: 10px;
-  width: 40px;
+  width: 35px;
+  height: 35px;
   border-radius: 150px;
-  height: 40px;
   display: flex;
   justify-content: center;
   cursor: pointer;

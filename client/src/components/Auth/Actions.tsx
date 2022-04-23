@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import UserIcon from '@assets/icons/user-solid.svg';
 import { StyledActions, StyledUserButton, StyledActionButtons } from './styled';
 import { Button } from '../UI/Button';
 import { Dropdown } from '../UI/Dropdown';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@hooks/useAuth';
+import { useAuth } from '@helpers/auth';
 import { Modal } from '../UI/Modal';
 import { Signup } from './Signup';
 import { Login } from './Login';
@@ -13,15 +13,15 @@ import { useModal } from '@hooks/useModal';
 
 export const Actions = (): JSX.Element => {
   const navigate = useNavigate();
-  const { token, onLogout } = useAuth();
-  const { isShowing, toggle } = useModal();
+  const { user, logout } = useAuth();
+  const [modalOpen, setModalOpen, toggleModal] = useModal();
   const [menu, setMenu] = useState(false);
   const [modal, setModal] = useState(null);
 
   const FORM_ELEMENT = {
-    signup: <Signup toggle={toggle} />,
-    login: <Login toggle={toggle} />,
-    reset: <Reset toggle={toggle} />,
+    signup: <Signup />,
+    login: <Login toggleModal={toggleModal} />,
+    reset: <Reset />,
   };
 
   const handleAdminMenu = (): void => {
@@ -47,55 +47,41 @@ export const Actions = (): JSX.Element => {
     {
       id: 4,
       title: 'Log Out',
-      onClick: onLogout,
+      onClick: logout,
     },
   ];
 
   const handleModalDisplay = (id: string) => {
     setModal(id);
-    toggle();
+    toggleModal();
   };
-
-  const buttons = [
-    {
-      id: 1,
-      title: 'Log In',
-      onClick: () => handleModalDisplay('login'),
-      color: 'secondary',
-      className: 'btn',
-    },
-    {
-      id: 2,
-      title: 'Sign Up',
-      onClick: () => handleModalDisplay('signup'),
-    },
-  ];
 
   return (
     <StyledActions>
-      {token ? (
+      {user ? (
         <StyledUserButton onMouseEnter={handleAdminMenu}>
           <UserIcon />
         </StyledUserButton>
       ) : (
         <StyledActionButtons>
-          {buttons.map(({ title, onClick, id, className, color }) => (
-            <Button
-              key={id}
-              onClick={onClick}
-              className={className}
-              color={color}
-            >
-              {title}
-            </Button>
-          ))}
+          <Button
+            onClick={() => handleModalDisplay('login')}
+            className="btn'"
+            color="secondary"
+          >
+            <p>Log In</p>
+          </Button>
+          <Button onClick={() => handleModalDisplay('signup')} className="btn'">
+            <p>Sign Up</p>
+          </Button>
         </StyledActionButtons>
       )}
+
       {menu && <Dropdown onMouseLeave={handleAdminMenu} items={items} />}
 
       <Modal
-        isShowing={isShowing}
-        hide={handleModalDisplay}
+        isActive={modalOpen}
+        handleClose={() => setModalOpen(false)}
         title={modal === 'login' ? 'Login' : 'Create An Account'}
       >
         {FORM_ELEMENT[modal]}

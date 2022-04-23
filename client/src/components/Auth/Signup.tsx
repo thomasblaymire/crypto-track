@@ -4,9 +4,7 @@ import { useMutation } from 'react-query';
 import { StyledForm, StyledHeader } from './styled';
 import { setLocalStorage } from '@helpers/storage';
 
-interface LoginProps {
-  toggle: any;
-}
+interface LoginProps {}
 
 const formSchema = [
   {
@@ -35,16 +33,12 @@ const formSchema = [
   },
 ];
 
-export const Signup = ({ toggle }: LoginProps): JSX.Element => {
-  // const [data, setData] = useState(null);
-  // const [loading, setLoading] = useState(null);
-  // const [errors, setErrors] = useState(null);
-
+export const Signup = ({}: LoginProps): JSX.Element => {
   const navigate = useNavigate();
 
   const { mutateAsync, isLoading } = useMutation((data: any) => {
     const { email, password } = data;
-    return fetch('https://553e-45-67-96-230.ngrok.io/api/users/signup', {
+    return fetch('http:127.0.0.1/api/users/signup', {
       method: 'POST',
       body: JSON.stringify({
         email,

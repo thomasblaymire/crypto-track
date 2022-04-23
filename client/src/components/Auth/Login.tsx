@@ -1,12 +1,11 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useMutation } from 'react-query';
+import React, { useState } from 'react';
 import { Form } from '@components/Form';
-import { setLocalStorage } from '@helpers/storage';
+import { Error } from '@components/UI/Error';
+import { useAuth } from '@helpers/auth';
 import styled from 'styled-components';
 
 interface LoginProps {
-  toggle: any;
+  toggleModal: () => void;
 }
 
 const StyledForm = styled(Form)`
@@ -19,6 +18,10 @@ const StyledHeader = styled.div`
   margin-bottom: 24px;
   line-height: 24px;
   color: #a1a7bb;
+`;
+
+const StyledFormError = styled.div`
+  margin: 2rem 2rem 0rem 2rem;
 `;
 
 const formSchema = [
@@ -40,56 +43,41 @@ const formSchema = [
   },
 ];
 
-export const Login = ({ toggle }: LoginProps): JSX.Element => {
-  // const [data, setData] = useState(null);
-  // const [loading, setLoading] = useState(null);
-  // const [errors, setErrors] = useState(null);
-
-  const navigate = useNavigate();
-
-  const { mutateAsync, isLoading } = useMutation((data: any) => {
-    const { email, password } = data;
-    return fetch('https://553e-45-67-96-230.ngrok.io/api/users/signin', {
-      method: 'POST',
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-      headers: {
-        'Content-type': 'application/json',
-      },
-    });
-  });
+export const Login = ({ toggleModal }: LoginProps): JSX.Element => {
+  const { login } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const onSubmit = async ({ email, password }) => {
     try {
-      const signin = await mutateAsync({
-        email,
-        password,
-      });
-      const userData = await signin.json();
-      if (userData) {
-        toggle();
-        setLocalStorage('userId', userData.id);
-        navigate('/currencies');
-      }
-      console.log(signin);
-    } catch (error) {
-      console.log(error);
+      setIsLoading(true);
+      const response = await login({ email, password });
+      response && toggleModal();
+    } catch (err: any) {
+      console.log('TOM error', err);
+      setIsError(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <>
+      {isError && (
+        <StyledFormError>
+          <Error errors={isError} />
+        </StyledFormError>
+      )}
+
       <StyledHeader>
         Welcome to coin tracker, please enter your email and password below.
       </StyledHeader>
       <StyledForm
         onSubmit={onSubmit}
         schema={formSchema}
+        isLoading={isLoading}
         buttonLabel="Log In"
       />
-      {/* <SignupForm onSubmit={onSubmit} /> */}
     </>
   );
 };

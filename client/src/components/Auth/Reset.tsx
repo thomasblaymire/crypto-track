@@ -4,6 +4,8 @@ import { useMutation } from 'react-query';
 import { Form } from '@components/Form';
 import styled from 'styled-components';
 
+interface ResetProps {}
+
 const StyledForm = styled(Form)`
   margin-top: 2rem;
 `;
@@ -27,7 +29,7 @@ const formSchema = [
   },
 ];
 
-export const Reset = ({}): JSX.Element => {
+export const Reset = ({}: ResetProps): JSX.Element => {
   const navigate = useNavigate();
 
   const { mutate } = useMutation((formData: any) => {
