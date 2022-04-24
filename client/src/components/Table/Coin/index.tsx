@@ -27,8 +27,7 @@ export const StyledTicker = styled.div`
 `;
 
 export const Coin = ({ data }): JSX.Element => {
-  const { image, name, market_cap_rank, symbol } = data;
-
+  const { image, name, symbol } = data;
   return (
     <StyledCoin>
       <img src={image} alt={name} />

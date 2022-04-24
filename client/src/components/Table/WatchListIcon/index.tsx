@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation } from 'react-query';
 import styled from 'styled-components';
-import { storage } from '@helpers/storage';
 
 const StyledStarIcon = styled.svg`
   width: 15px;
@@ -31,42 +29,34 @@ function StarIcon({ fill }) {
   );
 }
 
+const StyledWatchList = styled.div`
+  display: flex;
+`;
+
 interface WatchListInterface {
   cell: any;
-  onSaveRating?: any;
+  handleWatchList?: any;
   selected: any;
 }
 
 export const WatchListIcon = ({
   cell,
-  onSaveRating,
+  handleWatchList,
   selected,
 }: WatchListInterface): JSX.Element => {
   const [watchList, setWatchList] = useState(selected);
   const fillColor = watchList ? '#f6b87e' : 'none';
 
-  const mutation = useMutation(id => {
-    console.log('TOM cryptoID', id);
-    return fetch('http://127.0.0.1:3000/api/watchlist', {
-      method: 'POST',
-      body: JSON.stringify({ cryptoId: 'ethereum', haha: 'hahah' }),
-      headers: {
-        Authorization: `Bearer ${storage.getToken()}`,
-      },
-    });
-  });
-
   const handleOnSave = (e, cell) => {
     setWatchList(prev => !prev);
-    console.log('TOM ', cell.row.original?.id);
-    mutation.mutate(cell.row.original?.id);
+    handleWatchList(e, cell.row.original?.id);
   };
 
   return (
-    <div>
+    <StyledWatchList>
       <div className="cursor-pointer" onClick={e => handleOnSave(e, cell)}>
         <StarIcon fill={fillColor} />
       </div>
-    </div>
+    </StyledWatchList>
   );
 };

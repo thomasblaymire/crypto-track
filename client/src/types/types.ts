@@ -126,3 +126,8 @@ export type PublicInterestStats = {
   alexa_rank: number;
   bing_matches: any;
 };
+
+export type ColumnType = {
+  accessor: string;
+  label: string;
+};

@@ -1,186 +1,33 @@
-import React, { useMemo } from 'react';
-import { useTable, useSortBy, useRowSelect } from 'react-table';
+import React from 'react';
+import { Column } from './Column';
+import { ColumnType, CryptoData } from '../../types/types';
 import {
   StyledTable,
   StyledThead,
   StyledTableHeader,
-  StyledTableD,
-  StyledTableRow,
   StyledTableRowBody,
 } from './styled';
-import { currencyFormat } from '@helpers/format';
-import { Coin } from './Coin';
-import { useQuery } from 'react-query';
-import { PriceChange } from './PriceChange';
-import { useModal } from '@hooks/useModal';
-import { Modal } from '../UI/Modal';
-import { Signup } from '../Auth/Signup';
-import { WatchListIcon } from './WatchListIcon';
-import { CryptoData } from '../../types/types';
 
 interface TableProps {
-  data: CryptoData[];
+  columns: ColumnType[];
+  rows: CryptoData[];
 }
 
-export const Table = ({ data }: TableProps): JSX.Element => {
-  const { isShowing, toggle } = useModal();
-
-  // const onSaveRating = (e, cell) => {
-  //   // If user is not authenticated then signup modal displayed
-  //   const isAuthenticated = false;
-  //   if (!isAuthenticated) {
-  //     toggle();
-  //   }
-
-  //   const id = cell?.row?.original.id;
-  //   // Hit an API to store the users selected cryptos
-  //   e.preventDefault();
-  // };
-
-  const columns = useMemo(
-    () => [
-      {
-        Header: ' ',
-        columns: [
-          {
-            Header: '',
-            accessor: 'watch',
-            Cell: ({ cell }) => {
-              // console.log('TOM CELL', cell.row.original);
-
-              return (
-                <WatchListIcon
-                  cell={cell}
-                  selected={cell.row.original?.isSelected}
-                />
-              );
-            },
-          },
-          {
-            Header: 'Name',
-            accessor: 'name',
-            Cell: row => {
-              return <Coin data={row.row.original} />;
-            },
-          },
-          {
-            Header: 'Price',
-            accessor: 'current_price',
-            Cell: ({ cell: { value } }) => currencyFormat(value),
-          },
-          {
-            Header: '24%',
-            accessor: 'price_change_percentage_24h',
-            Cell: ({ cell: { value } }) => {
-              return <PriceChange price={value} />;
-            },
-          },
-          {
-            Header: '48%',
-            accessor: 'market_cap_change_percentage_24h',
-            id: 'price',
-            Cell: ({ cell: { value } }) => {
-              return <PriceChange price={value} />;
-            },
-          },
-          {
-            Header: 'Market Cap',
-            accessor: 'market_cap',
-            id: 'market',
-            Cell: ({ cell: { value } }) => currencyFormat(value),
-          },
-          {
-            Header: 'Circulating Supply',
-            id: 'circulating_supply',
-            accessor: 'circulating_supply',
-          },
-          {
-            Header: 'Total Volume',
-            id: 'total_volume',
-            accessor: 'total_volume',
-          },
-        ],
-      },
-    ],
-    []
-  );
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    selectedFlatRows,
-    state: { selectedRowIds, pageIndex, pageSize, sortBy, filters },
-  } = useTable(
-    {
-      columns,
-      data,
-    },
-    useSortBy,
-    useRowSelect
-  );
-
-  // //When these table states change, fetch new cryptoData!
-  // React.useEffect(() => {
-  //   onFetchData({ pageIndex, pageSize, sortBy, filters });
-  // }, [onFetchData, pageIndex, pageSize, sortBy, filters]);
-
-  return (
-    <>
-      <StyledTable {...getTableProps()}>
-        <StyledThead>
-          {headerGroups.map(headerGroup => (
-            <StyledTableRow {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <StyledTableHeader
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                >
-                  {column.render('Header')}
-                  <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? ' 🔽'
-                        : ' 🔼'
-                      : ''}
-                  </span>
-                </StyledTableHeader>
-              ))}
-            </StyledTableRow>
-          ))}
-        </StyledThead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map(row => {
-            prepareRow(row);
-            return (
-              <StyledTableRowBody {...row.getRowProps()}>
-                {row.cells.map(cell => {
-                  return (
-                    <StyledTableD
-                      {...cell.getCellProps()}
-                      // onClick={() => {
-                      //   console.log('TOM', cell);
-                      //   if (cell[0]) {
-                      //     return;
-                      //   }
-                      //   return navigate(
-                      //     `/currencies/${cell.row.original.id.toLowerCase()}`
-                      //   );
-                      // }}
-                    >
-                      {cell.render('Cell')}
-                    </StyledTableD>
-                  );
-                })}
-              </StyledTableRowBody>
-            );
-          })}
-        </tbody>
-      </StyledTable>
-      <Modal isShowing={isShowing} hide={toggle} title={'Create An Account'}>
-        <Signup toggle={toggle} />
-      </Modal>
-    </>
-  );
-};
+export const Table = ({ columns, rows }: TableProps): JSX.Element => (
+  <StyledTable>
+    <StyledThead>
+      {columns.map(column => (
+        <StyledTableHeader key={column.accessor}>
+          {column.label}
+        </StyledTableHeader>
+      ))}
+    </StyledThead>
+    <tbody>
+      {rows.map(row => (
+        <StyledTableRowBody key={row.id}>
+          <Column columns={columns} row={row} />
+        </StyledTableRowBody>
+      ))}
+    </tbody>
+  </StyledTable>
+);

@@ -10,9 +10,6 @@ export const StyledThead = styled.thead`
   background: ${props => props.theme.colors.primary};
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
-  tr:first-child {
-    display: none;
-  }
 
   th:nth-child(1) {
     border-top-left-radius: 8px;
@@ -37,8 +34,6 @@ export const StyledTableD = styled.td`
   font-size: 1.5rem;
   padding-left: 1.5rem;
 `;
-
-export const StyledTableRow = styled.tr``;
 
 export const StyledHeader = styled.div`
   display: flex;
