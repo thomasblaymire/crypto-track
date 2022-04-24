@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form } from '@components/Form';
 import { Error } from '@components/UI/Error';
 import { useAuth } from '@helpers/auth';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface LoginProps {
@@ -45,6 +46,7 @@ const formSchema = [
 
 export const Login = ({ toggleModal }: LoginProps): JSX.Element => {
   const { login } = useAuth();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -52,7 +54,11 @@ export const Login = ({ toggleModal }: LoginProps): JSX.Element => {
     try {
       setIsLoading(true);
       const response = await login({ email, password });
-      response && toggleModal();
+
+      if (response) {
+        toggleModal();
+        navigate('/currencies');
+      }
     } catch (err: any) {
       console.log('TOM error', err);
       setIsError(err);
