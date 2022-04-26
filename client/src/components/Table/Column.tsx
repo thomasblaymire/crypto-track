@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { currencyFormat } from '@helpers/format';
 import { StyledTableD } from './styled';
-import { WatchListIcon } from './WatchListIcon';
+import { WatchList } from './WatchList';
 import { Coin } from './Coin';
 import { PriceChange } from './PriceChange';
 
@@ -12,7 +12,7 @@ export const Column = ({ columns, row }): JSX.Element => {
       switch (column.accessor) {
         case 'watch':
           return (
-            <WatchListIcon
+            <WatchList
               cell={column}
               handleWatchList={handleWatchList}
               selected={false}

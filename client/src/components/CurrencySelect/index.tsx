@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useCryptos } from '@hooks/useCryptos';
+import { Dropdown } from '@components/UI/Dropdown';
 import { currencies } from '../../data';
 import { setLocalStorage } from '@helpers/storage';
+import { Modal } from '../UI/Modal';
+import { useModal } from '@hooks/useModal';
 
-const StyledListBox = styled.select``;
+const StyledCurrencySelect = styled.div`
+  position: relative;
+`;
 
 interface CurrencySelectInterface {
   className?: string;
@@ -16,6 +21,8 @@ export const CurrencySelect = ({
   const [currency, setCurrency] = useState(
     localStorage.getItem('currency') || '[]'
   );
+  const [modalOpen, setModalOpen] = useModal();
+  const [dropownVisible, setSropownVisible] = useState(false);
 
   // useCryptos(currency);
 
@@ -24,17 +31,30 @@ export const CurrencySelect = ({
     setLocalStorage('currency', value);
   };
 
+  const handleAdminValue = () => {
+    console.log('TM REST');
+  };
+
+  console.log('TOM currencies', currencies[0][1]);
+
   return (
-    <StyledListBox
-      className={className}
-      onChange={({ target: { value } }) => setCurrencyValue(value)}
-    >
-      {currencies.map(([value, text]) => (
-        //<option key={text} selected={currency === value} value={value}>
-        <option key={text} value={value}>
-          {text}
-        </option>
-      ))}
-    </StyledListBox>
+    <>
+      <StyledCurrencySelect>
+        {dropownVisible && (
+          <Dropdown onMouseLeave={handleAdminValue} items={currencies} />
+        )}
+        <div onClick={() => setModalOpen(true)}>{[currencies][0][1]}</div>
+      </StyledCurrencySelect>
+
+      <Modal
+        isActive={modalOpen}
+        handleClose={() => setModalOpen(false)}
+        title="Select Currency"
+      >
+        {currencies.map(([value, text]) => (
+          <div key={text}>{text}</div>
+        ))}
+      </Modal>
+    </>
   );
 };
