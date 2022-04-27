@@ -1,9 +1,18 @@
+// This file contains all of the Front End data for the application, some will eventually be Backend driven!
 import React from 'react';
 import CoinIcon from './assets/icons/coins.svg';
 import StoreIcon from './assets/icons/store.svg';
 import NewsIcon from './assets/icons/news.svg';
 import PeopleIcon from './assets/icons/people.svg';
 import ToolsIcon from './assets/icons/toolbox.svg';
+
+import AudIcon from './assets/flags/AUD.svg';
+import GbpIcon from './assets/flags/GBP.svg';
+import CadIcon from './assets/flags/CAD.svg';
+import CnyIcon from './assets/flags/CNY.svg';
+import EurIcon from './assets/flags/EUR.svg';
+import UsdIcon from './assets/flags/USD.svg';
+import BrlIcon from './assets/flags/BRL.svg';
 
 const cryptoHeadingColumns = {
   name: 'Name',
@@ -15,9 +24,48 @@ const cryptoHeadingColumns = {
 };
 
 const currencies = [
-  ['gbp', 'GBP'],
-  ['aud', 'AUD'],
-  ['usd', 'USD'],
+  {
+    id: 'aud',
+    code: 'AUD',
+    title: 'Australian Dollar',
+    icon: <AudIcon />,
+  },
+  {
+    id: 'brl',
+    code: 'BRL',
+    title: 'Brazilian Real',
+    icon: <BrlIcon />,
+  },
+  {
+    id: 'gbp',
+    code: 'GBP',
+    title: 'Pound Sterling',
+    icon: <GbpIcon />,
+  },
+  {
+    id: 'cad',
+    code: 'CAD',
+    title: 'Canadian Dollar',
+    icon: <CadIcon />,
+  },
+  {
+    id: 'cny',
+    code: 'CNY',
+    title: 'Chinese Yuan',
+    icon: <CnyIcon />,
+  },
+  {
+    id: 'eur',
+    code: 'EUR',
+    title: 'Euro',
+    icon: <EurIcon />,
+  },
+  {
+    id: 'usd',
+    code: 'USD',
+    title: 'United States Dollar',
+    icon: <UsdIcon />,
+  },
 ];
 
 const stats = [
