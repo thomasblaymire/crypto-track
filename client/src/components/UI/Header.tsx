@@ -46,6 +46,7 @@ const StyledBar = styled.div`
 
 const StyledBarActions = styled.div`
   display: flex;
+  line-height: 22px;
 `;
 
 export const StyledHeader = styled.header`

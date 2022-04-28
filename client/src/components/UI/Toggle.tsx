@@ -13,7 +13,7 @@ const ToggleContainer = styled.button`
   border: none;
   background: transparent;
   padding-right: 0;
-  padding-left: 1rem;
+  padding-left: 1.5rem;
 
   svg {
     height: auto;
