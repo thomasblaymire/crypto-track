@@ -16,11 +16,13 @@ interface TableProps {
 export const Table = ({ columns, rows }: TableProps): JSX.Element => (
   <StyledTable>
     <StyledThead>
-      {columns.map(column => (
-        <StyledTableHeader key={column.accessor}>
-          {column.label}
-        </StyledTableHeader>
-      ))}
+      <tr>
+        {columns.map(column => (
+          <StyledTableHeader key={column.accessor}>
+            {column.label}
+          </StyledTableHeader>
+        ))}
+      </tr>
     </StyledThead>
     <tbody>
       {rows.map(row => (
