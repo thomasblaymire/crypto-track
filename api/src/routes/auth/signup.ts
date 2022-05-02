@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import { createSendToken } from '../../services/auth';
 import { validateRequest, rateLimiter } from '../../middlewares';
 import { BadRequestError } from '../../errors';
+import { catchAsync } from '../../services/async';
 import { User } from '../../models/user';
 
 const router = express.Router();
@@ -14,7 +15,7 @@ router.post(
   // ],
   validateRequest,
   rateLimiter,
-  async (req: Request, res: Response) => {
+  catchAsync(async (req: Request, res: Response) => {
     const { email, password, name, role } = req.body;
 
     const existingUser = await User.findOne({ email });
@@ -30,7 +31,7 @@ router.post(
     });
 
     createSendToken(newUser, 201, res);
-  }
+  })
 );
 
 export { router as signupRouter };

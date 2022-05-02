@@ -4,6 +4,7 @@ import { Password } from '../../services/password';
 import { User } from '../../models/user';
 import { createSendToken } from '../../services/auth';
 import { validateRequest } from '../../middlewares';
+import { catchAsync } from '../../services/async';
 import { BadRequestError } from '../../errors';
 
 const router = express.Router();
@@ -15,7 +16,7 @@ router.post(
     body('password').trim().notEmpty().withMessage('You must supply a password'),
   ],
   validateRequest,
-  async (req: Request, res: Response) => {
+  catchAsync(async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
@@ -33,7 +34,7 @@ router.post(
     }
 
     createSendToken(user, 200, res);
-  }
+  })
 );
 
 export { router as signinRouter };

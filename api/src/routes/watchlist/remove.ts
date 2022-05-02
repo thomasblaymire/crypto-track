@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import { BadRequestError } from '../../errors';
 import { validateRequest, requireAuth } from '../../middlewares';
 import { WatchList } from '../../models/watchlist';
+import { catchAsync } from '../../services';
 
 const router = express.Router();
 
@@ -23,7 +23,7 @@ router.post(
       .withMessage('CryptoId must be provided'),
   ],
   validateRequest,
-  async (req: Request, res: Response) => {
+  catchAsync(async (req: Request, res: Response) => {
     console.log('TOM req', req.user);
 
     // Find the crypto the user is trying to their watchlist
@@ -38,7 +38,7 @@ router.post(
     await watchList.remove();
 
     res.status(200).send(watchList);
-  }
+  })
 );
 
 export { router as watchListRemoveRouter };

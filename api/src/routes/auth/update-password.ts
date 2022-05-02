@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import { User } from '../../models/user';
 import { validateRequest, requireAuth, rateLimiter } from '../../middlewares';
 import { createSendToken } from '../../services/auth';
+import { catchAsync } from '../../services/async';
 import { BadRequestError, JWTError } from '../../errors';
 
 const router = express.Router();
@@ -13,7 +14,7 @@ router.patch(
   validateRequest,
   requireAuth,
   rateLimiter,
-  async (req: Request, res: Response) => {
+  catchAsync(async (req: Request, res: Response) => {
     const user = await User.findById(req.user!.id).select('+password');
 
     // Compare the requested pssword with the acutal password for matching
@@ -29,7 +30,7 @@ router.patch(
     await user!.save();
 
     createSendToken(user, 200, res);
-  }
+  })
 );
 
 export { router as updatePasswordRouter };

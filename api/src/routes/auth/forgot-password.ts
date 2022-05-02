@@ -4,6 +4,7 @@ import { sendEmail } from '../../services/email';
 import { User } from '../../models/user';
 import { validateRequest, rateLimiter } from '../../middlewares';
 import { BadRequestError } from '../../errors';
+import { catchAsync } from '../../services/async';
 
 const router = express.Router();
 
@@ -11,7 +12,7 @@ router.post(
   '/api/users/forgotPassword',
   validateRequest,
   rateLimiter,
-  async (req: Request, res: Response, next: NextFunction) => {
+  catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const { email } = req.body;
     const user = await User.findOne({ email });
 
@@ -51,7 +52,7 @@ router.post(
       status: 'success',
       message: 'Your password request has been sent successfully',
     });
-  }
+  })
 );
 
 export { router as forgotPaswordRouter };
