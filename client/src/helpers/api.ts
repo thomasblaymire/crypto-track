@@ -28,6 +28,7 @@ export interface User {
   id: string;
   email: string;
   name?: string;
+  token?: string;
 }
 
 const API_URL = 'http://127.0.0.1:3000/api';

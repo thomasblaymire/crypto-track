@@ -4,7 +4,6 @@ import { Home } from './pages/Home';
 import { WatchList } from './pages/WatchList';
 import { Influencers } from './pages/Influencers';
 import { Details } from './pages/Details';
-import { Reset } from './pages/Reset';
 import { Markets } from './pages/Markets';
 import { Register } from './pages/Register';
 import { NotFound } from './pages/NotFound';
@@ -47,10 +46,6 @@ const Router = () => {
     {
       path: '/tools',
       element: <Tools />,
-    },
-    {
-      path: '/reset',
-      element: <Reset />,
     },
     {
       path: '/register',
