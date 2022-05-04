@@ -33,17 +33,17 @@ interface Error {
 
 const app = express();
 
-const whitelist = ['http://127.0.0.1:3001', 'http://localhost:3001', 'http://127.0.0.0'];
-const corsOptions = {
-  credentials: true,
-  //@ts-ignore
-  origin: (origin, callback) => {
-    if (whitelist.includes(origin)) return callback(null, true);
-    callback(new Error('Not allowed by CORS'));
-  },
-};
+// const whitelist = ['http://127.0.0.1:3001', 'http://localhost:3001', 'http://127.0.0.0'];
+// const corsOptions = {
+//   credentials: true,
+//   //@ts-ignore
+//   origin: (origin, callback) => {
+//     if (whitelist.includes(origin)) return callback(null, true);
+//     callback(new Error('Not allowed by CORS'));
+//   },
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 // Body parser, reading data from body into req.body (limit for #security)
 app.use(express.json({ limit: '10kb' }));
@@ -79,12 +79,12 @@ app.use(
 app.set('trust proxy', true);
 
 // CORS options
-app.use((req, res, next) => {
-  // console.log('TOM req.cookies', req.cookies);
-  res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:3001');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  next();
-});
+// app.use((req, res, next) => {
+//   // console.log('TOM req.cookies', req.cookies);
+//   res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:3001');
+//   res.setHeader('Access-Control-Allow-Credentials', 'true');
+//   next();
+// });
 
 app.use(currentUser);
 app.use(indexCryptoRouter);

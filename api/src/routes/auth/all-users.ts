@@ -9,8 +9,9 @@ router.get(
   '/api/users/all-users',
   requireAuth,
   restrictTo('admin'),
-  catchAsync(async (res: Response) => {
+  catchAsync(async (err: any, req: any, res: any, next: any) => {
     const users = await User.find();
+
     res.status(200).json({
       status: 'success',
       results: users.length,

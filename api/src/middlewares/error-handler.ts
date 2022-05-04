@@ -1,4 +1,25 @@
 import { Response, NextFunction } from 'express';
+import { AppError } from '../errors';
+
+// Transform the error message from a mongoDB error into a nice human readable one
+const handleCastErrorDB = (err: any) => {
+  const message = `Invalid ${err.path}: ${err.value}`;
+  return new AppError(message, 400);
+};
+
+// Transform the error message from a mongoDB error returning duplicated value
+const handleDuplicateFieldsDB = (err: any) => {
+  const value = err.errmsg.match(/(["'])(\\?.)*?\1/);
+  const message = `Duplicate field value: ${value}. Please use another value`;
+  return new AppError(message, 400);
+};
+
+// Transform the errors when multiple validation errors occur
+const handleValidationErrorDB = (err: any) => {
+  const errors = Object.values(err.errors).map((el: any) => el.message);
+  const message = `Invalid input data. ${errors.join('. ')}`;
+  return new AppError(message, 400);
+};
 
 const sendDevelopmentError = (err: any, res: Response) => {
   res.status(err.statusCode).json({
@@ -35,6 +56,14 @@ export const globalErrorHandler = (err: any, res: Response, next: NextFunction) 
   if (process.env.NODE_ENV === 'development') {
     sendDevelopmentError(err, res);
   } else if (process.env.NODE_ENV === 'production') {
-    sendProductionError(err, res);
+    let error = { ...err };
+
+    if (error.name === 'CastError') error = handleCastErrorDB(error);
+    if (error.code === 11000) error = handleDuplicateFieldsDB(error);
+    if (error.name === 'ValidationError') err = handleValidationErrorDB(error);
+
+    sendProductionError(error, res);
   }
 };
+
+//return next(new AppError('No xxx found with xxx', 404));
