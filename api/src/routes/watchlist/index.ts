@@ -1,6 +1,6 @@
-import express, { Request, Response } from 'express';
-import { requireAuth, currentUser, validateRequest, rateLimiter } from '../../middlewares';
-import { NotFoundError, NotAuthorizedError } from '../../errors';
+import express, { Request, Response, NextFunction } from 'express';
+import { requireAuth, validateRequest, rateLimiter } from '../../middlewares';
+import { AppError } from '../../errors';
 import { WatchList } from '../../models/watchlist';
 import { catchAsync } from '../../services';
 
@@ -11,17 +11,17 @@ router.get(
   requireAuth,
   validateRequest,
   rateLimiter,
-  catchAsync(async (req: Request, res: Response) => {
+  catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.user?.id;
 
     if (!userId) {
-      throw new NotAuthorizedError();
+      return next(new AppError('Not authorized', 401));
     }
 
     const watchlist = await WatchList.find({ userId });
 
     if (!watchlist) {
-      throw new NotFoundError();
+      return next(new AppError('Not found', 404));
     }
 
     res.send(watchlist);

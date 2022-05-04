@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import { NotAuthorizedError } from '../errors/not-authorized-error';
-import { JWTError } from '../errors/jwt-error';
+import { AppError } from '../errors';
 import { User } from '../models/user';
 
 type UserRole = 'admin' | 'user';
@@ -28,19 +27,19 @@ export const requireAuth = async (req: Request, res: Response, next: NextFunctio
   }
 
   if (!token) {
-    throw new NotAuthorizedError();
+    throw new AppError('Not authorized', 401);
   }
 
   // Verification token
   const decoded = jwt.verify(token, process.env.JWT_KEY!) as UserPayload;
   if (!decoded) {
-    throw new JWTError('Your token is invalid. Please log in again');
+    throw new AppError('Your token is invalid. Please log in again', 401);
   }
 
   // Check if the user still exists
   const currentUser = await User.findById(decoded.id);
   if (!currentUser) {
-    return next(new JWTError('The user belonging to this token does not exist'));
+    throw new AppError('The user belonging to this token does not exist', 401);
   }
 
   req.user = currentUser;

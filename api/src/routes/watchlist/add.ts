@@ -1,5 +1,5 @@
-import express, { Request, Response } from 'express';
-import { BadRequestError } from '../../errors';
+import express, { Request, Response, NextFunction } from 'express';
+import { AppError } from '../../errors';
 import { validateRequest, requireAuth, rateLimiter } from '../../middlewares';
 import { WatchList } from '../../models/watchlist';
 import { catchAsync } from '../../services';
@@ -21,14 +21,14 @@ router.post(
   requireAuth,
   validateRequest,
   rateLimiter,
-  catchAsync(async (req: Request, res: Response) => {
+  catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     console.log('TOM BACKEND', req.body);
     const { cryptoId } = req.body;
 
     // Check if user has already added that one
     const existingCrypto = await WatchList.findOne({ cryptoId });
     if (existingCrypto) {
-      throw new BadRequestError('Sorry this crypto has already been added to user watchlist.');
+      return next(new AppError('Sorry this crypto has already been added to user watchlist', 400));
     }
 
     // Build the watchlist item and save it to the database

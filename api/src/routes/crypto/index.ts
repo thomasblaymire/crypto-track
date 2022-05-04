@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { WatchList } from '../../models/watchlist';
-import { NotFoundError, NotAuthorizedError } from '../../errors';
+import { AppError } from '../../errors';
 import { requireAuth, validateRequest, rateLimiter } from '../../middlewares';
 import { catchAsync } from '../../services/async';
 import fetch from 'node-fetch';
@@ -16,11 +16,11 @@ router.get(
     const API_URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=100&page=${page}&sparkline=false`;
 
     if (!currency) {
-      throw new Error('Currency must be defined');
+      throw new AppError('Currency must be defined', 401);
     }
 
     if (!page) {
-      throw new Error('Page must be defined');
+      throw new AppError('Page must be defined', 401);
     }
 
     const request = await fetch(API_URL);

@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import { sendEmail } from '../../services/email';
 import { User } from '../../models/user';
 import { validateRequest, rateLimiter } from '../../middlewares';
-import { BadRequestError } from '../../errors';
+import { AppError } from '../../errors';
 import { catchAsync } from '../../services/async';
 
 const router = express.Router();
@@ -17,7 +17,7 @@ router.post(
     const user = await User.findOne({ email });
 
     if (!user) {
-      throw new BadRequestError('The email you have entered are incorrect.');
+      return next(new AppError('The email you have entered are incorrect.', 500));
     }
 
     const resetToken = crypto.randomBytes(32).toString('hex');
@@ -45,7 +45,7 @@ router.post(
       user.passwordResetToken = undefined;
       user.passwordResetExpires = undefined;
       await user.save({ validateBeforeSave: false });
-      return next(new BadRequestError('There was an error sending the email. Please try again.'));
+      return next(new AppError('There was an error sending the email. Please try again.', 500));
     }
 
     res.status(200).json({

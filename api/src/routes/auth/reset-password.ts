@@ -3,7 +3,7 @@ import { User } from '../../models/user';
 import { createSendToken } from '../../services/auth';
 import { validateRequest, rateLimiter } from '../../middlewares';
 import { catchAsync } from '../../services/async';
-import { JWTError } from '../../errors';
+import { AppError } from '../../errors';
 import crypto from 'crypto';
 
 const router = express.Router();
@@ -15,6 +15,7 @@ router.patch(
   catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     // Get the user based on token
     const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
+
     const user = await User.findOne({
       passwordResetToken: hashedToken,
       passwordResetExpires: { $gt: Date.now() },
@@ -22,7 +23,7 @@ router.patch(
 
     // If token has not expired and there is a user set the new password
     if (!user) {
-      return new JWTError('Token is invalid or has expired');
+      return next(new AppError('Token is invalid or has expired', 400));
     }
 
     user.password = req.body.password;
