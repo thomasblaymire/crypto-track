@@ -5,3 +5,4 @@ export * from './require-auth';
 export * from './validate-request';
 export * from './restrict-to';
 export * from './rate-limit';
+export * from './upload';

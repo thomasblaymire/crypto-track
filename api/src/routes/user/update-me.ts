@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { User } from '../../models/user';
-import { validateRequest, requireAuth } from '../../middlewares';
+import { validateRequest, requireAuth, uploadUserPhoto } from '../../middlewares';
 import { filterObject } from '../../services/filter';
 import { catchAsync } from '../../services';
 
@@ -10,6 +10,7 @@ router.patch(
   '/api/users/update-me',
   validateRequest,
   requireAuth,
+  uploadUserPhoto,
   catchAsync(async (req: Request, res: Response) => {
     // Create error if users POSTS password data
     if (req.body.password) {

@@ -1,4 +1,4 @@
-import { Response, NextFunction } from 'express';
+import { Response, Request, NextFunction } from 'express';
 import { AppError } from '../errors';
 
 // Transform the error message from a mongoDB error into a nice human readable one
@@ -63,5 +63,3 @@ export const globalErrorHandler = (err: any, req: Request, res: Response, next: 
     sendProductionError(error, res);
   }
 };
-
-//return next(new AppError('No xxx found with xxx', 404));
