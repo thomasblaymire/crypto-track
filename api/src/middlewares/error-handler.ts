@@ -49,7 +49,7 @@ const sendProductionError = (err: any, res: Response) => {
   }
 };
 
-export const globalErrorHandler = (err: any, res: Response, next: NextFunction) => {
+export const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
@@ -57,11 +57,9 @@ export const globalErrorHandler = (err: any, res: Response, next: NextFunction) 
     sendDevelopmentError(err, res);
   } else if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
-
     if (error.name === 'CastError') error = handleCastErrorDB(error);
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);
     if (error.name === 'ValidationError') err = handleValidationErrorDB(error);
-
     sendProductionError(error, res);
   }
 };
