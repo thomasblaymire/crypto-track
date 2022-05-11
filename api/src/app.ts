@@ -26,24 +26,16 @@ import { deleteMeRouter } from './routes/user/delete-me';
 import { meRouter } from './routes/user/me';
 import { allUsersRouter } from './routes/auth/all-users';
 
-interface Error {
-  statusCode?: number;
-  status?: string;
-}
-
 const app = express();
 
-// const whitelist = ['http://127.0.0.1:3001', 'http://localhost:3001', 'http://127.0.0.0'];
-// const corsOptions = {
-//   credentials: true,
-//   //@ts-ignore
-//   origin: (origin, callback) => {
-//     if (whitelist.includes(origin)) return callback(null, true);
-//     callback(new Error('Not allowed by CORS'));
-//   },
-// };
+// CORS Configuration
+const allowedOrigins = ['http://127.0.0.1:3001', 'http://localhost:3001', 'http://127.0.0.0'];
+const corsOptions: cors.CorsOptions = {
+  credentials: true,
+  origin: allowedOrigins,
+};
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 // Body parser, reading data from body into req.body (limit for #security)
 app.use(express.json({ limit: '10kb' }));
@@ -78,14 +70,7 @@ app.use(
 // Used for NGINX requests
 app.set('trust proxy', true);
 
-// CORS options
-// app.use((req, res, next) => {
-//   // console.log('TOM req.cookies', req.cookies);
-//   res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:3001');
-//   res.setHeader('Access-Control-Allow-Credentials', 'true');
-//   next();
-// });
-
+// Application Routes
 app.use(currentUser);
 app.use(indexCryptoRouter);
 app.use(watchListRouter);
