@@ -6,3 +6,4 @@ export * from './validate-request';
 export * from './restrict-to';
 export * from './rate-limit';
 export * from './upload';
+export * from './resize';

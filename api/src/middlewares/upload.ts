@@ -1,16 +1,19 @@
 import multer from 'multer';
-import { Request } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { AppError } from '../errors';
 
-const multerStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/img/users');
-  },
-  filename: (req, file, cb) => {
-    const ext = file.mimetype.split('/')[1];
-    cb(null, `user-${req.user?.id}=${Date.now()}.${ext}`);
-  },
-});
+// const multerStorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, 'public/img/users');
+//   },
+//   filename: (req, file, cb) => {
+//     const ext = file.mimetype.split('/')[1];
+//     cb(null, `user-${req.user?.id}=${Date.now()}.${ext}`);
+//   },
+// });
+
+// Store the image in memory as a buffer
+const multerStorage = multer.memoryStorage();
 
 const multerFilter = (req: Request, file: Express.Multer.File, cb: any) => {
   if (file.mimetype.startsWith('image')) {
