@@ -12,12 +12,17 @@ interface UserModel extends mongoose.Model<UserDoc> {
   build(attrs: UserAttrs): UserDoc;
 }
 
+interface UserPhoto {
+  type: string;
+  default: string;
+}
+
 export interface UserDoc extends mongoose.Document {
   email: string;
   password: string;
   passwordResetToken: undefined | string;
   passwordResetExpires: undefined | number;
-  photo?: string;
+  photo?: UserPhoto;
   role: UserRole;
 }
 
@@ -40,7 +45,10 @@ const userSchema = new mongoose.Schema(
       enum: ['user', 'vip', 'admin'],
       default: 'user',
     },
-    photo: String,
+    photo: {
+      type: String,
+      default: 'default.svg',
+    },
     password: {
       type: String,
       required: true,
