@@ -1,6 +1,7 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import { User } from '../../models/user';
 import { validateRequest, requireAuth, uploadUserPhoto } from '../../middlewares';
+import { AppError } from '../../errors';
 import { filterObject } from '../../services/filter';
 import { catchAsync } from '../../services';
 
@@ -11,16 +12,15 @@ router.patch(
   validateRequest,
   requireAuth,
   uploadUserPhoto,
-  catchAsync(async (req: Request, res: Response) => {
-    // Create error if users POSTS password data
+  catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    // Create error if users POST password data
     if (req.body.password) {
-      console.log('TOM error');
-      // TOM HANDLE APP ERROR HERE (This route is not for password updates, plase use /updatemypassword) 400
-      return;
+      return next(new AppError('This route is not for password updates. Please use /updateMyPassword', 400));
     }
 
     // Filter out unwanted fields passing only what a user CAN update.
     const filteredBody = filterObject(req.body, 'name', 'email');
+    if (req.file) filteredBody.photo = req.file.filename;
 
     const updatedUser = await User.findByIdAndUpdate(req.user!.id, filteredBody, {
       new: true,
