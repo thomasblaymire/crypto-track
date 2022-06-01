@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 export const StyledCoin = styled.div`
   display: flex;
@@ -27,9 +28,10 @@ export const StyledTicker = styled.div`
 `;
 
 export const Coin = ({ data }): JSX.Element => {
-  const { image, name, symbol } = data;
+  const navigate = useNavigate();
+  const { image, name, symbol, id } = data;
   return (
-    <StyledCoin>
+    <StyledCoin onClick={() => navigate(`/currencies/${id}`)}>
       <img src={image} alt={name} />
       <StyledName>
         <p>{symbol.toUpperCase()}</p>

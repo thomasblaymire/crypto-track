@@ -33,6 +33,10 @@ export const StyledTableHeader = styled.th`
 export const StyledTableD = styled.td`
   font-size: 1.5rem;
   padding-left: 1.5rem;
+
+  &:nth-child(2) {
+    cursor: pointer;
+  }
 `;
 
 export const StyledHeader = styled.div`
@@ -52,12 +56,11 @@ export const StyledHeader = styled.div`
   font-weight: bold;
 `;
 
-export const StyledTableRowBody = styled.tr`
+export const StyledTableRowBody = styled.tr<TableRowProps>`
   border-bottom: 1px solid;
   border-color: #474d57;
 
   &:hover {
     background: ${props => props.theme.colors.primary};
-    cursor: pointer;
   }
 `;
