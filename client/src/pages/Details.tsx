@@ -8,6 +8,7 @@ import { SINGLE_COIN_QUERY_STRING } from '@helpers/api';
 import { useParams } from 'react-router-dom';
 import { SingleCoin } from '../types/types';
 import { Graph } from '../components/UI/Graph';
+import { Card } from '@components/UI/Card';
 
 const StyledCryptoSection = styled.section`
   padding: 7rem 0;
@@ -23,25 +24,6 @@ const StyledCryptoSection = styled.section`
     margin: 0;
   }
 `;
-
-const StyledCard = styled.div`
-  width: 100%;
-  background: #13131d;
-  padding: 3rem;
-  font-size: 2rem;
-
-  &:not(:last-child) {
-    border-right: solid 1px #222231;
-  }
-`;
-
-const StyledCardHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const StyledCardBody = styled.div``;
 
 const StyledCardRow = styled.div`
   box-shadow: rgb(0 0 0 / 8%) 0px 0px 15px, rgb(0 0 0 / 5%) 0px 0px 4px;
@@ -85,8 +67,6 @@ const StyledCryptoInformation = styled.div`
 
 const StyledSection = styled.section``;
 
-const StyledCryptoGraph = styled.div``;
-
 interface FetchSingleCoinInterface {
   data?: SingleCoin;
   isLoading?: boolean;
@@ -124,6 +104,8 @@ export const Details = (): JSX.Element => {
   );
 
   const fetchChartData = async () => {
+    //'//api.coingecko.com/api/v3/coins/bitcoin?localization=false&tickers=false&market_data=false&developer_data=false&sparkline=false';
+    //api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=gbp&days=1&interval=hourly
     const response = await fetch(
       `${process.env.COINGEKO_API}/coins/bitcoin/market_chart?vs_currency=gbp&days=1&interval=hourly`
     );
@@ -132,10 +114,7 @@ export const Details = (): JSX.Element => {
     return data;
   };
 
-  const teamsQuery = useQuery('teams', fetchChartData);
-
-  ('//api.coingecko.com/api/v3/coins/bitcoin?localization=false&tickers=false&market_data=false&developer_data=false&sparkline=false');
-  //api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=gbp&days=1&interval=hourly
+  const chartData = useQuery('teams', fetchChartData);
 
   return (
     <Layout>
@@ -148,51 +127,35 @@ export const Details = (): JSX.Element => {
           </StyledCrypto>
 
           <StyledCardRow>
-            <StyledCard>
-              <StyledCardHeader>
-                <h4>Market Cap</h4>
-                ICON
-              </StyledCardHeader>
-              <StyledCardBody>
-                <h5>$275,890,432</h5>
-                <span>UP 0.05%</span>
-              </StyledCardBody>
-            </StyledCard>
-            <StyledCard>
-              <StyledCardHeader>
-                <h4>Market Cap</h4>
-                ICON
-              </StyledCardHeader>
-              <StyledCardBody>
-                <h5>$275,890,432</h5>
-                <span>UP 0.05%</span>
-              </StyledCardBody>
-            </StyledCard>
-            <StyledCard>
-              <StyledCardHeader>
-                <h4>Market Cap</h4>
-                ICON
-              </StyledCardHeader>
-              <StyledCardBody>
-                <h5>$275,890,432</h5>
-                <span>UP 0.05%</span>
-              </StyledCardBody>
-            </StyledCard>
-            <StyledCard>
-              <StyledCardHeader>
-                <h4>Market Cap</h4>
-                ICON
-              </StyledCardHeader>
-              <StyledCardBody>
-                <h5>$275,890,432</h5>
-                <span>UP 0.05%</span>
-              </StyledCardBody>
-            </StyledCard>
+            <Card
+              title="Market Cap"
+              icon="ICON URL"
+              meta="$275,890,432"
+              change="UP 0.05%"
+            />
+            <Card
+              title="Market Cap"
+              icon="ICON URL"
+              meta="$275,890,432"
+              change="UP 0.05%"
+            />
+            <Card
+              title="Market Cap"
+              icon="ICON URL"
+              meta="$275,890,432"
+              change="UP 0.05%"
+            />
+            <Card
+              title="Market Cap"
+              icon="ICON URL"
+              meta="$275,890,432"
+              change="UP 0.05%"
+            />
           </StyledCardRow>
 
           <StyledLeftSection>
             <StyledSection>
-              <StyledLineGraph data={teamsQuery.data?.prices} />
+              <StyledLineGraph data={chartData.data?.prices} />
             </StyledSection>
 
             <StyledSection>
