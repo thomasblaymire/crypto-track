@@ -19,9 +19,9 @@ export const Actions = (): JSX.Element => {
   const [modal, setModal] = useState(null);
 
   const FORM_ELEMENT = {
-    signup: <Signup />,
+    signup: <Signup toggleModal={toggleModal} />,
     login: <Login toggleModal={toggleModal} />,
-    reset: <Reset />,
+    reset: <Reset toggleModal={toggleModal} />,
   };
 
   const handleAdminMenu = (): void => {

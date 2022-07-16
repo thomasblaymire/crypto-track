@@ -1,82 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from 'react-query';
-import { StyledForm, StyledHeader } from './styled';
-import { setLocalStorage } from '@helpers/storage';
+import { StyledForm, StyledHeader, StyledFormError } from './styled';
+import { signupSchema } from './schemas';
+import { useAuth } from '@helpers/auth';
+import { Error } from '@components/UI/Error';
 
-interface LoginProps {}
-
-const formSchema = [
-  {
-    name: 'name',
-    label: 'Name',
-    type: 'text',
-    componentType: 'text',
-    placeholder: 'Name:',
-    required: true,
-  },
-  {
-    name: 'email',
-    type: 'email',
-    label: 'Email',
-    placeholder: 'Enter your email address..',
-    componentType: 'text',
-    required: true,
-  },
-  {
-    name: 'password',
-    label: 'Password',
-    type: 'password',
-    placeholder: 'Enter a secure password',
-    componentType: 'text',
-    required: true,
-  },
-];
-
-export const Signup = ({}: LoginProps): JSX.Element => {
+export const Signup = ({ toggleModal }): JSX.Element => {
+  const { register } = useAuth();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(null);
 
-  const { mutateAsync, isLoading } = useMutation((data: any) => {
-    const { email, password } = data;
-    return fetch('http:127.0.0.1/api/users/signup', {
-      method: 'POST',
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-      headers: {
-        'Content-type': 'application/json',
-      },
-    });
-  });
-
-  const onSubmit = async ({ email, password }) => {
+  const onSubmit = async ({ name, email, password }) => {
     try {
-      const signin = await mutateAsync({
-        email,
-        password,
-      });
-      const userData = await signin.json();
-      if (userData) {
-        toggle();
-        setLocalStorage('userId', userData.id);
+      setIsLoading(true);
+      const response = await register({ name, email, password });
+      if (response) {
+        toggleModal();
         navigate('/currencies');
       }
-      console.log(signin);
-    } catch (error) {
-      console.log(error);
+    } catch (ex) {
+      const error = ex as Error;
+      setIsError(error);
+      console.error(
+        `❌ ERROR - SIGNUP - ERROR: name=${error.name} message=${error.message} stack=${error.stack}`
+      );
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <>
+      {isError && (
+        <StyledFormError>
+          <Error errors={isError} />
+        </StyledFormError>
+      )}
       <StyledHeader>
         Gain access to additional features such as Watchlist and Portfolio
         tracking.
       </StyledHeader>
       <StyledForm
         onSubmit={onSubmit}
-        schema={formSchema}
+        schema={signupSchema}
         isLoading={isLoading}
         buttonLabel="Create an account"
       />

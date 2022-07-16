@@ -1,67 +1,30 @@
 import React, { useState } from 'react';
-import { Form } from '@components/Form';
 import { Error } from '@components/UI/Error';
 import { useAuth } from '@helpers/auth';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import { loginSchema } from './schemas';
+import { StyledForm, StyledHeader, StyledFormError } from './styled';
 
-interface LoginProps {
-  toggleModal: () => void;
-}
-
-const StyledForm = styled(Form)`
-  margin-top: 2rem;
-`;
-
-const StyledHeader = styled.div`
-  font-size: 14px;
-  margin-top: 15px;
-  margin-bottom: 24px;
-  line-height: 24px;
-  color: #a1a7bb;
-`;
-
-const StyledFormError = styled.div`
-  margin: 2rem 2rem 0rem 2rem;
-`;
-
-const formSchema = [
-  {
-    name: 'email',
-    type: 'email',
-    label: 'Email',
-    placeholder: 'Enter your email address..',
-    componentType: 'text',
-    required: true,
-  },
-  {
-    name: 'password',
-    label: 'Password',
-    type: 'password',
-    placeholder: 'Enter a secure password',
-    componentType: 'text',
-    required: true,
-  },
-];
-
-export const Login = ({ toggleModal }: LoginProps): JSX.Element => {
+export const Login = ({ toggleModal }): JSX.Element => {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [isError, setIsError] = useState(null);
 
-  const onSubmit = async ({ email, password }) => {
+  const onSubmit = async ({ email, password }): Promise<void> => {
     try {
       setIsLoading(true);
       const response = await login({ email, password });
-
       if (response) {
         toggleModal();
         navigate('/currencies');
       }
-    } catch (err: any) {
-      console.log('TOM error', err);
-      setIsError(err);
+    } catch (ex) {
+      const error = ex as Error;
+      setIsError(error);
+      console.error(
+        `❌ ERROR - LOGIN - ERROR: name=${error.name} message=${error.message} stack=${error.stack}`
+      );
     } finally {
       setIsLoading(false);
     }
@@ -80,7 +43,7 @@ export const Login = ({ toggleModal }: LoginProps): JSX.Element => {
       </StyledHeader>
       <StyledForm
         onSubmit={onSubmit}
-        schema={formSchema}
+        schema={loginSchema}
         isLoading={isLoading}
         buttonLabel="Log In"
       />
