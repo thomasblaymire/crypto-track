@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useSearch } from '@hooks/useSearch';
+import { useSearch } from '@hooks/index';
 
 const StyledLink = styled(Link)`
   text-decoration: none;

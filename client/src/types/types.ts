@@ -2,7 +2,7 @@ export type NavigationItem = {
   id: number;
   title: string;
   url: string;
-  icon: string;
+  icon: JSX.Element;
 };
 
 export type Stats = {

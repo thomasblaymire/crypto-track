@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { currencies } from '../../data';
 import { setLocalStorage } from '@helpers/storage';
 import { Modal } from '../UI/Modal';
-import { useModal } from '@hooks/useModal';
+import { useModal } from '@hooks/index';
 import {
   StyledCurrencySelect,
   StyledCurrencyOption,

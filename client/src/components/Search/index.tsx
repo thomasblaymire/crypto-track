@@ -7,7 +7,7 @@ import {
   StyledClose,
 } from './styled';
 import { Results } from './SearchResults';
-import { useDebounce } from '@hooks/useDebounce';
+import { useDebounce } from '@hooks/index';
 import { QUERY_DEBOUNCE_DURATION_MILLISECONDS } from '../../constants';
 import SearchIcon from '@assets/search.svg';
 import CloseIcon from '@assets/close.svg';
