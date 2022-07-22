@@ -47,7 +47,7 @@ const StyledNavigationItem = styled.div`
 
   svg {
     width: 1.5rem;
-    fill: white;
+    fill: ${({ theme }) => theme.colors.textColor};
     margin-right: 0.75rem;
   }
 
@@ -82,7 +82,6 @@ export const Navigation = ({
   setIsOpen,
 }: NavigationProps): JSX.Element => {
   const navigate = useNavigate();
-
   return (
     <StyledNavigation>
       <StyledHamburger onClick={() => setIsOpen(!isOpen)}>

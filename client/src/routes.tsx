@@ -10,7 +10,7 @@ import { NotFound } from './pages/NotFound';
 import { Settings } from './pages/Settings';
 import { Tools } from './pages/Tools';
 import { News } from './pages/News';
-import { useAuth } from '@helpers/auth';
+import { useAuth } from '@context/auth';
 
 const Router = () => {
   const element = useRoutes([

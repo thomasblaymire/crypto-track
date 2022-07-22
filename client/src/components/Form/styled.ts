@@ -5,6 +5,8 @@ import { device } from '@helpers/device';
 
 interface FieldProps {
   hasError?: boolean;
+  required?: boolean;
+  label: string;
 }
 
 export const FormWrapper = styled.div`

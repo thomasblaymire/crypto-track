@@ -38,8 +38,8 @@ const StyledBar = styled.div`
   @media ${device.laptopL} {
     display: flex;
     justify-content: space-between;
-    height: 37px;
-    display: flex;
+    border-bottom: solid 1px #222531;
+    height: 50px;
     align-items: center;
   }
 `;
@@ -49,24 +49,39 @@ const StyledBarActions = styled.div`
   line-height: 22px;
 `;
 
+const StyledWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const StyledHeader = styled.header`
   background: ${props => props.theme.colors.primary};
 `;
 
-export const Header = ({ theme, toggleTheme }): JSX.Element => {
+interface HeaderProps {
+  theme: any;
+  toggleTheme: any;
+  user?: any;
+}
+
+export const Header = ({ theme, toggleTheme }: HeaderProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <StyledHeader>
-      <Container>
-        <StyledBar>
-          {stats && <StatsBar stats={stats} />}
-          <StyledBarActions>
-            <CurrencySelect />
-            <Toggle theme={theme} toggleTheme={toggleTheme} />
-          </StyledBarActions>
-        </StyledBar>
+      <StyledBar>
+        <Container>
+          <StyledWrapper>
+            {stats && <StatsBar stats={stats} />}
+            <StyledBarActions>
+              <CurrencySelect />
+              <Toggle theme={theme} toggleTheme={toggleTheme} />
+            </StyledBarActions>
+          </StyledWrapper>
+        </Container>
+      </StyledBar>
 
+      <Container>
         <StyledHeaderWrapper>
           <Logo />
           <Navigation

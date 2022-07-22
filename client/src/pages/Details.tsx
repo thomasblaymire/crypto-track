@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Layout } from '../components/UI/Layout';
 import { Loading } from '../components/UI/Loading';
 import { useQuery } from 'react-query';
-import { SINGLE_COIN_QUERY_STRING } from '@helpers/api';
 import { useParams } from 'react-router-dom';
 import { SingleCoin } from '../types/types';
 import { Graph } from '../components/UI/Graph';
@@ -81,18 +80,14 @@ const StyledLineGraph = styled(Graph)`
 
 export const Details = (): JSX.Element => {
   const { crypto } = useParams();
+  const getSingleCoinQueryString = (crypto?: string): string =>
+    `coins/${crypto}?localization=false&tickers=false&market_data=false&developer_data=false&sparkline=false`;
 
-  const {
-    data,
-    isLoading,
-    isFetching,
-    isError,
-    error,
-  }: FetchSingleCoinInterface = useQuery(
+  const { data, isLoading }: FetchSingleCoinInterface = useQuery(
     ['crypto', crypto],
     async () => {
       const response = await fetch(
-        `${process.env.COINGEKO_API}/${SINGLE_COIN_QUERY_STRING(crypto)}`
+        `${process.env.COINGEKO_API}/${getSingleCoinQueryString(crypto)}`
       );
 
       const data = await response.json();

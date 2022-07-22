@@ -62,7 +62,7 @@ const StyledModal = styled.div<ModalProps>`
     font-size: 1.4rem;
     font-weight: 700;
     line-height: 1;
-    color: #fff;
+    color: ${({ theme }) => theme.colors.textColor};
     background: none;
     opacity: 0.3;
     cursor: pointer;
@@ -73,7 +73,7 @@ const StyledModal = styled.div<ModalProps>`
 
   .button-default {
     background: #247ba0;
-    color: #fff;
+    color: ${({ theme }) => theme.colors.textColor};
   }
 `;
 

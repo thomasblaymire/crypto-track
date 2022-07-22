@@ -1,11 +1,10 @@
-import { initReactQueryAuth } from 'react-query-auth';
-import {
-  getUserProfile,
-  registerWithEmailAndPassword,
-  loginWithEmailAndPassword,
-  User,
-} from './api';
 import { storage } from './storage';
+import { client } from '@helpers/api';
+import { AuthResponse } from '../types/types';
+
+async function logout() {
+  await storage.clearToken();
+}
 
 export async function handleUserResponse(response) {
   const { token, data } = response;
@@ -13,38 +12,27 @@ export async function handleUserResponse(response) {
   return data.user;
 }
 
-async function loadUser() {
-  let user = null;
-  if (storage.getToken()) {
-    const data = await getUserProfile();
-    user = data;
-  }
-  return user;
+function getUser({ token }): Promise<AuthResponse> {
+  return client('users/me', { data: { token } }).then(handleUserResponse);
 }
 
-async function loginFn(data) {
-  const response = await loginWithEmailAndPassword(data);
-  const user = await handleUserResponse(response);
-  return user;
+function login({ email, password }): Promise<AuthResponse> {
+  return client('users/signin', { data: { email, password } }).then(
+    handleUserResponse
+  );
 }
 
-async function registerFn(data) {
-  const response = await registerWithEmailAndPassword(data);
-  const user = await handleUserResponse(response);
-  return user;
+function register({ name, email, password }): Promise<AuthResponse> {
+  return client('users/signup', { data: { name, email, password } }).then(
+    handleUserResponse
+  );
 }
 
-async function logoutFn() {
-  await storage.clearToken();
+function setUserCurrency({ token, currency }): Promise<AuthResponse> {
+  return client('users/currency', {
+    method: 'PATCH',
+    data: { token, currency },
+  }).then(handleUserResponse);
 }
 
-const authConfig = {
-  loadUser,
-  loginFn,
-  registerFn,
-  logoutFn,
-};
-
-const { AuthProvider, useAuth } = initReactQueryAuth<User>(authConfig);
-
-export { AuthProvider, useAuth };
+export { logout, login, register, getUser, setUserCurrency };

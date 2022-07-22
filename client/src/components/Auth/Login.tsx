@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Error } from '@components/UI/Error';
-import { useAuth } from '@helpers/auth';
+import { useAuth } from '../../context/auth';
 import { useNavigate } from 'react-router-dom';
 import { loginSchema } from './schemas';
 import { StyledForm, StyledHeader, StyledFormError } from './styled';

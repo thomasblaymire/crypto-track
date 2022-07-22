@@ -11,9 +11,14 @@ import {
 interface TableProps {
   columns: ColumnType[];
   rows: CryptoData[];
+  handleSelect: any;
 }
 
-export const Table = ({ columns, rows }: TableProps): JSX.Element => (
+export const Table = ({
+  columns,
+  rows,
+  handleSelect,
+}: TableProps): JSX.Element => (
   <StyledTable>
     <StyledThead>
       <tr>
@@ -27,7 +32,7 @@ export const Table = ({ columns, rows }: TableProps): JSX.Element => (
     <tbody>
       {rows.map(row => (
         <StyledTableRowBody key={row.id}>
-          <Column columns={columns} row={row} />
+          <Column columns={columns} row={row} handleSelect={handleSelect} />
         </StyledTableRowBody>
       ))}
     </tbody>

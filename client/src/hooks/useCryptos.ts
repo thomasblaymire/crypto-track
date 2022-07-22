@@ -1,5 +1,5 @@
+import { client } from '@helpers/api';
 import { useQuery } from 'react-query';
-import { ALL_COIN_QUERY_STRING } from '@helpers/api';
 import { CryptoData } from '../types/types';
 
 interface CryptoDataRequest {
@@ -12,29 +12,21 @@ interface CryptoDataRequest {
   error?: Error;
 }
 
-// A simple data fetching hook used to fetch all cryptos based on a given users currency.
-export const useCryptos = (pageNumber: number) => {
-  const { data, isLoading, isError, error }: CryptoDataRequest = useQuery(
-    ['cryptos', pageNumber],
-    async () => {
-      const response = await fetch(
-        `${process.env.BACKEND_API}/${ALL_COIN_QUERY_STRING(null, pageNumber)}`
-      );
+function useCryptos(pageNumber: number, user?: any) {
+  const currency = window.localStorage.getItem('currency') || 'gbp'; //user.currency || localStorage
+  const queryString = `cryptos/${currency}/${pageNumber}`;
 
-      const data = await response.json();
-      return data;
-    },
+  const data: CryptoDataRequest = useQuery(
+    ['cryptos', pageNumber],
+    () => client(`${queryString}`).then(cryptos => cryptos),
     {
       keepPreviousData: false,
       retry: 5,
-      refetchInterval: 6000,
+      // refetchInterval: 6000,
     }
   );
 
-  return {
-    cryptos: data,
-    isLoading,
-    isError,
-    error,
-  };
-};
+  return { ...data };
+}
+
+export { useCryptos };

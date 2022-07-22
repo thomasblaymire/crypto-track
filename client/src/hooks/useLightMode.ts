@@ -8,13 +8,13 @@ export const useLightMode = () => {
     setTheme(mode);
   };
 
-  const toggleTheme = () => {
+  function toggleTheme() {
     if (theme === 'dark') {
-      setMode('light');
-    } else {
-      setMode('dark');
+      return setMode('light');
     }
-  };
+
+    setMode('dark');
+  }
 
   useEffect(() => {
     const localTheme = window.localStorage.getItem('theme');

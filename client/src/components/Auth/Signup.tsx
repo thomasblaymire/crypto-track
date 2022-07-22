@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { StyledForm, StyledHeader, StyledFormError } from './styled';
 import { signupSchema } from './schemas';
-import { useAuth } from '@helpers/auth';
+import { useAuth } from '../../context/auth';
 import { Error } from '@components/UI/Error';
 
 export const Signup = ({ toggleModal }): JSX.Element => {

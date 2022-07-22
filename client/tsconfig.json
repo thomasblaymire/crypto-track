@@ -27,7 +27,8 @@
       "@components/*": ["components/*"],
       "@assets/*": ["assets/*"],
       "@helpers/*": ["helpers/*"],
-      "@hooks/*": ["hooks/*"]
+      "@hooks/*": ["hooks/*"],
+      "@context/*": ["context/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],

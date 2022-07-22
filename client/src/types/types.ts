@@ -131,3 +131,15 @@ export type ColumnType = {
   accessor: string;
   label: string;
 };
+
+export interface AuthResponse {
+  user: User;
+  jwt: string;
+}
+
+export interface User {
+  id: string;
+  email: string;
+  name?: string;
+  token?: string;
+}

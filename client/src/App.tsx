@@ -1,42 +1,35 @@
-import React, { Suspense } from 'react';
-import { Loading } from './components/UI/Loading';
-import { BrowserRouter } from 'react-router-dom';
+import * as React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { QueryClientProvider, QueryClient } from 'react-query';
 import { GlobalStyle, darkTheme, lightTheme } from '@helpers//style';
-import { Router } from './routes';
+import { FullPageSpinner } from '@components/UI/FullPageSpinner';
 import { useLightMode } from '@hooks/index';
-import { Header } from './components/UI/Header';
-import { AuthProvider } from '@helpers/auth';
+import { useAuth } from '@context/auth';
 
-const queryClient = new QueryClient();
+const AuthenticatedApp = React.lazy(
+  () => import(/* webpackPrefetch: true */ './authenticated-app')
+);
+const UnauthenticatedApp = React.lazy(() => import('./unauthenticated-app'));
 
-// See routes file for a breakdown of all routes.
-const App = () => {
-  const [theme, toggleTheme, componentMounted] = useLightMode();
+function App() {
+  const { user } = useAuth();
+  const [theme, toggleTheme] = useLightMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
-
-  if (!componentMounted) {
-    return <div />;
-  }
+  const props = { user, toggleTheme, theme };
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <React.Suspense fallback={<FullPageSpinner />}>
       <ThemeProvider theme={themeMode}>
         <GlobalStyle />
-        <Suspense fallback={<Loading position="center" />}>
-          <BrowserRouter>
-            <AuthProvider>
-              <Header toggleTheme={toggleTheme} theme={theme} />
-              <Router />
-            </AuthProvider>
-          </BrowserRouter>
-        </Suspense>
+        {user ? (
+          <AuthenticatedApp {...props} />
+        ) : (
+          <UnauthenticatedApp {...props} />
+        )}
         <ReactQueryDevtools />
       </ThemeProvider>
-    </QueryClientProvider>
+    </React.Suspense>
   );
-};
+}
 
-export default App;
+export { App };

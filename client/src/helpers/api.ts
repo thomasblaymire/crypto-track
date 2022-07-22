@@ -1,68 +1,48 @@
-import { storage } from './storage';
+import { QueryCache } from 'react-query';
 import { API_URL } from '../constants';
+import * as auth from './auth';
 
-interface AuthResponse {
-  user: User;
-  jwt: string;
-}
+const queryCache = new QueryCache({
+  onError: error => {
+    console.log(error);
+  },
+  onSuccess: data => {
+    console.log(data);
+  },
+});
 
-export interface User {
-  id: string;
-  email: string;
-  name?: string;
-  token?: string;
-}
-
-async function handleApiResponse(response): Promise<any> {
-  const data = await response.json();
-  if (response.ok) {
-    return data;
-  }
-  return Promise.reject(data);
-}
-
-async function getUserProfile(): Promise<AuthResponse> {
-  const response = await window.fetch(`${API_URL}/users/me`, {
+async function client(
+  endpoint,
+  { data, token, headers: customHeaders, ...customConfig }: any = {}
+) {
+  console.log('TOM in client', endpoint);
+  console.log('TOM data', data);
+  const config = {
+    method: data ? 'POST' : 'GET',
+    body: data ? JSON.stringify(data) : undefined,
     headers: {
-      Authorization: `Bearer ${storage.getToken()}`,
+      Authorization: token ? `Bearer ${token}` : undefined,
+      'Content-Type': data ? 'application/json' : undefined,
+      ...customHeaders,
     },
+    ...customConfig,
+  };
+
+  return window.fetch(`${API_URL}/${endpoint}`, config).then(async response => {
+    if (response.status === 401) {
+      queryCache.clear();
+      await auth.logout();
+      // refresh the page for them
+      window.location.assign(window.location as any);
+      return Promise.reject({ message: 'Please re-authenticate.' });
+    }
+    const data = await response.json();
+    if (response.ok) {
+      return data;
+    } else {
+      return Promise.reject(data);
+    }
   });
-  return handleApiResponse(response);
 }
 
-async function loginWithEmailAndPassword(data): Promise<AuthResponse> {
-  const response = await window.fetch(`${API_URL}/users/signin`, {
-    method: 'POST',
-    body: JSON.stringify(data),
-    credentials: 'include',
-    headers: {
-      'Content-type': 'application/json',
-    },
-  });
-  return handleApiResponse(response);
-}
-
-async function registerWithEmailAndPassword(data): Promise<AuthResponse> {
-  const response = await window.fetch(`${API_URL}/users/signup`, {
-    method: 'POST',
-    body: JSON.stringify(data),
-  });
-
-  return handleApiResponse(response);
-}
-
-async function storeUserCurrency(data): Promise<AuthResponse> {
-  const response = await window.fetch(`${API_URL}/users/currency`, {
-    method: 'PATCH',
-    body: JSON.stringify(data),
-  });
-  return handleApiResponse(response);
-}
-
-export {
-  storeUserCurrency,
-  registerWithEmailAndPassword,
-  loginWithEmailAndPassword,
-  getUserProfile,
-  handleApiResponse,
-};
+export { client };

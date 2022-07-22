@@ -4,7 +4,7 @@ import { StyledActions, StyledUserButton, StyledActionButtons } from './styled';
 import { Button } from '../UI/Button';
 import { Dropdown } from '../UI/Dropdown';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@helpers/auth';
+import { useAuth } from '../../context/auth';
 import { Modal } from '../UI/Modal';
 import { Signup } from './Signup';
 import { Login } from './Login';
@@ -12,11 +12,11 @@ import { Reset } from './Reset';
 import { useModal } from '@hooks/index';
 
 export const Actions = (): JSX.Element => {
-  const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [modalOpen, setModalOpen, toggleModal] = useModal();
   const [menu, setMenu] = useState(false);
   const [modal, setModal] = useState(null);
+  const navigate = useNavigate();
 
   const FORM_ELEMENT = {
     signup: <Signup toggleModal={toggleModal} />,
@@ -77,7 +77,7 @@ export const Actions = (): JSX.Element => {
         </StyledActionButtons>
       )}
 
-      {menu && <Dropdown onMouseLeave={handleAdminMenu} items={items} />}
+      {menu ? <Dropdown onMouseLeave={handleAdminMenu} items={items} /> : null}
 
       <Modal
         isActive={modalOpen}

@@ -5,8 +5,7 @@ import { WatchList } from './WatchList';
 import { Coin } from './Coin';
 import { PriceChange } from './PriceChange';
 
-export const Column = ({ columns, row }): JSX.Element => {
-  const handleWatchList = () => console.log('TOM');
+export const Column = ({ columns, row, handleSelect }): JSX.Element => {
   const renderContent = useCallback(
     column => {
       switch (column.accessor) {
@@ -14,8 +13,9 @@ export const Column = ({ columns, row }): JSX.Element => {
           return (
             <WatchList
               cell={column}
-              handleWatchList={handleWatchList}
+              toggle={handleSelect}
               selected={false}
+              id={row['name']}
             />
           );
 

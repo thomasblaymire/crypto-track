@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import LogoImage from '@assets/logo.svg';
+import LogoImage from '@assets/logo2.svg';
 import { Link } from 'react-router-dom';
 
 const StyledHeaderLogo = styled(LogoImage)`

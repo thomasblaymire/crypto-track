@@ -27,9 +27,8 @@ export const StyledTicker = styled.div`
   color: #848e9c;
 `;
 
-export const Coin = ({ data }): JSX.Element => {
+export const Coin = ({ data: { image, name, symbol, id } }): JSX.Element => {
   const navigate = useNavigate();
-  const { image, name, symbol, id } = data;
   return (
     <StyledCoin onClick={() => navigate(`/currencies/${id}`)}>
       <img src={image} alt={name} />

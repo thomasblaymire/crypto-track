@@ -19,7 +19,7 @@ const ToggleContainer = styled.button`
     height: auto;
     width: 1.75rem;
     transition: all 0.3s linear;
-    fill: white;
+    fill: ${({ theme }) => theme.colors.textColor};
   }
 `;
 
