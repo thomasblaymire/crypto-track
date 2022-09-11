@@ -1,4 +1,12 @@
 import styled from 'styled-components';
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxPopover,
+  ComboboxList,
+  ComboboxOption,
+  ComboboxOptionText,
+} from '@reach/combobox';
 
 interface WrapperProps {
   hideToggle: boolean;
@@ -56,8 +64,6 @@ export const StyledInputWrapper = styled.div`
   padding: 0px 4px;
 `;
 
-export const StyledSearchContainer = styled.div``;
-
 export const StyledClose = styled.div`
   cursor: pointer;
   width: 16px;
@@ -73,5 +79,48 @@ export const StyledClose = styled.div`
 
   svg {
     width: 15px;
+  }
+`;
+
+//@ts-ignore
+export const StyledComboboxInput = styled(ComboboxInput)`
+  background: ${props => props.theme.colors.primary};
+  color: ${props => props.theme.colors.quaternary};
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  padding-left: 1rem;
+  line-height: 2rem;
+
+  @media (min-width: 480px) {
+    width: 200px;
+  }
+
+  span {
+    font-size: 1.2rem;
+    padding-left: 1rem;
+  }
+`;
+
+//@ts-ignore
+export const StyledComboboxPopover = styled(ComboboxPopover)`
+  border: none;
+`;
+
+//@ts-ignore
+export const StyledComboboxOption = styled(ComboboxOption)`
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  background: #13131c;
+  color: rgb(100, 107, 128);
+  font-size: 1.2rem;
+
+  &:hover {
+    background: ${props => props.theme.colors.primary};
   }
 `;

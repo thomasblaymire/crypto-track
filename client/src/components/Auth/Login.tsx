@@ -32,11 +32,11 @@ export const Login = ({ toggleModal }): JSX.Element => {
 
   return (
     <>
-      {isError && (
+      {error ? (
         <StyledFormError>
-          <Error errors={isError} />
+          <Error error={error} />
         </StyledFormError>
-      )}
+      ) : null}
 
       <StyledHeader>
         Welcome to coin tracker, please enter your email and password below.

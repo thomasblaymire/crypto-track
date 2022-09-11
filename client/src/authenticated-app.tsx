@@ -14,7 +14,7 @@ const StyledCustomError = styled.div`
   align-items: center;
 `;
 
-function ErrorFallback({ error }) {
+function ErrorFallback({ error }): JSX.Element {
   return (
     <StyledCustomError>
       <ErrorMessage error={error} />
@@ -22,7 +22,7 @@ function ErrorFallback({ error }) {
   );
 }
 
-function AuthenticatedApp({ toggleTheme, theme }) {
+function AuthenticatedApp({ toggleTheme, theme }): JSX.Element {
   return (
     <ErrorBoundary FallbackComponent={FullPageErrorFallback}>
       <Header toggleTheme={toggleTheme} theme={theme} />

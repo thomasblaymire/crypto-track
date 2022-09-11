@@ -4,7 +4,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { GlobalStyle, darkTheme, lightTheme } from '@helpers//style';
 import { FullPageSpinner } from '@components/UI/FullPageSpinner';
 import { useLightMode } from '@hooks/index';
-import { useAuth } from '@context/auth';
+import { useAuth } from './context/auth';
 
 const AuthenticatedApp = React.lazy(
   () => import(/* webpackPrefetch: true */ './authenticated-app')

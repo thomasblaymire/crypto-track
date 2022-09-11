@@ -22,6 +22,7 @@ const signupSchema = [
     label: 'Password',
     type: 'password',
     placeholder: 'Enter a secure password',
+    autoComplete: 'false',
     componentType: 'text',
     required: true,
   },
@@ -43,6 +44,7 @@ const loginSchema = [
     placeholder: 'Enter a secure password',
     componentType: 'text',
     required: true,
+    autoComplete: 'false',
   },
 ];
 

@@ -32,7 +32,7 @@ const StyledUserButton = styled.div`
 `;
 
 const StyledFormError = styled.div`
-  margin: 2rem 2rem 0rem 2rem;
+  margin: 2rem 0rem;
 `;
 
 const StyledForm = styled(Form)`
