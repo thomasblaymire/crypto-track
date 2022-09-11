@@ -6,16 +6,6 @@ import { catchAsync } from '../../services';
 
 const router = express.Router();
 
-// router.post(
-//   '/api/users/signin',
-//   [
-//     body('email').isEmail().withMessage('Email must be valid'),
-//     body('password').trim().notEmpty().withMessage('You must supply a password'),
-//   ],
-//   validateRequest,
-//   async (req: Request, res: Response) => {
-//     const { email, password } = req.body;
-
 router.post(
   '/api/watchlist',
   requireAuth,
@@ -27,6 +17,7 @@ router.post(
 
     // Check if user has already added that one
     const existingCrypto = await WatchList.findOne({ cryptoId });
+
     if (existingCrypto) {
       return next(new AppError('Sorry this crypto has already been added to user watchlist', 400));
     }

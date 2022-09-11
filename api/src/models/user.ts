@@ -49,6 +49,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: 'default.svg',
     },
+    currency: {
+      type: String,
+      required: false,
+      lowercase: true,
+      trim: true,
+    },
     password: {
       type: String,
       required: true,
@@ -90,7 +96,6 @@ userSchema.pre('save', async function (done) {
   done();
 });
 
-// Created for TS Type checking
 userSchema.statics.build = (attrs: UserAttrs) => {
   return new User(attrs);
 };
