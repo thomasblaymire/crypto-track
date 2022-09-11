@@ -7,6 +7,8 @@ async function logout() {
 }
 
 export async function handleUserResponse(response) {
+  console.log('TOM RESPONSE', response);
+  debugger;
   const { token, data } = response;
   storage.setToken(token);
   return data.user;

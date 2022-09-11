@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { useAuth } from '@helpers/auth';
+import { useMutation } from 'react-query';
+import { useAuth } from '@context/auth';
+import { client } from '@helpers/api';
 import { useWatchList } from '@hooks/useWatchList';
 import styled from 'styled-components';
+import { storage } from '@helpers/storage';
 
 const StyledStarIcon = styled.svg`
   width: 15px;
@@ -49,9 +52,16 @@ export const WatchList = ({
   toggle,
 }: WatchListInterface): JSX.Element => {
   const [watchList, setWatchList] = useState(selected);
-  // const { user } = useAuth();
-  const user = null;
-  // const { watchListAdd } = useWatchList();
+  const { user } = useAuth();
+
+  const watchListItems = useWatchList();
+
+  console.log('TOm items', watchListItems);
+
+  const { mutate } = useMutation(({ cryptoId }: any) =>
+    client(`watchlist`, { data: { cryptoId }, token: storage.getToken() })
+  );
+
   const fillColor = watchList ? '#f6b87e' : 'none';
 
   const handleOnClick = (): void => {
@@ -60,7 +70,10 @@ export const WatchList = ({
     }
 
     setWatchList(prev => !prev);
-    // watchListAdd(id.toLowerCase());
+
+    console.log('TOM id', id.toLowerCase());
+
+    mutate({ cryptoId: id.toLowerCase() });
   };
 
   return (

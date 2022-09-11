@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { resetSchema } from './schemas';
+import { AuthenticationOptions } from '../../types';
 import { StyledHeader, StyledForm } from './styled';
 
 export const Reset = ({ toggleModal }): JSX.Element => {
@@ -15,7 +16,7 @@ export const Reset = ({ toggleModal }): JSX.Element => {
     });
   });
 
-  const onSubmit = ({ email, password }) => {
+  const onSubmit = ({ email, password }: AuthenticationOptions) => {
     console.log('TOM onSubmit', email, password);
     event.preventDefault();
     mutate(

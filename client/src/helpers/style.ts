@@ -29,6 +29,7 @@ const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
     height: inherit;
     background: ${({ theme }) => theme.body};
     color: ${({ theme }) => theme.text};
+
   }
 
   a {

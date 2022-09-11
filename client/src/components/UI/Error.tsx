@@ -14,14 +14,15 @@ const StyledError = styled.div`
 
   li {
     font-size: 1.2rem;
+    line-height: 20px;
   }
 `;
 
-export const Error = ({ errors }): JSX.Element => (
-  <StyledError>
-    <strong>Oops Something Went Wrong..</strong>
-    {errors.map((error: any) => (
-      <li>{error.message}</li>
-    ))}
-  </StyledError>
-);
+export const Error = ({ error }): JSX.Element => {
+  return (
+    <StyledError>
+      <strong>Oops Something Went Wrong..</strong>
+      {error ? <li>{error}</li> : null}
+    </StyledError>
+  );
+};

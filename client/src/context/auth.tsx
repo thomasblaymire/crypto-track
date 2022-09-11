@@ -68,6 +68,7 @@ function AuthProvider(props) {
   const logout = useCallback(() => {
     auth.logout();
     queryCache.clear();
+    storage.clearToken();
     setData(null);
   }, [setData]);
 

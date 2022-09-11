@@ -15,8 +15,6 @@ async function client(
   endpoint,
   { data, token, headers: customHeaders, ...customConfig }: any = {}
 ) {
-  console.log('TOM in client', endpoint);
-  console.log('TOM data', data);
   const config = {
     method: data ? 'POST' : 'GET',
     body: data ? JSON.stringify(data) : undefined,

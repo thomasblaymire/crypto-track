@@ -20,24 +20,11 @@ const StyledRow = styled.div`
 `;
 
 export const Home = (): JSX.Element => {
-  const [toggleSearch, setToggleSearch] = useState(false);
-
   return (
     <Layout>
       <StyledRow>
-        <SearchToggle
-          setToggleSearch={setToggleSearch}
-          toggleSearch={toggleSearch}
-        />
-
-        {toggleSearch && (
-          <Search
-            setToggleSearch={setToggleSearch}
-            toggleSearch={toggleSearch}
-          />
-        )}
+        <Search />
       </StyledRow>
-
       <CryptoTable />
     </Layout>
   );

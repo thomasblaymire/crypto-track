@@ -1,4 +1,5 @@
 import { client } from '@helpers/api';
+import { storage } from '@helpers/storage';
 import { useQuery } from 'react-query';
 import { CryptoData } from '../types/types';
 
@@ -7,26 +8,45 @@ interface CryptoDataRequest {
   hasMore?: boolean;
   isLoading?: boolean;
   isError?: boolean;
+  isSuccess?: boolean;
   isFetching?: boolean;
   isPreviousData?: boolean;
   error?: Error;
 }
 
-function useCryptos(pageNumber: number, user?: any) {
-  const currency = window.localStorage.getItem('currency') || 'gbp'; //user.currency || localStorage
-  const queryString = `cryptos/${currency}/${pageNumber}`;
+function useCryptos(pageNumber: number, currency: string) {
+  let userCurrency = storage.getItem(currency) || 'gbp';
 
-  const data: CryptoDataRequest = useQuery(
+  if (currency) {
+    userCurrency = currency;
+  }
+
+  const {
+    data,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+    isFetching,
+  }: CryptoDataRequest = useQuery(
     ['cryptos', pageNumber],
-    () => client(`${queryString}`).then(cryptos => cryptos),
+    () =>
+      client(`cryptos/${userCurrency}/${pageNumber}`).then(cryptos => cryptos),
     {
       keepPreviousData: false,
       retry: 5,
-      // refetchInterval: 6000,
+      //refetchInterval: 6000,
     }
   );
 
-  return { ...data };
+  return {
+    cryptos: data,
+    isLoading,
+    isError,
+    isSuccess,
+    isFetching,
+    error,
+  };
 }
 
 export { useCryptos };

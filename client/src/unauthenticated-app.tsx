@@ -1,10 +1,13 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Header } from '@components/UI/Header';
 import { Layout } from '@components/UI/Layout';
 import { CryptoTable } from '@components/CryptoTable';
 import { Search } from '@components/Search/index';
 import { SearchToggle } from '@components/Search/SearchToggle';
+import { Signup } from '@components/Auth/Signup';
+import { Modal } from '@components/UI/Modal';
+import { useModal } from '@hooks/index';
 
 const StyledRow = styled.div`
   display: flex;
@@ -20,28 +23,26 @@ const StyledRow = styled.div`
   }
 `;
 
-function UnauthenticatedApp({ theme, toggleTheme }) {
-  const [toggleSearch, setToggleSearch] = React.useState(false);
+function UnauthenticatedApp({ theme, toggleTheme }): JSX.Element {
+  const [modalOpen, setModalOpen, toggle] = useModal();
   return (
     <div>
       <Header toggleTheme={toggleTheme} theme={theme} />
       <main>
         <Layout>
           <StyledRow>
-            <SearchToggle
-              setToggleSearch={setToggleSearch}
-              toggleSearch={toggleSearch}
-            />
-
-            {toggleSearch && (
-              <Search
-                setToggleSearch={setToggleSearch}
-                toggleSearch={toggleSearch}
-              />
-            )}
+            <Search />
           </StyledRow>
 
-          <CryptoTable />
+          <CryptoTable toggleModal={() => toggle()} />
+
+          <Modal
+            isActive={modalOpen}
+            handleClose={() => setModalOpen(false)}
+            title="Create An Account"
+          >
+            <Signup toggleModal={toggle} />
+          </Modal>
         </Layout>
       </main>
     </div>

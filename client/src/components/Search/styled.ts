@@ -95,9 +95,15 @@ export const StyledComboboxInput = styled(ComboboxInput)`
   border: none;
   padding-left: 1rem;
   line-height: 2rem;
+  outline: none;
 
   @media (min-width: 480px) {
     width: 200px;
+  }
+
+  &:not(:placeholder-shown) {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
   }
 
   span {
@@ -106,19 +112,29 @@ export const StyledComboboxInput = styled(ComboboxInput)`
   }
 `;
 
-//@ts-ignore
-export const StyledComboboxPopover = styled(ComboboxPopover)`
+export const StyledCombobox = styled(Combobox)`
   border: none;
+  > [data-reach-combobox-popover] {
+    background: red;
+    color: white;
+    border: none;
+  }
 `;
 
-//@ts-ignore
-export const StyledComboboxOption = styled(ComboboxOption)`
+export const StyledComboboxPopover = styled(ComboboxPopover as any)``;
+
+export const StyledComboboxOption = styled(ComboboxOption as any)`
   display: flex;
   align-items: center;
   text-decoration: none;
   background: #13131c;
   color: rgb(100, 107, 128);
-  font-size: 1.2rem;
+  font-size: 1.25rem;
+  padding-left: 1.25rem;
+
+  img {
+    margin-right: 1rem;
+  }
 
   &:hover {
     background: ${props => props.theme.colors.primary};

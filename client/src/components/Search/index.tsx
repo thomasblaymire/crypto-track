@@ -6,6 +6,7 @@ import {
   StyledInputWrapper,
   StyledComboboxInput,
   StyledSearchContainer,
+  StyledCombobox,
   StyledClose,
 } from './styled';
 import { Results } from './SearchResults';
@@ -41,14 +42,14 @@ export const Search = ({}: SearchInterface): JSX.Element => {
 
   return (
     <div>
-      <Combobox>
+      <StyledCombobox>
         <StyledComboboxInput
           onChange={handleChange}
           style={{ width: 300, margin: 0 }}
           placeholder="Search Cryptocurrencies"
         />
         {data && (
-          <StyledComboboxPopover style={{ width: 300 }}>
+          <StyledComboboxPopover style={{ width: 300, border: '0px' }}>
             {data.length > 0 ? (
               <ComboboxList>
                 {data.length > 3 && (
@@ -71,7 +72,7 @@ export const Search = ({}: SearchInterface): JSX.Element => {
             )}
           </StyledComboboxPopover>
         )}
-      </Combobox>
+      </StyledCombobox>
     </div>
   );
 

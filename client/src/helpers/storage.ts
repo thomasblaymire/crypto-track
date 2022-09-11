@@ -18,6 +18,7 @@ export { setLocalStorage, getLocalStorage };
 
 export const storage = {
   getToken: () => JSON.parse(window.localStorage.getItem('token')),
+  getItem: (item: string) => window.localStorage.getItem(item),
   setToken: token =>
     window.localStorage.setItem('token', JSON.stringify(token)),
   clearToken: () => window.localStorage.removeItem('token'),

@@ -29,6 +29,10 @@ const createWebpackConfig = async () => {
           },
         },
         {
+          test: /\.css$/,
+          use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
+        },
+        {
           test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
           type: 'asset/resource',
         },
@@ -60,6 +64,7 @@ const createWebpackConfig = async () => {
         '@assets': path.resolve(__dirname, 'src/assets'),
         '@helpers': path.resolve(__dirname, 'src/helpers'),
         '@hooks': path.resolve(__dirname, 'src/hooks'),
+        '@type': path.resolve(__dirname, 'src/types'),
       },
     },
     output: {
@@ -69,11 +74,9 @@ const createWebpackConfig = async () => {
     },
     devServer: {
       static: path.join(__dirname, 'dist'),
-      compress: true,
-      port: port,
+      port,
       historyApiFallback: true,
       open: true,
-      hot: true,
       allowedHosts: ['crypto.dev'],
     },
   };
