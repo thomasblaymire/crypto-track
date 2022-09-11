@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { hot } from 'react-hot-loader/root';
 import { ThemeProvider } from 'styled-components';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { GlobalStyle, darkTheme, lightTheme } from '@helpers//style';
@@ -32,4 +33,4 @@ function App() {
   );
 }
 
-export { App };
+export default hot(App);
