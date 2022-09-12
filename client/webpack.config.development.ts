@@ -2,6 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import { getSVGLoader } from './webpack-helpers';
 import CopyPlugin from 'copy-webpack-plugin';
+import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const port = process.env.PORT || 3000;
@@ -40,6 +41,7 @@ const createWebpackConfig = async () => {
       ],
     },
     plugins: [
+      new ReactRefreshPlugin(),
       new HtmlWebpackPlugin({
         template: 'public/index.html',
       }),
@@ -48,7 +50,7 @@ const createWebpackConfig = async () => {
         'BACKEND_API',
         'AUTH_URL',
       ]),
-      new webpack.HotModuleReplacementPlugin(),
+      // new webpack.HotModuleReplacementPlugin(),
       new CopyPlugin({
         patterns: [{ from: 'src/assets', to: '' }],
       }),
@@ -57,7 +59,6 @@ const createWebpackConfig = async () => {
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
       alias: {
-        // 'react-dom': '@hot-loader/react-dom',
         '@': path.resolve(__dirname, 'src'),
         '@context': path.resolve(__dirname, 'src/context'),
         '@components': path.resolve(__dirname, 'src/components'),
@@ -75,6 +76,10 @@ const createWebpackConfig = async () => {
     devServer: {
       static: path.join(__dirname, 'dist'),
       port,
+      client: {
+        overlay: false,
+        logging: 'warn',
+      },
       historyApiFallback: true,
       open: true,
       allowedHosts: ['crypto.dev'],
