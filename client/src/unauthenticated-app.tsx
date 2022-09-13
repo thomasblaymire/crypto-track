@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Header } from '@components/UI/Header';
 import { Layout } from '@components/UI/Layout';
 import { CryptoTable } from '@components/CryptoTable';
 import { Search } from '@components/Search/index';
-import { SearchToggle } from '@components/Search/SearchToggle';
 import { Signup } from '@components/Auth/Signup';
 import { Modal } from '@components/UI/Modal';
 import { useModal } from '@hooks/index';
@@ -26,7 +25,7 @@ const StyledRow = styled.div`
 function UnauthenticatedApp({ theme, toggleTheme }): JSX.Element {
   const [modalOpen, setModalOpen, toggle] = useModal();
   return (
-    <div>
+    <>
       <Header toggleTheme={toggleTheme} theme={theme} />
       <main>
         <Layout>

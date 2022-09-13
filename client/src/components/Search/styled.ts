@@ -7,6 +7,7 @@ import {
   ComboboxOption,
   ComboboxOptionText,
 } from '@reach/combobox';
+import SearchIcon from '@assets/search.svg';
 
 interface WrapperProps {
   hideToggle: boolean;
@@ -58,12 +59,6 @@ export const StyledSearch = styled.div`
   }
 `;
 
-export const StyledInputWrapper = styled.div`
-  display: flex;
-  flex: 1 1 0%;
-  padding: 0px 4px;
-`;
-
 export const StyledClose = styled.div`
   cursor: pointer;
   width: 16px;
@@ -82,11 +77,17 @@ export const StyledClose = styled.div`
   }
 `;
 
-//@ts-ignore
-export const StyledComboboxInput = styled(ComboboxInput)`
+export const StyledInputWrapper = styled.div`
+  display: flex;
+  flex: 1 1 0%;
+  padding: 0px 4px;
+  background: ${props => props.theme.colors.primary};
+  border-radius: 8px;
+`;
+
+export const StyledComboboxInput = styled(ComboboxInput as any)`
   background: ${props => props.theme.colors.primary};
   color: ${props => props.theme.colors.quaternary};
-  border-radius: 8px;
   padding: 8px;
   display: flex;
   align-items: center;
@@ -96,6 +97,10 @@ export const StyledComboboxInput = styled(ComboboxInput)`
   padding-left: 1rem;
   line-height: 2rem;
   outline: none;
+  padding-left: 2.5rem;
+  background-repeat: no-repeat;
+  background-position: left center;
+  outline: 0;
 
   @media (min-width: 480px) {
     width: 200px;
@@ -112,31 +117,32 @@ export const StyledComboboxInput = styled(ComboboxInput)`
   }
 `;
 
-export const StyledCombobox = styled(Combobox)`
+export const StyledCombobox = styled(Combobox as any)`
   border: none;
-  > [data-reach-combobox-popover] {
-    background: red;
-    color: white;
-    border: none;
-  }
 `;
 
-export const StyledComboboxPopover = styled(ComboboxPopover as any)``;
+export const StyledComboboxPopover = styled(ComboboxPopover as any)`
+  background: red;
+`;
 
 export const StyledComboboxOption = styled(ComboboxOption as any)`
   display: flex;
   align-items: center;
   text-decoration: none;
   background: #13131c;
-  color: rgb(100, 107, 128);
+  color: #20202f;
   font-size: 1.25rem;
   padding-left: 1.25rem;
+
+  li {
+    padding: 1rem;
+  }
 
   img {
     margin-right: 1rem;
   }
 
   &:hover {
-    background: ${props => props.theme.colors.primary};
+    background: #20202f;
   }
 `;

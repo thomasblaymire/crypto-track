@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import { Logo } from './Logo';
 import { Link } from 'react-router-dom';
 import { navItems } from '../../data';
-import { CurrencySelect } from '../CurrencySelect';
+import CloseIcon from '@assets/close.svg';
 
 const StyledResponsiveMenu = styled.div`
   position: fixed;
   height: 100%;
   width: 100%;
-  top: 0px;
+  top: 5px;
   z-index: 932;
   color: rgb(255, 255, 255);
   right: 0px;
@@ -53,21 +53,24 @@ const StyledResponsiveBody = styled.div`
   overflow: auto;
 `;
 
+const StyledCloseIcon = styled(CloseIcon)`
+  width: 25px;
+  height: 25px;
+`;
+
 export const MobileNav = ({ setIsOpen }): JSX.Element => (
   <StyledResponsiveMenu>
     <StyledResponsiveHeader>
       <Logo />
-      <button onClick={() => setIsOpen(false)}>CLOSE</button>
+      <StyledCloseIcon onClick={() => setIsOpen(false)} />
     </StyledResponsiveHeader>
 
     <StyledResponsiveBody>
-      {navItems.map((item, i) => (
+      {navItems.map(({ title, url }, i) => (
         <StyledResponseiveDiv key={i}>
-          <Link to={item.url}>{item.item}</Link>
+          <Link to={url}>{title}</Link>
         </StyledResponseiveDiv>
       ))}
-
-      <CurrencySelect />
     </StyledResponsiveBody>
   </StyledResponsiveMenu>
 );

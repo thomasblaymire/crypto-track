@@ -61,6 +61,16 @@ export type CryptoData = {
   total_volume: number;
 };
 
+export interface CryptoSearchResult {
+  api_symbol: string;
+  id: string;
+  large: string;
+  market_cap_rank: number;
+  name: string;
+  symbol: string;
+  thumb: string;
+}
+
 export interface Coins {
   id: string;
   large: string;
