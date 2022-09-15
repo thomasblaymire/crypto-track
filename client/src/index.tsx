@@ -1,7 +1,7 @@
 import * as React from 'react';
+import App from './App';
 import { createRoot } from 'react-dom/client';
 import { QueryClientProvider, QueryClient } from 'react-query';
-import App from './App';
 import { AppProviders } from './context';
 
 const queryClient = new QueryClient({

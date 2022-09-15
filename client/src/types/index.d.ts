@@ -61,6 +61,17 @@ export type CryptoData = {
   total_volume: number;
 };
 
+export interface CryptoDataRequest {
+  data: CryptoData[];
+  hasMore?: boolean;
+  isLoading?: boolean;
+  isError?: boolean;
+  isSuccess?: boolean;
+  isFetching?: boolean;
+  isPreviousData?: boolean;
+  error?: Error;
+}
+
 export interface CryptoSearchResult {
   api_symbol: string;
   id: string;
@@ -179,4 +190,10 @@ export interface User {
 export interface AuthenticationOptions {
   email: string;
   password: string;
+}
+
+export interface NavItem {
+  id: number;
+  title: string;
+  onClick: () => void;
 }
