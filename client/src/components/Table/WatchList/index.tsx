@@ -70,9 +70,6 @@ export const WatchList = ({
     }
 
     setWatchList(prev => !prev);
-
-    console.log('TOM id', id.toLowerCase());
-
     mutate({ cryptoId: id.toLowerCase() });
   };
 

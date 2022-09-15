@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import UserIcon from '@assets/icons/user-solid.svg';
 import { StyledActions, StyledUserButton, StyledActionButtons } from './styled';
+import { NavItem } from '../../types';
 import { Button } from '../UI/Button';
 import { Dropdown } from '../UI/Dropdown';
 import { useNavigate } from 'react-router-dom';
@@ -28,7 +29,7 @@ export const Actions = (): JSX.Element => {
     setMenu(value => !value);
   };
 
-  const items = [
+  const items: NavItem[] = [
     {
       id: 1,
       title: 'Watch List',

@@ -1,18 +1,7 @@
 import { client } from '@helpers/api';
 import { storage } from '@helpers/storage';
 import { useQuery } from 'react-query';
-import { CryptoData } from '../types/types';
-
-interface CryptoDataRequest {
-  data: CryptoData[];
-  hasMore?: boolean;
-  isLoading?: boolean;
-  isError?: boolean;
-  isSuccess?: boolean;
-  isFetching?: boolean;
-  isPreviousData?: boolean;
-  error?: Error;
-}
+import { CryptoDataRequest } from '../types';
 
 function useCryptos(pageNumber: number, currency: string) {
   let userCurrency = storage.getItem(currency) || 'gbp';

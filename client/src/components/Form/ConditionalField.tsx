@@ -1,14 +1,13 @@
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 
 export const ConditionalField = ({ show, onCollapse, onShow, children }) => {
   useEffect(() => {
     if (show) {
-      onShow()
+      onShow();
     } else {
-      onCollapse()
+      onCollapse();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [show])
+  }, [show]);
 
-  return show ? children : null
-}
+  return show ? children : null;
+};
