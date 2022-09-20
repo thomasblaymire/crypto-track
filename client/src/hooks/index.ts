@@ -5,6 +5,7 @@ import { useLightMode } from './useLightMode';
 import { useModal } from './useModal';
 import { useSearch } from './useSearch';
 import { useWatchList } from './useWatchList';
+import { useNews } from './useNews';
 
 export {
   useCryptos,
@@ -14,4 +15,5 @@ export {
   useModal,
   useSearch,
   useWatchList,
+  useNews,
 };

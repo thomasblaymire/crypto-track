@@ -68,7 +68,6 @@ const Router = () => {
 };
 
 const ProtectedRoute = ({ children }) => {
-  debugger;
   const { user } = useAuth();
   const location = useLocation();
 
