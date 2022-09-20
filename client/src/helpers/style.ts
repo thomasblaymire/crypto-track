@@ -42,13 +42,13 @@ const GlobalStyle = createGlobalStyle<{ theme: ThemeType }>`
 `;
 
 export const lightTheme = {
-  body: '#E2E2E2',
+  body: '#e5e8ec',
   text: '#363537',
   toggleBorder: '#FFF',
   gradient: 'linear-gradient(#39598A, #79D7ED)',
 
   colors: {
-    primary: '#E2E2E2',
+    primary: '#FFFFFF',
     secondary: '#000',
     tertiary: '#13131c',
     quaternary: 'rgb(100, 107, 128)',

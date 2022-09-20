@@ -44,7 +44,7 @@ function UnauthenticatedApp({ theme, toggleTheme }): JSX.Element {
           </Modal>
         </Layout>
       </main>
-    </div>
+    </>
   );
 }
 

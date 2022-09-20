@@ -24,6 +24,7 @@ export const StyledCryptoTable = styled.div`
     }
 
     .tr {
+      cursor: pointer;
       :last-child {
         .td {
           border-bottom: 0;
