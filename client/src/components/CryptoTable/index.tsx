@@ -44,7 +44,7 @@ export const CryptoTable = ({ toggleModal }: CryptoTableProps): JSX.Element => {
       ) : null}
 
       {isSuccess ? (
-        cryptos.length ? (
+        cryptos ? (
           <StyledCryptoTable>
             <Table
               rows={cryptos}
