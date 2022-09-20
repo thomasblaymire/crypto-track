@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Loading } from '@components/UI/Loading';
+import { StyledArticleRow, StyledArticle, StyledArticleImage } from './styled';
 import { useNews } from '@hooks/index';
 
 export const NewsFeed = (): JSX.Element => {
@@ -21,14 +22,15 @@ export const NewsFeed = (): JSX.Element => {
         </div>
       ) : null}
 
-      <div>
+      <StyledArticleRow>
         {news.articles.map(article => (
-          <>
+          <StyledArticle>
+            <StyledArticleImage src={article.media} alt={article.title} />
             <h1>{article.title}</h1>
             <p>{article.excerpt}</p>
-          </>
+          </StyledArticle>
         ))}
-      </div>
+      </StyledArticleRow>
 
       {isLoading ? <Loading position="center" /> : null}
     </>
