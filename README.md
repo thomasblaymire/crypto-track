@@ -1,5 +1,5 @@
 <div>
-  <h1 align="center">Crypto Track 🚀</h1>
+  <h1 align="center">Crypto Track 📊</h1>
   <h4 align="center">A work-in-progress Crypto Tracking application.</h4>
 
 
