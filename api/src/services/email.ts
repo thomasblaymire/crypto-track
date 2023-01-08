@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer';
+import nodemailer from "nodemailer";
 
 interface MailOptions {
   email: string;
@@ -18,18 +18,16 @@ export const sendEmail = async (options: MailOptions): Promise<any> => {
   });
 
   const mailOptions = {
-    from: 'Tom Blaymire <hello@cryptotrack.com>',
+    from: "Tom Blaymire <hello@cryptotrack.com>",
     to: options.email,
     subject: options.subject,
     text: options.message,
     // html:
   };
 
-  console.log('TOM mailOptions', mailOptions);
-
   try {
     await transporter.sendMail(mailOptions);
   } catch (err) {
-    console.log('TOM MAIL ERR', err);
+    console.log("Error sending email:", err);
   }
 };

@@ -1,14 +1,14 @@
-import mongoose from 'mongoose';
-import 'dotenv/config';
-import { app } from './app';
+import mongoose from "mongoose";
+import "dotenv/config";
+import { app } from "./app";
 
 const start = async () => {
   if (!process.env.JWT_KEY) {
-    throw new Error('JWT_KEY must be defined');
+    throw new Error("JWT_KEY must be defined");
   }
 
   if (!process.env.MONGO_URI) {
-    throw new Error('MONGO_URI must be defined');
+    throw new Error("MONGO_URI must be defined");
   }
 
   try {
@@ -18,13 +18,13 @@ const start = async () => {
       useCreateIndex: true,
       useFindAndModify: false,
     });
-    console.log('Connected to MongoDB');
+    console.log("Connected to MongoDB");
   } catch (err) {
     console.log(err);
   }
 
   app.listen(3000, () => {
-    console.log('Listening on port 3000!!!');
+    console.log("Listening on port 3000!!!");
   });
 };
 
