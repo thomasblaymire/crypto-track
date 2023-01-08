@@ -15,7 +15,6 @@ export const CryptoTable = ({ toggleModal }: CryptoTableProps): JSX.Element => {
   const [pageNumber, setPageNumber] = useState(1);
   const { user } = useAuth();
   const watchListItems = user ? useWatchList() : [];
-  // const currency = user?.currency ? user.currency : 'gbp';
 
   const currency = 'gbp';
   const { cryptos, isLoading, isSuccess, isError, error } = useCryptos(
