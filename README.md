@@ -9,6 +9,10 @@
 
 A FullStack Crypto Tracking Application. The app enables users to authenticate and add their favorite coins to a watchlist to track price movements. There is also live refreshing of coin prices along with search, and historical crypto data over time.
 
+## Screenshot
+
+![](https://github.com/thomasblaymire/crypto-track/blob/main/home.png)
+
 ## Features 
 - Full Authentication (Login, Signup, Reset & Emails)
 - Crypto Search (Debounce)
