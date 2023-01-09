@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-import { ObjectId } from 'mongodb';
+import mongoose from "mongoose";
 
 interface WatchListAttrs {
   cryptoId: string;
@@ -22,8 +21,8 @@ const watchList = new mongoose.Schema(
       required: true,
     },
     userId: {
-      type: ObjectId,
-      ref: 'User',
+      type: mongoose.Types.ObjectId,
+      ref: "User",
       required: true,
     },
   },
@@ -44,6 +43,9 @@ watchList.statics.build = (attrs: WatchListAttrs) => {
   return new WatchList(attrs);
 };
 
-const WatchList = mongoose.model<WatchListDoc, WatchListModel>('WatchList', watchList);
+const WatchList = mongoose.model<WatchListDoc, WatchListModel>(
+  "WatchList",
+  watchList
+);
 
 export { WatchList };
