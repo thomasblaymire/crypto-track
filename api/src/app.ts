@@ -51,7 +51,7 @@ app.use(cookieParser());
 app.use(mongoSanitize());
 
 // Serving static files
-app.use(express.static(`${__dirname}/ public`));
+app.use(express.static("./public"));
 
 // Gzip compression
 app.use(compression());
